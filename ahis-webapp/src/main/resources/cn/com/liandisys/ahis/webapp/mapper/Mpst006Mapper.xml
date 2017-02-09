@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mpst006Mapper" >
+ 
+  <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.entity.BankCardInfoEntity" >
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <id column="bankCardNo" property="bankCardNo" jdbcType="VARCHAR" />
+    <result column="ownCardName" property="ownCardName" jdbcType="VARCHAR" />
+    <result column="idCardNo" property="idCardNo" jdbcType="VARCHAR" />
+    <result column="bank" property="bank" jdbcType="CHAR" />
+    <result column="bankCardType" property="bankCardType" jdbcType="CHAR" />
+    <result column="phoneNo" property="phoneNo" jdbcType="CHAR" />
+    <result column="insertTimeStamp" property="insertTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    userId, ownCardName, idCardNo, bankCardNo, bank, bankCardType, phoneNo, insertTimeStamp
+  </sql>
+  
+    <select id="getCardsByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from BankCardInfo
+    where userId = #{userId,jdbcType=BIGINT}
+    order by insertTimeStamp
+  </select>
+
+  <select id="getCntByUserId" resultType="Integer" parameterType="Integer" >
+    select 
+       count(1) as cnt
+    from BankCardInfo
+    where userId = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <select id="getCardByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.BankCardInfoEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from BankCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and bankCardNo = #{bankCardNo,jdbcType=VARCHAR}
+  </select>
+  
+  <insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.BankCardInfoEntity" >
+    insert into BankCardInfo (userId, ownCardName, idCardNo, bankCardNo, bank, bankCardType, phoneNo, insertTimeStamp)
+    values (#{userId,jdbcType=BIGINT}, #{ownCardName,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR},
+    #{bankCardNo,jdbcType=VARCHAR}, #{bank,jdbcType=CHAR}, #{bankCardType,jdbcType=CHAR}, #{phoneNo,jdbcType=CHAR},
+    #{insertTimeStamp,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.liandisys.ahis.webapp.entity.BankCardInfoEntity" >
+    delete from BankCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and bankCardNo = #{bankCardNo,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

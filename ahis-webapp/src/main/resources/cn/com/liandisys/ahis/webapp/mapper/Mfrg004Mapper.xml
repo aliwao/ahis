@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfrg004Mapper">
+	<insert id="insertAppointOrder"
+		parameterType="cn.com.liandisys.ahis.webapp.entity.AppointmentOrderEntity">
+		insert into AppointmentOrder
+		values (#{userId,jdbcType=BIGINT}, #{psOrdNum,jdbcType=VARCHAR},
+		#{hisOrdNum,jdbcType=VARCHAR},
+		#{patCardType,jdbcType=VARCHAR}, #{patCardNo,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{insertTimeStamp,jdbcType=TIMESTAMP})
+	</insert>
+	<select id="getOrderNo" resultType="java.lang.Integer">
+		SELECT NEXTVAL('TestSeq');
+	</select>
+	<update id="updateStatusByKey">
+		update AppointmentOrder
+		set ord_status =#{status ,jdbcType=VARCHAR},
+		insertTimeStamp=now()
+		where userId=#{userId ,jdbcType=BIGINT}
+		and psOrdNum=#{psOrdNum,jdbcType=VARCHAR }
+		and hisOrdNum=#{hisOrdNum,jdbcType=VARCHAR }
+
+	</update>
+</mapper>

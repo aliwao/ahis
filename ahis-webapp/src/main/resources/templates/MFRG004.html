@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>预约信息</title>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen"></link>
+<link href="/css/common.css" rel="stylesheet"></link>
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+</head>
+<body style="overflow: hidden;">
+	<input type="hidden" id="deptCode" th:field="${mfrg004Form.deptCode}" />
+	<input type="hidden" id="deptName" th:field="${mfrg004Form.deptName}" />
+	<input type="hidden" id="doctorCode"
+		th:field="${mfrg004Form.doctorCode}" />
+	<input type="hidden" id="timeFlag" th:field="${mfrg004Form.timeFlag}" />
+	<div>
+		<div class="container-fluid">
+
+			<div class="row">
+				<nav class="navbar navbar-default open-hover ldui-topnavbar"
+					role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col-xs-3">
+						<ul class="nav navbar-nav pull-left">
+							<li><a href="#" style="font-size: 18px; color: white"
+								onClick="goBack()"><span
+									class="glyphicon glyphicon-chevron-left"> </span></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<p class="navbar-text text-center"
+							style="font-size: 18px; font-weight: bold; color: white">预约信息</p>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<div
+			style="background-color: white; margin-top: 3px; padding-top: 9px; padding-bottom: 9px; margin-bottom: 2px;">
+			<div class="text-center">
+				<span style="font-size: 17px">无锡市第三人民医院</span>
+			</div>
+		</div>
+		<div
+			style="background-color: white; margin-top: 1px; padding-top: 10px; padding-bottom: 30px;">
+			<div class="col-xs-5">
+				<span class="glyphicon glyphicon-user pull-left">&nbsp;</span> <span>就诊人</span>
+			</div>
+			<div class="col-xs-7">
+				<span th:text="${mfrg004Form.userName}"></span>
+			</div>
+		</div>
+		<div
+			style="background-color: white; margin-top: 1px; padding-top: 10px; padding-bottom: 30px;">
+			<div class="col-xs-3">
+				<span>就诊日</span>
+			</div>
+			<div id="reserveDate" class="col-xs-9">
+				<div
+					th:if="${mfrg004Form.detailedTime}=='' or ${mfrg004Form.detailedTime}==null">
+					<span th:text="${mfrg004Form.reserveDate}"></span>&nbsp; <span
+						th:if="${mfrg004Form.timeFlag}=='am'">上午</span> <span
+						th:if="${mfrg004Form.timeFlag}=='pm'">下午</span>
+				</div>
+				<div
+					th:if="${mfrg004Form.detailedTime}!='' and ${mfrg004Form.detailedTime}!=null">
+					<span th:text="${mfrg004Form.detailedTime}"></span>
+				</div>
+			</div>
+		</div>
+		<div
+			style="background-color: white; margin-top: 1px; padding-top: 10px; padding-bottom: 30px;">
+			<div class="col-xs-3">
+				<span>科室</span>
+			</div>
+			<div class="col-xs-9">
+				<span id="deptName" th:text="${mfrg004Form.deptName}"></span>
+			</div>
+		</div>
+
+		<div th:if="${mfrg004Form.isExpert}"
+			style="background-color: white; margin-top: 1px; padding-top: 10px; padding-bottom: 30px;">
+			<div class="col-xs-3">
+				<span>医生</span>
+			</div>
+			<div class="col-xs-9">
+				<span id="doctorName" th:text="${mfrg004Form.doctorName}"></span>
+			</div>
+		</div>
+
+		<div
+			style="background-color: white; margin-top: 1px; padding-top: 10px; padding-bottom: 30px;">
+			<div style="margin-top: 2px;">
+				<h4 style="padding-left: 16px;">温馨提示</h4>
+			</div>
+			<div style="padding-left: 24px;">
+				<span>1.请确认预约信息，预约成功后取消需提前2天。</span> <br></br> <span>2.一天退约3次或一周退约10次将不能再退约。</span>
+			</div>
+		</div>
+		<div
+			style="background-color: white; text-align: center; margin-top: 2px; padding-top: 10px; padding-bottom: 66px;">
+			<div id="regFee" class="col-xs-12"
+				style="color: red; font-size: 25px;">
+				<span th:if="${mfrg004Form.isExpert}"
+					th:text="${mfrg004Form.regFee}"></span> <span
+					th:if="!${mfrg004Form.isExpert}"> 8元</span>
+			</div>
+			<div class="col-xs-12">
+				<span style="font-size: 13px;">挂号费</span>
+			</div>
+		</div>
+
+
+		<div style="height: 70%"></div>
+
+		<div
+			style="background-color: white; text-align: center; margin-top: 2px; padding-top: 10px; padding-bottom: 66px; height: 100%; width: 100%; position: absolute;">
+			<div
+				style="margin-top: 2px; padding-bottom: 27px; padding-top: 25px; padding-left: 6px;">
+				<button id="appointConfirm" type="button"
+					class="btn btn-primary btn-block">确认预约</button>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	//CSRF Token
+	//<![CDATA[
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	var urlpath = '/m/mfrg004/appoint';
+	var deptCode = $('#deptCode').val();
+	var doctorCode = $('#doctorCode').val();
+	var reserveDate = $('#reserveDate').text();
+	var regFee = $('#regFee').text();
+	var timeFlag = $('#timeFlag').val();
+	var params = {deptCode:deptCode, doctorCode:doctorCode, reserveDate:reserveDate, regFee:regFee, timeFlag:timeFlag};
+	var callback = sucess;
+	$(document).ready(function() {
+		$('#appointConfirm').click(function() {
+			postAjax(urlpath, params, callback);
+		});
+	});
+
+	function sucess(reponse) {
+		if (reponse == 'error') {
+			showErrorToast('订单请求失败');
+		} else {
+			var obj = JSON.parse(reponse);
+			var userId=obj.userId;
+			var psOrdNum = obj.psOrdNum;
+			var hisOrdNum= obj.hisOrdNum;
+			window.parent.location='/m/mfrg005/index?userId='+userId+'&psOrdNum='+psOrdNum+'&hisOrdNum='+hisOrdNum+'&payAmt='+regFee;
+		}
+	}
+	//]]>
+</script>
+</html>

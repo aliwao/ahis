@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfih001Mapper" >
+ 
+ <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.dto.PatientsHospitalizedInfo">
+    <id column="stayNo" property="stayNo" jdbcType="CHAR" />
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <id column="hospitalCode" property="hospitalCode" jdbcType="CHAR" />
+    <id column="deptCode" property="deptCode" jdbcType="CHAR" />
+    <id column="doctorCode" property="doctorCode" jdbcType="CHAR" />
+    <id column="nurseCode" property="nurseCode" jdbcType="CHAR" />
+    <result column="diagnoseInfo" property="diagnoseInfo" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="bed" property="bed" jdbcType="VARCHAR" />
+    <result column="inDate" property="inDate" jdbcType="DATE" />
+    <result column="outDate" property="outDate" jdbcType="DATE" />
+    <result column="advancedPay" property="advancedPay" jdbcType="DOUBLE" />
+    <result column="supplementaryPay" property="supplementaryPay" jdbcType="DOUBLE" />
+    <result column="returnPay" property="returnPay" jdbcType="DOUBLE" />
+    <result column="statusFlg" property="statusFlg" jdbcType="CHAR" />
+    <result column="validFlg" property="validFlg" jdbcType="CHAR" />
+    <result column="commentInfo" property="commentInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    stayNo, userId, hospitalCode, deptCode, doctorCode, nurseCode, diagnoseInfo, area, bed, inDate, outDate, advancedPay, supplementaryPay, 
+    returnPay, statusFlg, validFlg, commentInfo
+  </sql>
+  
+  <select id="getInfoByUserIdAndStatusFlg" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.PatientsHospitalizedEntity">
+    select 
+    <include refid="Base_Column_List" />
+    from PatientsHospitalized
+    where statusFlg = #{statusFlg,jdbcType=CHAR}   <!-- TODO userId条件 -->
+    order by inDate desc
+    limit 1
+  </select>
+  
+  <select id="getInfoByStayNo" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.PatientsHospitalizedEntity">
+    select 
+    <include refid="Base_Column_List" />
+    from PatientsHospitalized
+    where stayNo = #{stayNo,jdbcType=CHAR} 
+    order by inDate desc
+  </select>
+  
+  <select id="getListByUserId" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.PatientsHospitalizedEntity">
+    select 
+    <include refid="Base_Column_List" />
+    from PatientsHospitalized
+    <if test="inDate != null">
+    	WHERE inDate <![CDATA[>=]]> #{inDate,jdbcType=DATE}
+    </if>
+    order by inDate DESC <!-- TODO userId条件 -->
+  </select>
+  
+    <select id="getStayListByUserId" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.PatientsHospitalizedEntity">
+    select 
+    <include refid="Base_Column_List" />
+    from PatientsHospitalized
+    where (statusFlg='1' or statusFlg='2')
+    <if test="inDate != null">
+    	AND inDate <![CDATA[>=]]> #{inDate,jdbcType=DATE}
+    </if>
+    order by inDate DESC <!-- TODO userId条件 -->
+  </select>
+
+</mapper>

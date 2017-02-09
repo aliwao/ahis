@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>预约时间</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen"></link>
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen"></link>
+<link href="/css/common.css" rel="stylesheet"></link>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+	<input type="hidden" id="deptCode" th:field="${mfrg003Form.deptCode}" />
+	<input type="hidden" id="deptName" th:field="${mfrg003Form.deptName}" />
+	<input type="hidden" id="doctorCode"
+		th:field="${mfrg003Form.doctorCode}" />
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default open-hover ldui-topnavbar"
+					role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col-xs-3">
+						<ul class="nav navbar-nav pull-left">
+							<li><a href="/g/mfrg002/index"
+								style="font-size: 18px; color: white" onclick="goBack()"><span
+									class="glyphicon glyphicon-chevron-left"> </span></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<p class="navbar-text text-center"
+							style="font-size: 18px; font-weight: bold; color: white">预约时间</p>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<div
+			style="margin-top: 10px; overflow: auto; padding: 5px 2px 0px 5px; border-bottom: 1px solid #f5f5f5; background-color: white">
+
+			<img class="pull-left" th:src="${mfrg003Form.imgPath}" width="100"
+				height="100" style="padding: 5px 5px 1px 5px; border-radius: 10px" />
+			<div style="margin-top: 20px; margin-left: 20px;">
+				姓名 &nbsp;<span id="doctorName" th:text="${mfrg003Form.doctorName}"></span><br></br>
+				职位 &nbsp;<span th:text="${mfrg003Form.doctorTitle}"></span><br></br>
+				擅长项目&nbsp;<span th:each="skill:${mfrg003Form.doctorSkill}"> <span
+					th:text="${skill}"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<div
+			style="background-color: white; padding-top: 10px; padding-bottom: 10px; margin-top: 10px; border-bottom: 1px solid #f5f5f5;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span><span>
+				挂号预约</span>
+		</div>
+		<div th:each="numberSource:${mfrg003Form.entityList}">
+			<div
+				style="overflow: auto; padding: 5px 2px 0px 5px; border-bottom: 1px solid #f5f5f5; background-color: white;">
+				<div class="pull-left">
+
+
+					<input type="hidden" id="regFee" th:value="${numberSource.regFee}" />
+					<div id="detailedTime">
+						<span id="scheduleDate" th:text="${numberSource.scheduleDate}"></span>&nbsp;<span
+							id="week" th:text="${numberSource.week}"></span>&nbsp;<span
+							th:if="${numberSource.timeFlag}=='1'">上午</span> <span
+							th:if="${numberSource.timeFlag}=='2'">下午</span>
+					</div>
+					<div id="leftNum">
+						剩<span th:text="${numberSource.leftNum}"></span>个号
+					</div>
+				</div>
+				<div class="pull-right">
+					<button type="button" class="btn btn-default btn-sm"
+						th:if="${numberSource.leftNum=='0'}" disabled="disabled">已约满</button>
+					<button type="button" class="btn btn-primary btn-sm"
+						th:if="${numberSource.leftNum!='0'}" onClick="confirmInfo(this)">预&nbsp;
+						约</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	//<![CDATA[
+	$(document).ready(function() {
+		var target = $("#atTitle");
+		var date = new Date();
+		var str = date.getFullYear() + "年";
+		str += (date.getMonth() + 1) + "月";
+		str += date.getDate() + "日";
+		var today = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+		var week = today[date.getDay()];
+		str += " " + week;
+		target.append(str);
+	});
+	function confirmInfo(obj) {
+		window.parent.location = "/m/mfrg004/index?deptCode="
+				+ $('#deptCode').val() + "&deptName=" + $('#deptName').val()
+				+ "&doctorCode=" + $('#doctorCode').val() + "&doctorName="
+				+ $('#doctorName').text() + "&detailedTime="
+				+ $(obj).parent().parent().find('#detailedTime').text()
+				+ "&regFee=" + $(obj).parent().parent().find('#regFee').val();
+	}
+	//]]>
+</script>
+</html>

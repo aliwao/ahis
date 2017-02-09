@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+        <title>
+            首页
+        </title>
+  <meta charset="UTF-8" /> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+        media="screen" />
+        <link href="/css/common.css" rel="stylesheet" />
+        <script src="/js/jquery-3.1.1.min.js">
+        </script>
+        <script src="/js/bootstrap.min.js">
+        </script>
+        <script src="/js/common.js">
+        </script>
+        
+<style>
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+  background-color:#22a7f0;
+}
+
+.nav>li>a:focus, .nav>li>a:hover{
+  background-color:#22a7f0;
+}
+</style>
+ </head> 
+ <body> 
+  <div class="content"> 
+   <div class="container-fluid"> 
+    <div class="row" style="padding-bottom:0"> 
+                    <nav class="navbar navbar-default ldui-topnavbar" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display --> 
+	  <div class="col-xs-2">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="#myModal" data-toggle="modal">
+                                        <img class="ldui-topnavimg" src="/images/icon/message.ico" />
+                                    </a>
+                                </li>
+      </ul> 
+	  </div>
+	  <div class="col-xs-8">
+                            <p class="text-center ldui-topnavtext">
+                                无锡市第三人民医院
+                            </p>
+		        </div>
+	  <div class="col-xs-2">
+				<ul class="nav navbar-nav pull-right"> 
+                                <li>
+                                    <a href="#">
+                                         <img class="ldui-topnavimg" src="/images/icon/scancode.ico" />
+                                    </a>
+                                </li>
+      </ul> 
+	  </div>
+     </nav> 
+    </div>
+    <!-- row end --> 
+    <div class="row"> 
+     <div id="myCarousel" class="carousel slide" data-ride="carousel"> 
+      <!-- 轮播（Carousel）指标 --> 
+      <ol class="carousel-indicators"> 
+                            <li data-target="#myCarousel" data-slide-to="0" class="active">
+                            </li>
+                            <li data-target="#myCarousel" data-slide-to="1">
+                            </li>
+                            <li data-target="#myCarousel" data-slide-to="2">
+                            </li>
+                            <li data-target="#myCarousel" data-slide-to="4">
+                            </li>
+      </ol> 
+      <!-- 轮播（Carousel）项目 --> 
+      <div class="carousel-inner" role="listbox"> 
+       <div class="item active"> 
+	   <a href="#">
+                                    <img src="/images/home/slide1.jpg" alt="First slide" />
+                                    <div class="carousel-caption ldui-ahis-basecolor">
+          医院简介 
+        </div>
+       </a>
+       </div> 
+       <div class="item"> 
+	    <a href="#">
+                                    <img src="/images/home/slide2.jpg" alt="Second slide" />
+                                    <div class="carousel-caption ldui-ahis-basecolor">
+          医院导航 
+        </div> 
+		</a>
+       </div> 
+       <div class="item"> 
+	   <a href="#">
+                                    <img src="/images/home/slide3.jpg" alt="Third slide" />
+                                    <div class="carousel-caption ldui-ahis-basecolor">
+          联系我们
+        </div> 
+		</a>
+       </div> 
+	   <div class="item"> 
+	   <a href="#">
+                                    <img src="/images/home/slide4.jpg" alt="Forth slide" />
+                                    <div class="carousel-caption ldui-ahis-basecolor">
+          活动公告
+        </div> 
+		</a>
+       </div> 
+      </div> 
+      <!-- 轮播（Carousel）导航 --> 
+                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left">
+                            </span>
+                        </a>
+                        <a class="carousel-control right" href="#myCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right">
+                            </span>
+                        </a>
+     </div> 
+    </div> 
+   </div> 
+            <div class="container ldui-marketing">
+                <div class="ldui-marketing-row">
+                    <div class="ldui-col-xs-4">
+                        <a href="/g/mfrg001/index" class="btn ldui-btn-default" role="button">
+                            <img class="ldui-menuimg" src="/images/icon/1.png"
+                            />
+                            <br/>
+                            <span>
+                                预约挂号
+                            </span>
+                        </a>
+     </div> 
+                    <div class="ldui-col-xs-4">
+                        <a  href="/m/mfop001/init" class="btn ldui-btn-default" role="button">
+                            <img class="ldui-menuimg" src="/images/icon/2.png"
+                            />
+                            <br />
+                            <span>
+                                诊间缴费
+                            </span>
+                        </a>
+     </div> 
+     			<!-- 入院&住院 -->
+                <div class="ldui-col-xs-4">
+                    <ul class="nav">
+                    <li >
+                        <a href="#" class="btn ldui-btn-default" style="padding:6px" role="button" data-toggle="dropdown">
+                            <img class="ldui-menuimg" src="/images/icon/3.png"/>
+                            <br />
+                            <span>住院治疗</span>
+                        </a>
+                        <ul class="dropdown-menu" style="min-width:100%; text-align:center;">
+							<li><img src="/images/home/hospital_in.jpg" height="25px" width="25px" /><a href="#" style="display:inline-block;padding:0px 5px " onclick="pageNavOnLogin('mfih001');">入院</a></li>
+							<li><img src="/images/home/hospital_stay.jpg" height="25px" width="25px" /><a href="#" style="display:inline-block;padding:0px 5px" onclick="pageNavOnLogin('mfih003');">住院</a></li>
+						</ul>
+					</li>
+					</ul>
+     			</div>
+     			
+    </div> 
+    <div class="row"> 
+                    <div class="ldui-col-xs-4">
+                        <a href="#" class="btn ldui-btn-default" role="button">
+                            <img class="ldui-menuimg" src="/images/icon/4.png"
+                            />
+                            <br />
+                            <span>
+                                报告查询
+                            </span>
+                        </a>
+     </div> 
+                    <div class="ldui-col-xs-4">
+                        <a href="#" class="btn ldui-btn-default" role="button">
+                            <img class="ldui-menuimg" src="/images/icon/5.png"
+                            />
+                            <br />
+                            <span>
+                                药房取药
+                            </span>
+                        </a>
+     </div> 
+                    <div class="ldui-col-xs-4">
+                        <a href="#" class="btn ldui-btn-default" role="button" onClick="getMore()">
+                            <img class="ldui-menuimg" src="/images/icon/more.ico" />
+                            <br />
+                            <span>
+                                更多
+                            </span>
+                        </a>
+     </div> 
+    </div> 
+   </div> 
+   <footer>
+   <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+	   <ul class="nav nav-tabs  ldui-bottomtabbar">
+                        <li class="active">
+                            <a onclick="pageNavById('HPHP001');" href="javascript:void(0)" data-toggle="tab">
+                               <!--  <span class="glyphicon glyphicon-home" >
+                                </span> -->
+                                <img alt="首页" src="/images/footer/home-fill.png" style="height: 20px;width: 20px;" />
+                                <p >
+                                    首页
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="pageNavById('HMHH001');" href="javascript:void(0)" data-toggle="tab">
+                                <!-- <span class="glyphicon glyphicon-book" >
+                                </span> -->
+                                <img alt="健康手冊" src="/images/footer/handbook.png" style="height: 20px;width: 20px;" />
+                                <p >
+                                    健康手册
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="pageNavById('EMEM001');" href="javascript:void(0)" data-toggle="tab">
+                                 <!-- <span class="glyphicon glyphicon-th-large" >
+                                </span>  -->
+                                <img alt="电子病历" src="/images/footer/form.png" style="height: 20px;width: 20px;" />
+                                <p >
+                                    电子病历
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a onclick="pageNavById('MPMP001');" href="javascript:void(0)" data-toggle="tab">
+                                <!-- <span class="glyphicon glyphicon-user">
+                                </span> -->
+                                <img alt="我的" src="/images/footer/my.png" style="height: 20px;width: 20px;" />
+                                <p >
+                                    我的
+                                </p>
+                            </a>
+                        </li>
+       </ul>
+	   </nav>
+	</footer>
+<!-- 模态框（Modal） -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">
+                                常挂科室
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            在这里添加一些文本
+            </div>
+            <div class="modal-footer">
+                            <button type="button" class="btn btn-danger center-block" data-dismiss="modal">
+                                ×
+                            </button>
+            </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal -->
+</div>
+  </div> 
+ </body>
+  <script>
+        function getMore() {
+            window.location = "./HPHP002.html";
+        }
+        function appoint() {
+            window.location = "./MFRG001.html";
+        }
+ </script>
+</html>

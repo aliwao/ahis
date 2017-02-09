@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>预约支付</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+</head>
+<body>
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default open-hover ldui-topnavbar"
+					role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col-xs-3">
+						<ul class="nav navbar-nav pull-left">
+							<li><a href="#" style="font-size: 18px; color: white"
+								onClick="goBack()"><span
+									class="glyphicon glyphicon-chevron-left"> </span></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<p class="navbar-text text-center"
+							style="font-size: 18px; font-weight: bold; color: white">支付方式</p>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<input type="hidden" name="userId" th:field="${mfrg005Form.userId}" />
+		<input type="hidden" name="psOrdNum"
+			th:field="${mfrg005Form.psOrdNum}" /> <input type="hidden"
+			name="hisOrdNum" th:field="${mfrg005Form.hisOrdNum}" /> <input
+			type="hidden" id="payAmt" th:field="${mfrg005Form.payAmt}" />
+		<div class="form-group">
+			<div class="radio">
+				<label> <input type="radio" name="payMode"
+					id="optionsRadios1" value="ZFBPay" checked="checked" /><img
+					class="img-list" src="/images/payway/alipay.jpg" /><span
+					class="payName">支付宝</span>
+				</label>
+			</div>
+			<div class="radio">
+				<label> <input type="radio" name="payMode"
+					id="optionsRadios2" value="WXPay" /><img class="img-list"
+					src="/images/payway/wechat.jpg" /><span class="payName">微信</span>
+				</label>
+			</div>
+			<div class="radio">
+				<label> <input type="radio" name="payMode"
+					id="optionsRadios3" value="YLPay" /><img class="img-list"
+					src="/images/payway/unionpay.jpg" /><span class="payName">银联</span>
+				</label>
+			</div>
+
+			<button id="submit" class="btn btn-primary btn-block">确认支付</button>
+		</div>
+	</div>
+</body>
+<style>
+.radio {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+.radio label {
+	margin-left: 25px;
+}
+
+.img-list {
+	margin-left: 20px;
+	width: 25px;
+	height: 25px;
+}
+
+.payName {
+	margin-left: 10px;
+}
+</style>
+<script>
+	//CSRF Token
+	//<![CDATA[
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	var urlpath = '/m/mfrg006/updateStatus';
+	var userId = $('#userId').val();
+	var psOrdNum = $('#psOrdNum').val();
+	var hisOrdNum = $('#hisOrdNum').val();
+	var payAmt = $('#payAmt').val();
+	var payMode = $("input[name='payMode']:checked").val();
+	var params = {
+		userId : userId,
+		psOrdNum : psOrdNum,
+		hisOrdNum : hisOrdNum,
+		payAmt : payAmt,
+		payMode : payMode
+	};
+	var callback = finishPay;
+	$(document).ready(function() {
+		$('#submit').on('click', function() {
+			postAjax(urlpath, params, callback);
+		});
+	});
+	function finishPay(response) {
+		if (response == 'error') {
+			showErrorToast('支付失败');
+		} else {
+			window.parent.location = '/m/mfrg007/index';
+		}
+	}
+	//]]>
+</script>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>添加银行卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+	<script src="/js/common.js"></script>
+	<script src="/js/jquery-confirm.js"></script>
+	<link href="/css/jquery-confirm.css" rel="stylesheet" />
+	
+    <style>
+     .label-row-left {
+        line-height:32px;
+     }
+     .row-ui {
+	 	margin-right:0px;
+	 	margin-left: -15px
+	 }
+    </style>
+    
+<script type="text/javascript">
+	// CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+	
+	// 绑定 银行卡
+	$(document).ready(function(){
+		$("#cardBind").click(function() {
+			if (!checkInput()) {
+				return;
+			}
+			$.confirm({
+				title: '',
+			    content: '确认绑定尾号' + $('#bankCardNo').val().substring($('#bankCardNo').val().length-4) +'银行卡？',
+				buttons: {
+					是: function () {
+						$("#cardBind").attr("disabled", "true");
+						$('#infoArea').html('正在处理，请稍后...');
+				    	$.ajax({
+							url: "/m/mpst008/bind",
+							type: "POST",
+							async: false,
+							data: {
+								bank: $('#bank').val(), 
+								bankCardNo: $('#bankCardNo').val(), 
+								phoneNo: $('#phoneNo').val()
+							},
+							success: function (result) {
+								if (result == '') {
+									$('#infoArea').html('绑定成功！正在跳转...');
+									setTimeout(function () {  
+										self.location= '/m/mpst006/index';
+							   		}, 3000);
+								} else {
+									$("#cardBind").removeAttr("disabled");
+									$("#infoArea").html(result);
+								}
+							}
+						});
+				    },
+				         否: 	{ btnClass: 'btn-blue',
+				    	  action: function () {}
+				    }
+				}
+	         });
+    	});
+	}); 
+	
+    function checkInput() {
+    	// 银行卡验证
+    	if($('#bankCardNo').val().length != 19) { 
+            showErrorToast('银行卡号不正确');
+            $("#bankCardNo").focus();
+            return false; 
+        }
+    	// 银行选择验证
+    	if ($('#bank').val() == '0') {
+    		showErrorToast("请选择银行");
+            $("#bank").focus();
+            return false;
+    	}
+    	// 手机号验证
+    	if ($('#phoneNo').val().length != 11) {
+    		showErrorToast("手机号不正确");
+            $("#phoneNo").focus();
+            return false;
+    	}
+    	return true;
+    }
+	
+</script>  	
+
+</head>
+<body>
+<form id="mpst008Form" name="mpst008Form">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mpst006');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a class="navbar-brand" href="#">添加银行卡</a>
+                     </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="containerDiv" style="margin-top:65px">
+       <ul class="list-group">
+       		<li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left">姓名</div>
+               <div class="col-xs-9 label-row-left"><span th:text="${mpst008Form.ownCardName}"></span></div>
+           </li>
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left" style="padding-right: 0px">身份证号</div>
+               <div class="col-xs-9 label-row-left"><span th:text="${mpst008Form.idCardNo}"></span></div>
+           </li>
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left"><span>卡号</span></div>
+               <div class="col-xs-9">
+                    <input type="text" class="form-control" id="bankCardNo" th:field="${mpst008Form.bankCardNo}" placeholder="请输入银行卡号" maxlength="19" />
+               </div>
+           </li>
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left"><span>银行</span></div>
+               <div class="col-xs-9">
+                   <select th:field="${mpst008Form.bank}" class="selectpicker show-tick form-control">
+                   	   <option value="0">请选择银行</option>
+                       <option value="1">中国银行</option>
+                       <option value="2">中国工商银行</option>
+                       <option value="3">中国建设银行</option>
+                       <option value="4">招商银行</option>
+                   </select>
+               </div>
+           </li>
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left"><span>手机号</span></div>
+               <div class="col-xs-9">
+                    <input type="text" class="form-control" id="phoneNo" th:field="${mpst008Form.phoneNo}" placeholder="请输入银行卡预留手机号" maxlength="11" />
+               </div>
+           </li> 
+       </ul>
+       <div style="font-size: 10px;color:red;text-align:right">《快捷支付服务协议》</div><br />
+    </div>
+	<div id="infoArea" style="margin-top:10px;color:red;text-align:left"></div>
+    <footer class="container">
+    	<ul class="nav navbar-fixed-bottom">
+        	<li>
+            	<button type="button" id="cardBind" class="btn btn-primary btn-block" style="width:100%;">同意协议并绑定</button>
+        	</li>
+    	</ul>
+    </footer>
+
+</form>
+</body>
+</html>

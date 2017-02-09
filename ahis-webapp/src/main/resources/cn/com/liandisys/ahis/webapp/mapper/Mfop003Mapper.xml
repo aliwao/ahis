@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfop003Mapper">
+
+	<insert id="insert"
+		parameterType="cn.com.liandisys.ahis.webapp.entity.HospitalOrderEntity">
+		insert into PaidDetailInfo
+		(userId
+		, hisOrdNum
+		, payName
+		, deptName
+		, doctorName
+		, totalAmt
+		, medInsAmt
+		, selfAmt
+		, totalAmt_all
+		, totalAmt_paid
+		, totalAmt_pay
+		, medIns_all
+		, medIns_paid
+		, medIns_pay
+		, selfAmt_all
+		, selfAmt_paid
+		, selfAmt_pay
+		, scheduleDate
+		, timeFlag)
+		values
+		(#{userId}
+		, #{hisOrdNum}
+		, #{payName}
+		, #{deptName}
+		, #{doctorName}
+		, #{totalAmt}
+		, #{medInsAmt}
+		, #{selfAmt}
+		, #{totalAmt_all}
+		, #{totalAmt_paid}
+		, #{totalAmt_pay}
+		, #{medIns_all}
+		, #{medIns_paid}
+		, #{medIns_pay}
+		, #{selfAmt_all}
+		, #{selfAmt_paid}
+		, #{selfAmt_pay}
+		, #{scheduleDate}
+		, #{timeFlag});
+	</insert>
+
+	<select id="select"
+		parameterType="cn.com.liandisys.ahis.webapp.entity.HospitalOrderEntity" resultType="integer">
+		select
+		count(*)
+		from PaidDetailInfo
+		where
+		userId=#{userId}
+		AND hisOrdNum = #{hisOrdNum}
+	</select>
+
+</mapper>

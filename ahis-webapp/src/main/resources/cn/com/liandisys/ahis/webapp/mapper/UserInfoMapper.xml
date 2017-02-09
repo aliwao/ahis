@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.entity.UserInfoEntity" >
+    <id column="UserID" property="userid" jdbcType="BIGINT" />
+    <result column="Shenfenzhenghao" property="shenfenzhenghao" jdbcType="VARCHAR" />
+    <result column="Yibaokahao" property="yibaokahao" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="jzcardno" property="jzcardno" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="birthdate" property="birthdate" jdbcType="DATE" />
+    <result column="sex" property="sex" jdbcType="CHAR" />
+    <result column="zhiye" property="zhiye" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    UserID, Shenfenzhenghao, Yibaokahao, address, jzcardno, username, birthdate, sex, 
+    zhiye
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UserInfo
+    where UserID = #{userid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UserInfo
+    where UserID = #{userid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.UserInfoEntity" >
+    insert into UserInfo (UserID, Shenfenzhenghao, Yibaokahao, 
+      address, jzcardno, username, 
+      birthdate, sex, zhiye)
+    values (#{userid,jdbcType=BIGINT}, #{shenfenzhenghao,jdbcType=VARCHAR}, #{yibaokahao,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{jzcardno,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{birthdate,jdbcType=DATE}, #{sex,jdbcType=CHAR}, #{zhiye,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserInfoEntity" >
+    insert into UserInfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        UserID,
+      </if>
+      <if test="shenfenzhenghao != null" >
+        Shenfenzhenghao,
+      </if>
+      <if test="yibaokahao != null" >
+        Yibaokahao,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="jzcardno != null" >
+        jzcardno,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="birthdate != null" >
+        birthdate,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="zhiye != null" >
+        zhiye,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="shenfenzhenghao != null" >
+        #{shenfenzhenghao,jdbcType=VARCHAR},
+      </if>
+      <if test="yibaokahao != null" >
+        #{yibaokahao,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="jzcardno != null" >
+        #{jzcardno,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="zhiye != null" >
+        #{zhiye,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserInfoEntity" >
+    update UserInfo
+    <set >
+      <if test="shenfenzhenghao != null" >
+        Shenfenzhenghao = #{shenfenzhenghao,jdbcType=VARCHAR},
+      </if>
+      <if test="yibaokahao != null" >
+        Yibaokahao = #{yibaokahao,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="jzcardno != null" >
+        jzcardno = #{jzcardno,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="birthdate != null" >
+        birthdate = #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="zhiye != null" >
+        zhiye = #{zhiye,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UserID = #{userid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.liandisys.ahis.webapp.entity.UserInfoEntity" >
+    update UserInfo
+    set Shenfenzhenghao = #{shenfenzhenghao,jdbcType=VARCHAR},
+      Yibaokahao = #{yibaokahao,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      jzcardno = #{jzcardno,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      birthdate = #{birthdate,jdbcType=DATE},
+      sex = #{sex,jdbcType=CHAR},
+      zhiye = #{zhiye,jdbcType=VARCHAR}
+    where UserID = #{userid,jdbcType=BIGINT}
+  </update>
+</mapper>

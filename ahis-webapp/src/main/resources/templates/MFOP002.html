@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>确认缴费</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script src="/js/jquery-3.1.1.min.js"></script>
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-theme.css" rel="stylesheet" />
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/common.css" rel="stylesheet" />
+<script src="/js/common.js"></script>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<style>
+.list-group-item>.my-badge {
+	float: right;
+}
+
+.my-badge {
+	display: inline-block;
+	position: relative;
+	top: -33px;
+	min-width: 10px;
+	padding: 8px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #000;
+	white-space: nowrap;
+}
+</style>
+<script type="text/javascript">
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	function doChoosePayWay() {
+		$("#mfop002Form").submit();
+	}
+</script>
+</head>
+
+<body>
+	<form id="mfop002Form" th:action="@{doChoosePayWay}"
+		th:object="${mfop002Form}">
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container  ldui-topnavbar" >
+				<!--向左对齐-->
+				<div class="row">
+					<div class="col-xs-3">
+						<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left"
+							onclick="goBack();"></span>
+					</div>
+					<div class="col-xs-6">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#">确认缴费</a>
+						</div>
+					</div>
+					<div class="col-xs-3"></div>
+				</div>
+			</div>
+		</div>
+		<div class="container" style="background-color: white;margin-top: 80px;margin-right: 15px;margin-left: 15px;border-radius:3%">
+			
+			<div class="col-xs-12" style="margin-bottom: 1px; text-align: center;font-size: 22px;padding: 15px">
+				<span th:text="*{payName}"> 挂号费 </span>
+			</div>
+			<div class="col-xs-12" style="background-color: white;font-size: 18px;padding: 7px">
+			    <div class="col-xs-5 col-sm-5">费用总计</div>
+			    <div class="col-xs-7 col-sm-7" style="text-align: right;">
+					<span th:text="*{totalAmt}+' 元'"> ¥800.00 </span>
+				</div>
+			</div>
+			<div class="col-xs-12" style="background-color: white;font-size: 18px;padding: 7px">
+				<div class="col-xs-5 col-sm-5">医保扣除</div>
+				<div class="col-xs-7 col-sm-7"  style="text-align: right;">
+					<span th:text="'- ' + *{medInsAmt}+' 元'"> ¥300.00 </span>
+				</div>
+			</div>			
+			<div class="col-xs-1" style="background-color: white;height:1px"></div>
+			<div class="col-xs-11" style="background-color: white;border-top: 1px solid #F0F0F6;height:1px"></div>
+
+			<div class="col-xs-12" style="background-color: white;font-size: 20px;padding: 6px">
+				<div class="col-xs-6 col-sm-6">自费支付</div>
+				<div class="col-xs-6 col-sm-7" style="text-align: right; color:red;">
+					<span th:text="*{selfAmt}+' 元'"> ¥500.00 </span>
+				</div>
+			</div>
+<!-- 			<div class="row text-right" style="font-size: x-large;">
+				<div class="col-xs-4 col-sm-4 text-right">
+					<button type="button" class="btn btn-primary navbar-btn"
+						onclick="doChoosePayWay();">缴费</button>
+				</div>
+			</div> -->
+		</div>
+		  <div style="background-color: white;margin-top: 10px;margin-right: 15px;margin-left: 15px;border-radius:3%">
+		    <div style="padding-top: 10px;">
+		        <h4 style="padding-left:16px;">温馨提示</h4>
+		    </div>
+		    <div style="padding-left: 24px;padding-bottom: 10px;">
+			  <span>1.本次费用缴费中医保部分将直接从您的医保账户中扣除，请确保医保账户中有足够余额。</span>
+			  <br></br>
+			  <span>2.医保账户直接扣除以外部分可以进行在线缴费，目前支持支付宝，微信，商联通付方式进行付款。</span>
+			  <br></br>
+			  <span>3.如果支付过程中遇到问题，请联系客服电话：400-0800-0888。</span>
+		    </div>
+		  </div>
+		  <div>
+       <div style="margin-top: 10px;padding-left: 15px;padding-top: 15px;padding-right: 8px;">
+           <button type="button" class="btn btn-primary btn-block" onclick="doChoosePayWay();">确定缴费</button>
+       </div>    
+   </div>
+	</form>
+</body>
+</html>

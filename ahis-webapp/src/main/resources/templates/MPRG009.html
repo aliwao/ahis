@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>我的挂号</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="msapplication-tap-highlight" content="no" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<script src="/js/jquery-3.1.1.min.js"></script>
+	<link href="/css/bootstrap.css" rel="stylesheet" />
+	<link href="/css/bootstrap-theme.css" rel="stylesheet" />
+	<script src="/js/bootstrap.min.js"></script>
+	<link href="/css/common.css" rel="stylesheet" />
+	<script src="/js/common.js"></script>
+	<style>
+	 .ldui-badge {
+		display: inline-block;
+		min-width: 10px;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: normal;
+		text-align: center;
+		padding:6px 9px;
+		white-space: nowrap;
+		vertical-align: middle;
+		background-color: #fcfcfc;
+	    border: 1px solid #777;
+	    border-radius: 2px;
+	    color:#333;
+	 }
+	 .nav.ldui-nav-tas > li {
+	    background-color: #ffffff;
+	    border-bottom: 1px solid #eee;
+	 }
+	 .nav.ldui-nav-tas > li > a {
+	    color: #555;
+	    border: 1px solid transparent;
+	 }
+	 .nav.ldui-nav-tas > li.active > a {
+	    color: #22a7f0;
+	    border: 1px solid transparent;
+	    border-bottom: 1px solid #22a7f0;
+	 }
+	 .nav.ldui-nav-tas > li > a:hover, .nav.ldui-nav-tas > li > a:focus {
+		background-color: #ffffff;
+	 }
+	 .ldui-panel {
+	    margin-bottom:10px;
+	    border:none;
+	 }
+	</style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack();"></span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#">我的挂号</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                  </div>
+            </div>
+        </div>
+    </div>
+    <ul class="nav nav-tabs navbar-fixed-top ldui-nav-tas" style="margin-top:50px;">
+            <li class="active" style="text-align: center; width: 25%;">
+                <a href="javascript:void(0);" onclick="changeTab(this, 0);">全部</a>
+            </li>
+            <li style="text-align: center; width: 25%;">
+                <a href="javascript:void(0);" onclick="changeTab(this, 1);">已预约</a>
+            </li>
+            <li style="text-align: center; width: 25%;">
+                <a href="javascript:void(0);" onclick="changeTab(this, 2);">已缴费</a>
+            </li>
+            <li style="text-align: center; width: 25%;">
+                <a href="javascript:void(0);" onclick="changeTab(this, 3);">已取消</a>
+            </li>
+    </ul>
+    <div class="container" id="containerDiv" style="padding-left:10px;padding-right:10px;padding-top:50px;">
+       <div class="panel panel-primary ldui-panel ldui-panel1">
+           <div class="panel-heading ldui-panel-heading">
+               <span class="ldui-mark">|</span> 2017-01-03 13:12:12
+               <span class="pull-right">预约成功</span>
+           </div>
+           <div class="panel-body ldui-list-group-body">
+                <img src="/images/doctor.jpg" class="pull-left" style="width:60px;height:60px;" />
+                <label style="margin:0px;text-indent:0.5em;">钱先</label>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">风湿科</p>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">主任中医师</p>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊时间</label>
+                    <span>2017-01-03周二下午</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊人</label>
+                    <span>周树人</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">挂号费</label>
+                    <span>38元</span>
+                </li>
+                <li class="list-group-item" style="text-align:right;">
+                    <span>&nbsp;&nbsp;</span>
+                    <span class="ldui-badge">挂号缴费</span>
+                    <span class="ldui-badge">取消预约</span>
+                </li>
+            </ul>
+       </div>
+
+       <div class="panel panel-primary ldui-panel ldui-panel2">
+           <div class="panel-heading ldui-panel-heading">
+               <span class="ldui-mark">|</span> 2017-01-03 13:12:12
+               <span class="pull-right">预约成功已缴费</span>
+           </div>
+           <div class="panel-body ldui-list-group-body">
+                <img src="/images/doctor.jpg" class="pull-left" style="width:60px;height:60px;" />
+                <label style="margin:0px;text-indent:0.5em;">钱先</label>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">风湿科</p>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">主任中医师</p>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊时间</label>
+                    <span>2017-01-03周二下午</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊人</label>
+                    <span>周树人</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">挂号费</label>
+                    <span>38元</span>
+                </li>
+            </ul>
+       </div>
+
+       <div class="panel panel-primary ldui-panel ldui-panel3">
+           <div class="panel-heading ldui-panel-heading">
+               <span class="ldui-mark">|</span> 2017-01-03 13:12:12
+               <span class="pull-right">预约已取消</span>
+           </div>
+           <div class="panel-body ldui-list-group-body">
+                <img src="/images/doctor.jpg" class="pull-left" style="width:60px;height:60px;" />
+                <label style="margin:0px;text-indent:0.5em;">钱后</label>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">儿科</p>
+                <p style="margin:0px;text-indent:0.5em;" class="text-muted">主任中医师</p>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊时间</label>
+                    <span>2017-01-03周二下午</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">就诊人</label>
+                    <span>周树人</span>
+                </li>
+                <li class="list-group-item ldui-list-group-item">
+                    <label class="col-xs-4 control-label">挂号费</label>
+                    <span>38元</span>
+                </li>
+            </ul>
+       </div>
+
+    </div>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+        function(){
+            // 初期数据加载
+            //initload();
+        }
+    );
+
+    function initload() {
+        var params = {};
+        $.ajax({
+            type:"POST",
+            url:"initload",
+            data:params,
+            async: false,
+            success:function(data){
+                
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+    
+    function changeTab(that, i) {
+        $(that).parent('li').siblings('li.active').eq(0).removeClass('active'); 
+        $(that).parent('li').addClass('active');
+        if(i==0){
+            $("#containerDiv").find('.ldui-panel').each(
+                    function(index){
+                        $(this).show();
+                    }
+            );
+        }
+        else {
+            $("#containerDiv").find('.ldui-panel').each(
+                function(index){
+                    if($(this).hasClass('ldui-panel' + i)) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                }
+            );
+        }
+    }
+ //]]>
+ </script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>银行卡详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+	<script src="/js/common.js"></script>
+	<script src="/js/jquery-confirm.js"></script>
+	<link href="/css/jquery-confirm.css" rel="stylesheet" />
+	
+<script type="text/javascript">
+	// CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+	
+	// 解除绑定 银行卡
+	$(document).ready(function(){
+		$("#cardUnBind").click(function() {
+			var cardNo = $('#bankCardNo').val().replace(/\s+/g, "");
+			$.confirm({
+				title: '',
+			    content: '确认解除绑定尾号' + cardNo.substring(cardNo.length-4) +'银行卡？',
+				buttons: {
+					是: function () {
+						$("#cardUnBind").attr("disabled", "true");
+						$('#infoArea').html('正在处理，请稍后...');
+				    	$.ajax({
+							url: "/m/mpst007/unbind",
+							type: "POST",
+							async: false,
+							data: {
+								bankCardNo: $('#bankCardNo').val()
+							},
+							success: function (result) {
+								if (result == '') {
+									$('#infoArea').html('解除绑定成功！正在跳转...');
+									setTimeout(function () {  
+										self.location= '/m/mpst006/index';
+							   		}, 3000);
+								} else {
+									$("#cardUnBind").removeAttr("disabled");
+									$("#infoArea").html(result);
+								}
+							}
+						});
+				    },
+				         否: 	{ btnClass: 'btn-blue',
+				    	  action: function () {}
+				    }
+				}
+	         });
+    	});
+	}); 
+	
+</script>  
+</head>
+<body>
+<form id="mpst007Form" name="mpst007Form">
+<input type="hidden" id="bankCardNo" th:value="${mpst007Form.bankCardNo}" />
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mpst006');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a class="navbar-brand" href="#">银行卡详情</a>
+                     </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:65px">
+       <div class="panel panel-default" style="margin-top:0px;background-color:#fff;border-radius:10px">
+           <img th:src="${mpst007Form.bankIconImg}"  height="35px" width="35px" style="margin:10px 10px 70px 10px" class="pull-left" />
+      	   <div style="padding:10px">
+               <span th:text="${mpst007Form.bank}" style="font-size: 17px; font-weight: bold"></span><br />
+               <span th:text="${mpst007Form.bankCardType}"></span>
+               <span style="padding:0px 5px;color:#22a7f0;font-weight:bold;">|</span>
+               	尾号：<span th:text="${mpst007Form.bankCardNo.substring(mpst007Form.bankCardNo.length() -4)}"></span><br /><br />
+                                     持卡人姓名&emsp;&emsp;&emsp;&emsp;<span th:text="${mpst007Form.ownCardName}"></span><br />
+                                     银行卡预留手机号&emsp;<span th:text="${mpst007Form.phoneNo}"></span>
+           </div>
+       </div>
+       <div style="overflow:auto;padding:0px 20px;">
+          <span style="font-size: 13px;">如果您更换了银行预留手机号，请先解除绑定，并在收银台付款时重新绑定。</span><br />
+       </div>
+    </div>
+    
+	<div id="infoArea" style="margin-top:10px;color:red;text-align:left"></div>
+    
+    <footer class="container">
+       <ul class="nav navbar-fixed-bottom">
+        	<li>
+            	<button type="button" id="cardUnBind" class="btn btn-danger btn-block" style="width:100%;">解除绑定</button>
+        	</li>
+    	</ul>
+    </footer>
+</form>
+</body>
+</html>

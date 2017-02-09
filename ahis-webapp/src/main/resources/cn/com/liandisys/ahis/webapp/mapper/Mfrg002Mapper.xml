@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfrg002Mapper" >
+ 
+  <resultMap id="FavDoctorResultMap" type="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <id column="deptCode" property="deptCode" jdbcType="CHAR" />
+    <id column="doctorCode" property="doctorCode" jdbcType="CHAR" />
+    <result column="deptName" property="deptName" jdbcType="VARCHAR" />
+    <result column="doctorName" property="doctorName" jdbcType="VARCHAR" />
+    <result column="insertTimeStamp" property="insertTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_favdoctor_List">
+    userId, deptCode, deptName, doctorCode, doctorName, insertTimeStamp
+  </sql>
+  
+  <select id="getFavDocByPrimaryKey" resultMap="FavDoctorResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
+    select 
+    <include refid="Base_favdoctor_List" />
+    from FavoriteDoctors
+    where userId = #{userId,jdbcType=BIGINT} and deptCode = #{deptCode,jdbcType=CHAR} and doctorCode = #{doctorCode,jdbcType=CHAR}
+  </select>
+  
+  <select id="getFavDocsByDept" resultMap="FavDoctorResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
+    select 
+    <include refid="Base_favdoctor_List" />
+    from FavoriteDoctors
+    where userId = #{userId,jdbcType=BIGINT} and deptCode = #{deptCode,jdbcType=CHAR}
+  </select>
+
+  <select id="getFavDocByUserId" resultMap="FavDoctorResultMap" parameterType="Integer" >
+    select 
+    <include refid="Base_favdoctor_List" />
+    from FavoriteDoctors
+    where userId = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insertFavDoctor" parameterType="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
+    insert into FavoriteDoctors (userId, deptCode, deptName, doctorCode, doctorName, insertTimeStamp)
+    values (#{userId,jdbcType=BIGINT}, #{deptCode,jdbcType=CHAR}, #{deptName,jdbcType=VARCHAR},
+    		#{doctorCode,jdbcType=CHAR}, #{doctorName,jdbcType=VARCHAR}, #{insertTimeStamp,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
+    delete from FavoriteDoctors
+    where userId = #{userId,jdbcType=BIGINT} and deptCode = #{deptCode,jdbcType=CHAR} and doctorCode = #{doctorCode,jdbcType=CHAR}
+  </delete>
+  
+</mapper>

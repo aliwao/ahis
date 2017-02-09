@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>预约支付</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+</head>
+<body>
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default open-hover ldui-topnavbar"
+					role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col-xs-3">
+						<ul class="nav navbar-nav pull-left">
+							<li><a href="#" style="font-size: 18px; color: white"
+								onClick="goBack()"><span
+									class="glyphicon glyphicon-chevron-left"> </span></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<p class="navbar-text text-center"
+							style="font-size: 18px; font-weight: bold; color: white">预约支付</p>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<input type="hidden" id="userId" th:field="${mfrg005Form.userId}" />
+		<input type="hidden" id="psOrdNum" th:field="${mfrg005Form.psOrdNum}" />
+		<input type="hidden" id="hisOrdNum"
+			th:field="${mfrg005Form.hisOrdNum}" /> <input type="hidden"
+			id="payAmt" th:field="${mfrg005Form.payAmt}" />
+		<center>
+			<button id="payNow" class="btn btn-payment">立即支付</button>
+			<br />
+			<button id="appointmentlist" class="btn btn-appointmentlist">预约一览</button>
+		</center>
+	</div>
+</body>
+<style>
+.btn-payment {
+	margin-top: 80px;
+	text-align: center;
+	line-height: 40px;
+	height: 50px;
+	width: 80%;
+	color: #FFF;
+	background-color: #ededed;
+	font-size: 18px;
+	font-weight: bold;
+	background: -webkit-gradient(linear, left top, left bottom, color-start(0.05,
+		#ffec64), color-stop(1, #ffab23));
+	background: -moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: -o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: -ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+	background: -webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64',
+		endColorstr='#ffab23', GradientType=0);
+	border: 1px solid #ffaa22;
+	-webkit-border-top-left-radius: 6px;
+	-moz-border-radius-topleft: 6px;
+	border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-moz-border-radius-topright: 6px;
+	border-top-right-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-moz-border-radius-bottomleft: 6px;
+	border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-moz-border-radius-bottomright: 6px;
+	border-bottom-right-radius: 6px;
+	-moz-box-shadow: inset 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow: inset 0px 1px 0px 0px #fff6af;
+	box-shadow: inset 0px 1px 0px 0px #fff6af;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+}
+
+.btn-payment:hover {
+	background-color: #f5f5f5;
+	background: -webkit-gradient(linear, left top, left bottom, color-start(0.05,
+		#ffab23), color-stop(1, #ffec64));
+	background: -moz-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background: -o-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background: -ms-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+	background: -webkit-linear-gradient(top, #ffab23 5%, #ffec64 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23',
+		endColorstr='#ffec64', GradientType=0);
+}
+
+.btn-appointmentlist {
+	margin-top: 40px;
+	text-align: center;
+	line-height: 40px;
+	height: 50px;
+	width: 80%;
+	color: #ffffff;
+	background-color: #4a8cf7;
+	font-size: 18px;
+	font-weight: normal;
+	border: 0px solid #dcdcdc;
+	-webkit-border-top-left-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-box-shadow: inset 0px 0px 0px 0px #ffffff;
+	-webkit-box-shadow: inset 0px 0px 0px 0px #ffffff;
+	box-shadow: inset 0px 0px 0px 0px #ffffff;
+	text-align: center;
+	display: inline-block;
+	text-decoration: none;
+}
+
+.btn-appointmentlist:hover {
+	background-color: #4a8cf7;
+}
+</style>
+<script>
+	//CSRF Token
+	//<![CDATA[
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	var urlpath = '/m/mfrg005/updateStatus';
+	var userId = $('#userId').val();
+	var psOrdNum = $('#psOrdNum').val();
+	var hisOrdNum = $('#hisOrdNum').val();
+	var payAmt = $('#payAmt').val();
+	var params = {
+		userId : userId,
+		psOrdNum : psOrdNum,
+		hisOrdNum : hisOrdNum
+	};
+	var callback = toPay;
+	$(document).ready(function() {
+		$('#appointmentlist').on('click', function() {
+			window.parent.location = '/m/mprg009/index';
+		});
+		$('#payNow').on('click', function() {
+			postAjax(urlpath, params, callback);
+		});
+	});
+	function toPay(reponse) {
+		window.parent.location = '/m/mfrg006/index?userId=' + userId
+				+ '&psOrdNum=' + psOrdNum + '&hisOrdNum=' + hisOrdNum
+				+ "&payAmt=" + payAmt;
+	}
+	//]]>
+</script>
+</html>

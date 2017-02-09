@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>预约支付</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<script src="/js/jquery-3.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+</head>
+<body style="background-color: #fff">
+	<div class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="navbar navbar-default open-hover ldui-topnavbar"
+					role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<div class="col-xs-3">
+						<ul class="nav navbar-nav pull-left">
+							<li><a href="#" style="font-size: 18px; color: white"
+								onClick="goBack()"><span
+									class="glyphicon glyphicon-chevron-left"> </span></a></li>
+						</ul>
+					</div>
+					<div class="col-xs-6">
+						<p class="navbar-text text-center"
+							style="font-size: 18px; font-weight: bold; color: white">支付成功</p>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<div style="margin-top: 20px">
+			<center>
+				<img src="/images/payway/success.png" />
+				<div class="div11"></div>
+			</center>
+
+		</div>
+		<h3 style="text-align: center; color: red">支付成功</h3>
+	</div>
+</body>
+<style>
+div {
+	position: relative;
+}
+
+div img {
+	width: 100px;
+	height: 100px
+}
+
+.div11 {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	animation: myfirst 5s;
+	-moz-animation: myfirst 3s; /* Firefox */
+	-webkit-animation: myfirst 3s; /* Safari 和 Chrome */
+	-o-animation: myfirst 3s;
+	top: 0;
+	background: #fff;
+	left: 50%;
+	margin-left: -50px
+}
+</style>
+<script>
+	$(document).ready(function() {
+		$(".div11").animate({
+			left : '50%',
+			marginLeft : '50px'
+		});
+		setTimeout('delayer()', 2000);
+	});
+	function delayer(){
+		 window.parent.location = "/g/hphp001/index";
+		}
+</script>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    .header-back {
+       display: block;
+       position: relative;
+       top:14px;
+       padding: 0 0 0 10px;
+     }
+     .label-row-left {
+        line-height:32px;
+     }
+     .list-group-item.ldui-row {
+        padding:10px 2px;
+     }
+     .row.ldui-row {
+        margin-right: 0px;
+        margin-left: 0px;
+     }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack();"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a id="titleaddaddr" class="navbar-brand" href="#">密码修改</a>
+                     </div>
+                  </div>
+                  <div class="col-xs-3">
+                      
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv">
+       <form id="passForm" th:action="@{save}" method="post">
+       <ul class="list-group">
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>原密码</span></div>
+               <div class="col-xs-9">
+                    <input type="password" class="form-control" id="oldpasswd" name="oldpasswd" placeholder="请输入原密码" />
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>新密码</span></div>
+               <div class="col-xs-9">
+                    <input type="password" class="form-control" id="passwd" name="passwd" placeholder="请输入新密码" />
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>确认密码</span></div>
+               <div class="col-xs-9">
+                    <input type="password" class="form-control" id="passwd2" name="passwd2" placeholder="请再次确认密码" />
+               </div>
+           </li>
+       </ul>
+       </form>
+    </div>
+    <footer class="container">
+       <button type="button" class="btn btn-primary btn-block" onclick="doSubmit();">确定</button>
+       <input type="hidden" id="msg" th:value="${mpst003Form.msg}" />
+       <input type="hidden" id="msgtype" th:value="${mpst003Form.msgtype}" />
+    </footer>
+ <script>
+    $(document).ready(
+       function(){
+           showToastMsg();
+       }
+    );
+
+    function showToastMsg() {
+        var content = $("#msg").val();
+        var type = $("#msgtype").val() || "success";
+        if(content){
+            $.mytoast({
+                text: content,
+                type: type
+            });
+            $("#msg").val("");
+            $("#msgtype").val("");
+        }
+    }
+
+    function doSubmit() {
+        var chkflg = checkPassWd();
+        if(chkflg) {
+            $("#passForm").submit();
+        }
+    }
+    
+    function checkPassWd() {
+        var oldpasswd = $("#oldpasswd").val();
+        if(!oldpasswd){
+            showErrorToast("请输入原密码!");
+            $("#oldpasswd").focus();
+            return false;
+        }
+        var passwd = $("#passwd").val();
+        if(!passwd){
+            showErrorToast("密码不能为空!");
+            $("#passwd").focus();
+            return false;
+        }
+        var passwd2 = $("#passwd2").val();
+        if(passwd != passwd2){
+            showErrorToast("密码不一致!");
+            $("#passwd").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

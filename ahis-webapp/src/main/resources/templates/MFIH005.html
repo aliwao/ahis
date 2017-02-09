@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+
+<script type="text/javascript">
+//CSRF Token
+//<![CDATA[
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+//]]>
+</script>
+
+
+<title>账单一览</title>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy">
+<form id="mfrg001Form" name="mfrg001Form" action="deptSearch" method="post">
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#f4f4f4">
+    <div class="open-hover ldui-topnavbar">
+    	<div class="row">
+        	<div class="col-xs-3">
+      			<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mfih003');"></span>
+      		</div>
+      		<div class="col-xs-6">
+      			<div class="navbar-header">
+      		          <a class="navbar-brand" href="#">账单一览</a>
+      		    </div>
+      		</div>
+        </div>
+    </div>
+</div>
+
+<div class="" id="containerDiv" style="margin-top:50px;">
+	<!-- 检索 -->
+	<div style="width:100%; background-color: white; position: fixed;">
+		<div class="col-xs-12" style="padding-top:10px">
+        	<select class="selectpicker show-tick form-control">
+            	<option value="0">全部</option>
+                <option value="1">3个月以内</option>
+                <option value="2">1年以内</option>
+                <option value="3">3年以内</option>
+            </select>
+        </div>
+	</div>
+	
+	<!-- 日期 & 费用情况 -->
+	<div class="row text-left" style="padding-top:55px;background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
+		<div class="col-xs-12" style="height: 33px; padding-top: 6px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span>2016年4月10日 星期日</span>&emsp;<span class="glyphicon glyphicon-file" onclick="pageNavById('mfih006')"></span>
+		</div>
+	</div>
+	<div class="row" style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px;margin-bottom: 1px" onclick="pageNavById('mfih006')">
+		<div class="col-xs-12">
+			<div class="col-xs-4">药费：</div>
+			<div class="col-xs-4"><span>100元</span></div>
+			<div class="col-xs-4"><span>公费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">床位费：</div>
+			<div class="col-xs-4"><span>100元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">护理费：</div>
+			<div class="col-xs-4"><span>80元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">氧气费：</div>
+			<div class="col-xs-4"><span>320元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">合计：</div>
+			<div class="col-xs-4"><span>公费100元</span></div>
+			<div class="col-xs-4"><span>自费500元</span></div>
+		</div>
+	</div>
+	
+	
+	<!-- 日期 & 费用情况 -->
+	<div class="row text-left" style="padding-top:10px;background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
+		<div class="col-xs-12" style="height: 33px; padding-top: 6px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span>2016年4月11日 星期一</span>&emsp;<span class="glyphicon glyphicon-file" onclick="pageNavById('mfih006')"></span>
+		</div>
+	</div>
+	<div class="row" style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px;margin-bottom: 1px" onclick="pageNavById('mfih006')">
+		<div class="col-xs-12">
+			<div class="col-xs-4">药费：</div>
+			<div class="col-xs-4"><span>500元</span></div>
+			<div class="col-xs-4"><span>公费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">床位费：</div>
+			<div class="col-xs-4"><span>100元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">护理费：</div>
+			<div class="col-xs-4"><span>80元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">氧气费：</div>
+			<div class="col-xs-4"><span>320元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">合计：</div>
+			<div class="col-xs-4"><span>公费500元</span></div>
+			<div class="col-xs-4"><span>自费500元</span></div>
+		</div>
+	</div>
+	
+	
+	<!-- 日期 & 费用情况 -->
+	<div class="row text-left" style="padding-top:10px;background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 0px">
+		<div class="col-xs-12" style="height: 33px; padding-top: 6px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span>2016年4月12日 星期二</span>&emsp;<span class="glyphicon glyphicon-file" onclick="pageNavById('mfih006')"></span>
+		</div>
+	</div>
+	<div class="row" style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px;margin-bottom: 1px" onclick="pageNavById('mfih006')">
+		<div class="col-xs-12">
+			<div class="col-xs-4">药费：</div>
+			<div class="col-xs-4"><span>500元</span></div>
+			<div class="col-xs-4"><span>公费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">床位费：</div>
+			<div class="col-xs-4"><span>100元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">护理费：</div>
+			<div class="col-xs-4"><span>80元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">氧气费：</div>
+			<div class="col-xs-4"><span>320元</span></div>
+			<div class="col-xs-4"><span>自费</span></div>
+		</div>
+		<div class="col-xs-12">
+			<div class="col-xs-4">合计：</div>
+			<div class="col-xs-4"><span>公费500元</span></div>
+			<div class="col-xs-4"><span>自费500元</span></div>
+		</div>
+	</div>
+	
+</div>
+</form>
+</body>
+</html>

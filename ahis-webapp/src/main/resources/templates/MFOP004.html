@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>缴费详细</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script src="/js/jquery-3.1.1.min.js"></script>
+<link href="/css/bootstrap.css" rel="stylesheet" />
+<link href="/css/bootstrap-theme.css" rel="stylesheet" />
+<script src="/js/bootstrap.min.js"></script>
+<link href="/css/common.css" rel="stylesheet" />
+<script src="/js/common.js"></script>
+<style>
+.list-group-item>.my-badge {
+	float: right;
+}
+
+.my-badge {
+	display: inline-block;
+	position: relative;
+	top: -33px;
+	min-width: 10px;
+	padding: 8px;
+	font-size: 13px;
+	font-weight: bold;
+	color: #000;
+	white-space: nowrap;
+}
+</style>
+<script type="text/javascript">
+	
+</script>
+</head>
+
+<body>
+	<form id="mfop004Form" name="mfop004Form" th:object="${mfop004Form}">
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<div class="container  ldui-topnavbar">
+				<!--向左对齐-->
+				<div class="row">
+					<div class="col-xs-3">
+						<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left"
+							onclick="goBack();"></span>
+					</div>
+					<div class="col-xs-6">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#">缴费详细</a>
+						</div>
+					</div>
+					<div class="col-xs-3"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row" style="height: 50px;"></div>
+		<!-- 诊疗费-->
+		<div th:each="detail:*{detailList}">
+			<div class="row" style="height: 25px;"></div>
+
+			<div class="row text-left"
+				style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-9 col-sm-11"
+					style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+					<span
+						style="padding-left: 20px; color: #22a7f0; font-weight: bold;">
+						| </span> <span th:text="${detail.type}"> 诊疗费 </span>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="row text-left" style="font-size: small">
+						<span class="col-xs-6 col-sm-6" th:text="${'名称: ' + detail.name}">
+							名称:口腔器械盒 </span> <span class="col-xs-6 col-sm-6"
+							th:text="${'规格: ' + detail.spec}"> 规格:镊子+口镜+探针 </span>
+					</div>
+					<div class="row text-left" style="font-size: small">
+						<span class="col-xs-6 col-sm-6"
+							th:text="${'单价: ¥' + detail.price}"> 单价:¥25.00 </span> <span
+							class="col-xs-6 col-sm-6" th:text="${'数量: ' + detail.number}">
+							数量:2 </span>
+					</div>
+				</div>
+			</div>
+
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="row text-left" style="font-size: small">
+						<span class="col-xs-6 col-sm-6"
+							th:text="${'费用: ¥' + detail.totalAmt}"> 费用:¥50.00 </span> <span
+							class="col-xs-6 col-sm-6"
+							th:text="${'医保部分: ¥' + detail.medInsAmt}"> 医保部分:¥40.00 </span>
+					</div>
+					<div class="row text-left" style="font-size: small">
+						<span class="col-xs-6 col-sm-6"></span> <span
+							class="col-xs-6 col-sm-6" th:text="${'个人部分: ¥' + detail.selfAmt}">
+							个人部分:¥10.00 </span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

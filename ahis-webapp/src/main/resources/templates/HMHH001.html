@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+body{background:url(img/bg.gif);}
+a,img{border:none;}
+
+.zx_slider{position:relative;margin:40px auto 0 auto;width:1002px;height:350px;overflow:hidden;border-radius:5px;}
+.zx_slider .imgbox{width:3750px;height:310px;position:absolute;left:5px;top:4px;}
+.zx_slider .imgbox img{float:left;width:750px;height:310px;}
+.zx_slider .png{width:1002px;height:350px;left:0px;top:0px;position:absolute;background:url(img/slider_bg.png);_background:none;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slider_bg.png");}
+.zx_slider .lbtn{cursor:pointer;width:45px;height:55px;position:absolute;left:0px;bottom:-3px;background:url(img/slider_l_btn.png);_background:none;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slider_l_btn.png");}
+.zx_slider .rbtn{cursor:pointer;width:45px;height:55px;position:absolute;left:718px;bottom:-3px;background:url(img/slider_r_btn.png);_background:none;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slider_r_btn.png");}
+.zx_slider .btnbox{width:750px;height:60px;position:absolute;left:30px;bottom:0px;}
+.zx_slider .btnbox a{cursor:pointer;display:inline-block;float:left;width:126px;height:54px;margin:0 0 0 10px;}
+.zx_slider .btnbox a img{position:relative;display:inline;width:120px;height:48px;float:left;border:3px solid #392101;border-radius:2px;}
+.zx_slider .btnbox a .img_hover{border:3px solid #e4471f;border-radius:2px;}
+.zx_slider .slider_p{overflow:hidden;width:220px;height:290px;position:absolute;right:15px;top:15px;}
+.zx_slider .slider_p h3{margin:20px 0 10px 0;font-size:20px;text-align:center;color:#faa629;}
+.zx_slider .slider_p p{line-height:26px;font-size:14px;color:#faa629;}
+.hi_btn{width:740px;height:330px;position:absolute;left:0px;top:0px;display:block;}
+
+@-webkit-keyframes scrollText2 {
+    0%{-webkit-transform: translateX(0px);}
+    20%{-webkit-transform: translateX(-204px);}
+    40%{-webkit-transform: translateX(-408px);}
+    60%{-webkit-transform: translateX(-612px);}
+    80%{-webkit-transform: translateX(-816px);}
+    100%{-webkit-transform: translateX(-1020px);}
+}
+@keyframes scrollText2 {
+    0%{transform: translateX(0px);}
+    20%{transform: translateX(-204px);}
+    40%{transform: translateX(-408px);}
+    60%{transform: translateX(-612px);}
+    80%{transform: translateX(-816px);}
+    100%{transform: translateX(-1020px);}
+}
+
+.box4{
+  position: absolute;
+  width:200px;
+  height: 100px;
+  overflow: hidden;
+}
+.border4{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 1400px;
+  -webkit-animation:scrollText2 12s infinite  cubic-bezier(1,0,0.5,0) ;
+  animation:scrollText2 12s infinite  cubic-bezier(1,0,0.5,0) ;
+}
+.border4 div{
+  height: 30px;
+  width: 200px;
+  overflow: hidden;
+  display: inline-block;
+}
+.border4:hover{
+  animation-play-state:paused;
+  -webkit-animation-play-state:paused;
+}
+</style>
+    
+    <head>
+        <title>
+            健康首页
+        </title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        </link>
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+        </link>
+        <link href="/css/common.css" rel="stylesheet">
+        </link>
+        <script type="text/javascript" src="/js/jquery-3.1.1.js">
+        </script>
+        <script src="/js/bootstrap.min.js">
+        </script>
+        <script src="/js/hammer.min.js">
+        </script>
+        <script src="/js/idangerous.swiper.min.js"></script>
+        <script src="/js/common.js">
+        </script>
+        <script>
+            $(function() {
+                var helthBar = document.getElementById('health-bar');
+                var hmHealthBar = new Hammer(helthBar);
+                hmHealthBar.on("swipeleft",function() {
+                    $('#health-bar').carousel('next')
+                });
+                hmHealthBar.on("swiperight",function() {
+                    $('#health-bar').carousel('prev')
+                });
+            });
+        </script>
+    </head>
+    
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation"
+        style="margin-bottom:0px;">
+            <div class="container ldui-topnavbar" style="height:59px;">
+                <!--向左对齐-->
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12" style="padding-top:5px">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                健康首页
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="margin-bottom: 60px;margin-top: 58px;">
+            <div>
+                <div>
+                    <div class="ldui-list-group" style="height:100%;">
+                        <div class="form-group" style="padding-top:3px;margin-bottom:3px;">
+                            <div class="container input-group" style="padding: 3px;">
+                                <input class="form-control" id="deptName" placeholder="输入关键字搜索" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-search">
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ride="carousel" class="carousel slide" id="health-bar">
+                    <ol class="carousel-indicators">
+                        <li class="" data-slide-to="0" data-target="#health-bar">
+                        </li>
+                        <li data-slide-to="1" data-target="#health-bar" class="active">
+                        </li>
+                        <li data-slide-to="2" data-target="#health-bar" class="">
+                        </li>
+                    </ol>
+                    <div role="listbox" class="carousel-inner">
+                        <div class="item">
+                            <img alt="First slide" src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/1/default.jpg"
+                            data-holder-rendered="true" />
+                        </div>
+                        <div class="item active">
+                            <img alt="Second slide [1140x500]" src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/2/default.jpg"
+                            data-holder-rendered="true" />
+                        </div>
+                        <div class="item">
+                            <img alt="Third slide [1140x500]" src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/1600/500/sports/3/default.jpg"
+                            data-holder-rendered="true" />
+                        </div>
+                    </div>
+                </div>
+                <div class="ldui-list-group" style="background-color: white;">
+                    <div style="padding-top: 10px;padding-bottom: 10px;margin-bottom: 10px;border-bottom:1px solid #f0f0f6">
+                        <span style="padding-left:20px;color:#22a7f0;font-weight:bold;">
+                            |
+                        </span>
+                        <span>
+                            健康专题
+                        </span>
+                    </div>
+                    <div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage1.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    养生
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    83篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage4.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    减肥
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    165篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage7.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    育儿
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    71篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage14.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    饮食
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    52篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage19.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    专家
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    33篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: 15px;margin-bottom: 10px;">
+                            <div>
+                                <img class="img-circle" src="/images/healthPage/healthPage17.jpg" style="width: 45px; height: 45px"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-3" style="margin-left: -30px;">
+                            <div style="margin-top: 14px;margin-bottom:-5px;">
+                                <span>
+                                    其他
+                                </span>
+                            </div>
+                            <div>
+                                <span style="font-size: 10px;color: #C6C6C6;">
+                                    4篇分享
+                                </span>
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+<!--  <div class="box4">
+   <div class="border4">
+      <div>This is a test 1.</div>
+      <div>This is a test 2.</div>
+      <div>This is a test 3.</div>
+      <div>This is a test 4.</div>
+      <div>This is a test 5.</div>
+      <div>This is a test 1.</div>
+    </div>
+    <div style="clear:both;">
+                        </div>
+ </div> -->
+
+
+<script >
+//<![CDATA[
+var slider_count=4;
+$(".slider_p_div").hide();
+$("#slider_p0").show();
+$(".hi_btn").hide();
+$("#hi_btn0").show();
+$(".img_hover").animate({bottom:'10px'});
+var slider_i=1;
+var m_over=true;
+function zx_slider(){
+	if(m_over){
+		if(slider_i<0){slider_i=slider_count;}
+		//p
+		$(".slider_p_div").hide();
+		$("#slider_p"+slider_i).show();
+		//p end
+		//hi_btn
+		$(".hi_btn").hide();
+		$("#hi_btn"+slider_i).show();
+		//hi_btn end
+		//btn
+		$(".btnbox img").stop(true,true);
+		$(".btnbox img").removeClass("img_hover");
+		$(".btnbox img").animate({bottom:'0px'},200);
+		$("#btn_img"+slider_i).addClass("img_hover");
+		$("#btn_img"+slider_i).animate({bottom:'10px'},200);
+		//btn end
+		$(".imgbox").stop();
+		$(".imgbox").animate({left:'-750'*slider_i+'px'});
+		if(slider_i<slider_count){
+			slider_i++;	
+		}else{
+			slider_i=0;
+		}
+	}
+}
+
+$(".lbtn").click(function(){
+	m_over=true;
+	if(slider_i==0){slider_i=slider_count-1}else{slider_i=slider_i-2;}
+	zx_slider();
+	m_over=false;
+});
+
+$(".rbtn").click(function(){
+	m_over=true;
+	zx_slider();
+	m_over=false;
+});
+
+function btn_m_over(btn_i){
+	if(slider_i-1!=btn_i){
+		m_over=true;
+		slider_i=btn_i;
+		zx_slider();
+		m_over=false;
+	}
+}
+
+zx_timer=setInterval("zx_slider();",5000); 
+$(".zx_slider").mouseover(function(){
+	m_over=false;
+});
+$(".zx_slider").mouseout(function(){
+	m_over=true;
+});
+//]]>
+</script>
+
+
+
+  
+                <div class="ldui-list-group" style="background-color: white;margin-top: -10px;">
+                    <div style="padding-top: 10px;padding-bottom: 10px;margin-top: 10px;border-bottom:1px solid #f0f0f6">
+                        <span style="padding-left:20px;color:#22a7f0;font-weight:bold;">
+                            |
+                        </span>
+                        <span>
+                            推荐阅读
+                        </span>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/erming.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    中医治耳鸣的独特方法
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-25
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                患者的耳鸣严重影响生活、睡眠、精力集中、工作能力和社交活动， 因耳鸣而犹如残疾，65岁以上33%的人有过耳鸣。
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/xinzang.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    那些方法对治疗心脏病有好处
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-25
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                研究人员发现，心脏病人，特别是高血压心脏病、冠心病、动脉硬化，都可以不同程度地出现耳鸣，这是因为内耳的微细血管变化比较敏感...
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/kafei.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    吃中药能喝咖啡么 中药的禁忌
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-24
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                中药是帮助治疗疾病,缓解自己各种身体不适的一种方法，而且在生活当中很多人会选择用中药帮助自己滋补保健身体
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/ganmao.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    治疗感冒的中药偏方~
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-24
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                冬天的天气寒冷，稍微不注意就会发现自己得了感冒，抵抗力差的就更不用说了，感冒已经是常事了。
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/wumai.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    雾霾来袭，中医教你如何清肺
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-23
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                2016年12月，入冬来最持久雾霾天气来临，多个城市已达严重污染，预计维持4天，直到21日后半夜才会自北向南减弱消散。
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                    <div class="ldui-article">
+                        <div class="col-xs-3">
+                            <img class="ldui-article-img" src="/images/healthPage/huangjing.jpg" />
+                        </div>
+                        <div class="col-xs-9">
+                            <div>
+                                <div class="col-xs-10 ldui-article-title">
+                                    一味黄精，堪比“黄金”
+                                </div>
+                                <div class="col-xs-2 ldui-article-date">
+                                    1-22
+                                </div>
+                                <div style="clear:both;">
+                                </div>
+                            </div>
+                            <div class="ldui-article-detail">
+                                黄精是什么？黄精是一种中药材，但在我们的日常生活中可能不是所有人都知道黄精是什么？
+                            </div>
+                        </div>
+                        <div style="clear:both;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        
+        
+        <footer>
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                <ul class="nav nav-tabs  ldui-bottomtabbar">
+                    <li>
+                        <a onclick="pageNavById('HPHP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-home">
+                            </span> -->
+                            <img alt="首页" src="/images/footer/home.png" style="height: 20px;width: 20px;"
+                            />
+                            <p>
+                                首页
+                            </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a onclick="pageNavById('HMHH001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-book">
+                            </span> -->
+                            <img alt="健康手册" src="/images/footer/handbook-fill.png" style="height: 20px;width: 20px;"
+                            />
+                            <p>
+                                健康手册
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('EMEM001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-th-large">
+                            </span> -->
+                            <img alt="电子病历" src="/images/footer/form.png" style="height: 20px;width: 20px;"
+                            />
+                            <p>
+                                电子病历
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('MPMP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-user">
+                            </span> -->
+                            <img alt="我的" src="/images/footer/my.png" style="height: 20px;width: 20px;"
+                            />
+                            <p>
+                                我的
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+</html>

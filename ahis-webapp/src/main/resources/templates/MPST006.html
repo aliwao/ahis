@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的银行卡</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+	<script src="/js/common.js"></script>
+	
+<script type="text/javascript">
+function goToUnbind(obj) {
+	window.location = "/m/mpst007/index?bankCardNo=" + $(obj).find("input").val().replace(/\s+/g, "");
+}	
+</script>
+</head>
+
+<body>
+<form id="mpst006Form" name="mpst006Form">
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mpst001');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a class="navbar-brand" href="#">我的银行卡</a>
+                     </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="margin-top:65px">
+    	<div class="panel panel-default" th:each="info:${mpst006Form.bankCardList}"
+    			style="margin:0px;background-color:#fff;margin-top:15px;border-radius:10px" onclick="goToUnbind(this);">
+    	   <input type="hidden" th:value="${info.bankCardNo}" />
+           <img th:src="${info.bankIconImg}"  height="35px" width="35px" style="margin:10px" class="pull-left" />
+      	   <div style="padding:10px 20px">
+               <span th:text="${info.bank}" style="font-size: 17px; font-weight: bold"></span><br />
+               <span th:text="${info.bankCardType}"></span>
+               <span style="padding:0px 5px;color:#22a7f0;font-weight:bold;">|</span>
+               	尾号：<span th:text="${info.bankCardNo.substring(info.bankCardNo.length() -4)}"></span>
+           </div>
+       </div>
+    </div>
+    <footer class="container" style="margin-top:30px;text-align:center">
+       <ul class="nav navbar-fixed-bottom">
+        	<li>
+            	<button type="button" class="btn btn-primary btn-block" style="width:100%;" onclick="pageNavOnLogin('MPST008');">+&nbsp;添加银行卡</button>
+        	</li>
+    	</ul>
+    </footer>
+    
+</form>
+</body>
+</html>

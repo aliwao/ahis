@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的地址</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+	 .nav.ldui-nav-tas > li {
+	    background-color: #ffffff;
+	    border-bottom: 1px solid #eee;
+	 }
+	 .nav.ldui-nav-tas > li > a {
+	    color: #555;
+	    border: 1px solid transparent;
+	 }
+	 .nav.ldui-nav-tas > li.active > a {
+	    color: #22a7f0;
+	    border: 1px solid transparent;
+	    border-bottom: 1px solid #22a7f0;
+	 }
+	 .nav.ldui-nav-tas > li > a:hover, .nav.ldui-nav-tas > li > a:focus {
+		background-color: #ffffff;
+	 }
+	 .ldui-panel {
+	    margin-bottom:10px;
+	    border:none;
+	 }
+
+	.ldui-badge {
+		display: inline-block;
+		min-width: 10px;
+		font-size: 12px;
+		font-weight: bold;
+		line-height: normal;
+		text-align: center;
+		padding:6px 9px 6px 18px;
+		white-space: nowrap;
+		vertical-align: middle;
+		background-color: #fcfcfc;
+		/*border: 1px solid #777;*/
+		border-radius: 2px;
+		color:#666;
+	}
+	.ldui-svg-edit{
+		background-size:16px 20px;
+		background-image:url("/images/svg/edit.svg");
+		background-repeat:no-repeat;
+		background-position:center left;
+	}
+	.ldui-svg-delete{
+		background-size:16px 20px;
+		background-image:url("/images/svg/delete.svg");
+		background-repeat:no-repeat;
+		background-position:center left;
+	}
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack('/g/mpmp001/index');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#">我的地址</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                      <!--<button type="button" class="btn btn-default navbar-btn">首页</button>-->
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv">
+       <div id="listgroup">
+
+       </div>
+       <form id="mySubmitForm" th:action="@{/m/mpad002/save}" method="post">
+            <input type="hidden" id="siteid" name="siteid" />
+            <input type="hidden" id="action" name="action" />
+       </form>
+    </div>
+    <footer>
+               <ul class="nav navbar-fixed-bottom">
+                  <li>
+                      <button type="button" class="btn btn-primary btn-block" style="width:100%;" onclick="goPageEditAddr(0);">添加新地址</button>
+                  </li>
+               </ul>
+    </footer>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+        function(){
+            // 初期数据加载
+            initload();
+        }
+    );
+
+    function initload() {
+        var params = {};
+        $.ajax({
+            type:"POST",
+            url:"initload",
+            data:params,
+            async: false,
+            success:function(data){
+                //alert(data.sitelist[0].address);
+                if(!data.sitelist || data.sitelist.length == 0){
+                    showNoticeToast("暂无任何地址信息！");
+                }
+                else {
+                  $.each(data.sitelist,function(i,item){
+                    /* alert(i);
+                    alert(item.siteid);
+                    alert(item.lianxiren);
+                    alert(item.sex);
+                    alert(item.mobileno);
+                    alert(item.address);
+                    alert(item.mark); */
+                    var sex = item.sex;
+                    if (sex == '男') {
+                         sex = '先生';
+                    }
+                    else if (sex == '女') {
+                         sex = '女士';
+                    }
+                    var mobileno = item.mobileno;
+                    var htmlstr = '<div class="panel panel-primary ldui-panel">';
+                        htmlstr += '   <div class="panel-heading ldui-panel-heading" style="border-color:#fefefe;padding:5px 15px 0px 15px;">';
+                        htmlstr += '       <span>' + item.lianxiren  + ' ' + sex + '</span>';
+                        htmlstr += '       <span class="pull-right">' + mobileno + '</span>';
+                        htmlstr += '   </div>';
+                        htmlstr += '   <div class="panel-body ldui-list-group-body" style="padding:5px 15px 6px;">';
+                        htmlstr += '       <p style="margin:0px;" class="text-muted">' + item.address + '</p>';
+                        htmlstr += '   </div>';
+                        htmlstr += '   <ul class="list-group">';
+                        htmlstr += '       <li class="list-group-item ldui-group-item" style="text-align:right;padding:5px 15px;">';
+                        htmlstr += '           <span>&nbsp;&nbsp;</span>';
+                        htmlstr += '           <span class="ldui-badge ldui-svg-edit" onclick="goPageEditAddr(' + item.siteid + ');">编辑</span>';
+                        htmlstr += '           <span class="ldui-badge ldui-svg-delete" onclick="deleteAddr(' + item.siteid + ');">删除</span>';
+                        htmlstr += '       </li>';
+                        htmlstr += '   </ul>';
+                        htmlstr += '</div>';
+                    $("#listgroup").append(htmlstr);
+                  });
+                }
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+    
+    function goPageEditAddr(siteid) {
+       //localStorage.setItem('addrupdkbn',addrupdkbn)
+       // self.location='MPAD002.html';
+       self.location='/m/mpad002/index?siteid=' + siteid;
+    }
+
+    function deleteAddr(siteid) {
+        if(siteid){
+            $("#siteid").val(siteid);
+            $("#action").val('delete');
+            $("#mySubmitForm").submit();
+        }
+     }
+ //]]>
+ </script>
+</body>
+</html>
