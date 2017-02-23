@@ -1,0 +1,14 @@
+﻿<Response>
+    	<checkId>123456789</checkId>
+        <checkName>血常规</checkName>
+        <deptName>内科</deptName>
+        <doctorName>黄小明</doctorName>
+        <reportTime>2017-02-07 17:00:00</reportTime>
+	<checkPart>血液</checkPart>
+        <checkMethod>抽血化验</checkMethod>
+	<checkSituation>好</checkSituation>
+	<option>正常</option>
+	<advice>少抽烟</advice>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

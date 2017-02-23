@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0001</deptCode>
+		<deptName>耳鼻喉科</deptName>
+		<doctorCode>0001</doctorCode>
+		<doctorName>张承明</doctorName>
+		<doctorSkill>鼻窦微创</doctorSkill>
+		<doctorIntrodution>111</doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0001</deptCode>
+		<deptName>耳鼻喉科</deptName>
+		<doctorCode>0002</doctorCode>
+		<doctorName>李黎</doctorName>
+		<doctorSkill>慢性支气管炎</doctorSkill>
+		<doctorIntrodution>111</doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

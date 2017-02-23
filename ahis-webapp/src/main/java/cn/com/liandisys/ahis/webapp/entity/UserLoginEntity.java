@@ -8,47 +8,31 @@ public class UserLoginEntity implements Serializable {
 
 	private int userID;
 	private String password;
-	private String name;
 	private String mobileNo;
-	private String isEnabled;
-
+	private String validFlag;
 	public int getUserID() {
 		return userID;
 	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
-
 	public String getPassword() {
 		return password;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getMobileNo() {
 		return mobileNo;
 	}
-
+	public String getValidFlag() {
+		return validFlag;
+	}
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-
-	public String getIsEnabled() {
-		return isEnabled;
+	public void setValidFlag(String validFlag) {
+		this.validFlag = validFlag;
 	}
 
-	public void setIsEnabled(String isEnabled) {
-		this.isEnabled = isEnabled;
-	}
 }

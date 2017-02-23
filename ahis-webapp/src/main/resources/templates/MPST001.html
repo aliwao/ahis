@@ -54,9 +54,9 @@
         <div class="panel panel-info ldui-panel-info">
             <div class="panel-heading ldui-panel-heading"><span class="ldui-mark">|</span> 卡绑定</div>
             <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item" id="jiuzhenka">院内诊疗卡号</li>
                 <li class="list-group-item ldui-list-group-item" id="yibaoka" onclick="pageNavOnLogin('MPST004');">医保卡</li>
-                <li class="list-group-item ldui-list-group-item" id="jiuzhenka" onclick="pageNavOnLogin('MPST005');">就诊卡</li>
-                <li class="list-group-item ldui-list-group-item" id="yinhangka" onclick="pageNavOnLogin('MPST006');">银行卡</li>
+                <!-- <li class="list-group-item ldui-list-group-item" id="yinhangka" onclick="pageNavOnLogin('MPST006');">银行卡</li> -->
             </ul>
         </div>
         
@@ -106,10 +106,10 @@
         postAjax("checkBinding/2", {}, function(data){
             var htmlstr = "";
             if(data) {
-                htmlstr = '就诊卡<span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right">' + data + '</span>';
+                htmlstr = '院内诊疗卡号<span class="pull-right">' + data + '</span>';
             }
             else {
-                htmlstr = '<span class="badge ldui-badge">去绑定</span>就诊卡';
+                htmlstr = '院内诊疗卡号<span class="pull-right">暂无</span>';
             }
             $("#jiuzhenka").html(htmlstr);
         });

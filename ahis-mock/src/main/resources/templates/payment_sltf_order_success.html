@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<title>商联通付</title>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation"
+        style="background-color: #6dbef6">
+        <div class="open-hover ldui-topnavbar">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">商联通付</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12"
+        style="text-align: center; color: #34ce4d; font-size: 20px; margin-top: 50px; margin-bottom: 15px; background-color: white; padding-top: 15px; padding-bottom: 15px;">
+        <span>支付成功！</span>
+    </div>
+
+    <div class="col-xs-12"
+        style="background-color: white; margin-bottom: 1px;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <span>收款商户</span>
+        </div>
+        <div class="col-xs-9"
+            style="text-align: right; margin-top: 10px; margin-bottom: 10px;">
+            <span>微医平台系统</span>
+        </div>
+    </div>
+
+    <div class="col-xs-12"
+        style="background-color: white; margin-bottom: 1px;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <span>商户名称</span>
+        </div>
+        <div class="col-xs-9"
+            style="text-align: right; margin-top: 10px; margin-bottom: 10px;">
+            <span>无锡市第三人民医院</span>
+        </div>
+    </div>
+
+    <div class="col-xs-12"
+        style="background-color: white; margin-bottom: 15px;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">
+            <span>应付金额</span>
+        </div>
+        <div class="col-xs-9"
+            style="text-align: right; margin-top: 10px; margin-bottom: 10px;">
+            <span th:text="${#numbers.formatDecimal(orderPaymentCallBackForm.orderfee / 100, 0, 'COMMA', 2, 'POINT')}">0.00</span>
+        </div>
+    </div>
+    <form th:action="${postUrl}" method="post">
+        <input type="hidden" name="version" th:value="${orderPaymentCallBackForm.version}" />
+        <input type="hidden" name="charset" th:value="${orderPaymentCallBackForm.charset}" />
+        <input type="hidden" name="systemid" th:value="${orderPaymentCallBackForm.systemid}" />
+        <input type="hidden" name="msgseqno" th:value="${orderPaymentCallBackForm.msgseqno}" />
+        <input type="hidden" name="uid" th:value="${orderPaymentCallBackForm.uid}" />
+        <input type="hidden" name="orderid" th:value="${orderPaymentCallBackForm.orderid}" />
+        <input type="hidden" name="orderfee" th:value="${orderPaymentCallBackForm.orderfee}" />
+        <input type="hidden" name="custominfo" th:value="${orderPaymentCallBackForm.custominfo}" />
+        <input type="hidden" name="reserved" th:value="${orderPaymentCallBackForm.reserved}" />
+        <input type="hidden" name="resultcode" th:value="${orderPaymentCallBackForm.resultcode}" />
+        <input type="hidden" name="resultmsg" th:value="${orderPaymentCallBackForm.resultmsg}" />
+        <input type="hidden" name="signmsg" th:value="${orderPaymentCallBackForm.signmsg}" />
+        <input type="submit" class="btn btn-primary btn-block" value="返回商户" />
+    </form>
+</body>
+</html>

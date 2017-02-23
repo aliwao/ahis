@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+	<!-- 2017-01-17 -->
+	<!-- 耳鼻喉科0001 -->
+    <item>
+		<deptCode>0001</deptCode>
+		<doctorCode>0001</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1010</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>6</leftNum>
+	</item>
+    <item>
+		<deptCode>0001</deptCode>
+		<doctorCode>0001</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1020</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>8</leftNum>
+	</item>
+	<item>
+		<deptCode>0001</deptCode>
+		<doctorCode>0001</doctorCode>
+		<scheduleDate>2017-01-18</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1030</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>10</leftNum>
+	</item>
+    <item>
+		<deptCode>0001</deptCode>
+		<doctorCode>0001</doctorCode>
+		<scheduleDate>2017-01-19</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1040</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>0</leftNum>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

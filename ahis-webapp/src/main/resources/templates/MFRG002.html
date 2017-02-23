@@ -98,7 +98,7 @@ a:hover  {
                 <img th:src="${info.doctorPic}"  height="100px" width="100px" style="padding:5px 5px 1px 5px;border-radius:10px" class="pull-left" />
                 <div style="padding:10px 6px 3px 5px">
         			姓名 <span th:text="${info.doctorName}"></span>
-        		    <span style="color:red;float:right;padding-right:7px" th:text="${info.regFee} + '元'" ></span>
+        		    <span style="float:right;color:red;padding-right:7px">元</span><span style="color:red;float:right;" th:text="${info.regFee}"></span>
         		    <br />
         		         职位    <span th:text="${info.doctorTitle}"></span><br />
         		         擅长项目  <span th:text="${info.doctorSkill}"></span><br />
@@ -247,7 +247,7 @@ function register(obj, timeFlag) {
 			+ "&doctorCode=" + $(obj).parent().parent().parent().attr('id') 
 			+ "&doctorName=" + $(obj).parent().parent().find('span').html()
 			+ "&reserveDate=" + $('#reserveDate').val() 
-			+ "&regFee=" + $(obj).parent().parent().find('span').eq(1).html() 
+			+ "&regFee=" + $(obj).parent().parent().find('span').eq(2).html() 
 			+ "&timeFlag=" + timeFlag;
 }
 

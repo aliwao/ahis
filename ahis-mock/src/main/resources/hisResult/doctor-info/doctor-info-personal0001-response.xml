@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0001</deptCode>
+		<deptName>耳鼻喉科</deptName>
+		<doctorCode>0001</doctorCode>
+		<doctorName>张承明</doctorName>
+		<doctorSkill>鼻窦微创</doctorSkill>
+		<doctorIntrodution>享受国家特殊津贴专家，擅长听力复聪，各种中耳炎及颅内外并发症的治疗。外耳道闭锁成形。头颈肿瘤外科　重点鼻腔、副鼻窦良恶性肿瘤处理，全喉、各类半喉手术。 面神经减压及移植。外耳道闭锁成形。头颈肿瘤外科　重点鼻腔、副鼻窦良恶性肿瘤处理，全喉、各类半喉手术。颈廓术。
+		</doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

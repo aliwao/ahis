@@ -65,11 +65,11 @@
 			<div class="col-xs-3">
 				<span>就诊日</span>
 			</div>
-			<div id="reserveDate" class="col-xs-9">
+			<div class="col-xs-9">
 				<div
 					th:if="${mfrg004Form.detailedTime}=='' or ${mfrg004Form.detailedTime}==null">
-					<span th:text="${mfrg004Form.reserveDate}"></span>&nbsp; <span
-						th:if="${mfrg004Form.timeFlag}=='am'">上午</span> <span
+					<span id="reserveDate" th:text="${mfrg004Form.reserveDate}"></span>&nbsp;
+					<span th:if="${mfrg004Form.timeFlag}=='am'">上午</span> <span
 						th:if="${mfrg004Form.timeFlag}=='pm'">下午</span>
 				</div>
 				<div
@@ -109,11 +109,12 @@
 		</div>
 		<div
 			style="background-color: white; text-align: center; margin-top: 2px; padding-top: 10px; padding-bottom: 66px;">
-			<div id="regFee" class="col-xs-12"
-				style="color: red; font-size: 25px;">
-				<span th:if="${mfrg004Form.isExpert}"
-					th:text="${mfrg004Form.regFee}"></span> <span
-					th:if="!${mfrg004Form.isExpert}"> 8元</span>
+			<div class="col-xs-12" style="color: red; font-size: 25px;">
+				<div id="regFee">
+					<span th:if="${mfrg004Form.isExpert}"
+						th:text="${mfrg004Form.regFee}+'元'"></span> <span
+						th:if="!${mfrg004Form.isExpert}"> 8元</span>
+				</div>
 			</div>
 			<div class="col-xs-12">
 				<span style="font-size: 13px;">挂号费</span>
@@ -127,8 +128,13 @@
 			style="background-color: white; text-align: center; margin-top: 2px; padding-top: 10px; padding-bottom: 66px; height: 100%; width: 100%; position: absolute;">
 			<div
 				style="margin-top: 2px; padding-bottom: 27px; padding-top: 25px; padding-left: 6px;">
-				<button id="appointConfirm" type="button"
-					class="btn btn-primary btn-block">确认预约</button>
+				<form action="#" method="post">
+					<input id="" name="" type="hidden" /> <input id="" name=""
+						type="hidden" /> <input id="" name="" type="hidden" /> <input
+						id="" name="" type="hidden" />
+					<button id="appointConfirm" type="button"
+						class="btn btn-primary btn-block">确认预约</button>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -145,9 +151,15 @@
 	var deptCode = $('#deptCode').val();
 	var doctorCode = $('#doctorCode').val();
 	var reserveDate = $('#reserveDate').text();
-	var regFee = $('#regFee').text();
-	var timeFlag = $('#timeFlag').val();
-	var params = {deptCode:deptCode, doctorCode:doctorCode, reserveDate:reserveDate, regFee:regFee, timeFlag:timeFlag};
+	var regFee = $('#regFee').text().replace('元', '');
+	var timeFlag = $('#timeFlag').val() == 'am' ? '1' : '2';
+	var params = {
+		deptCode : deptCode,
+		doctorCode : doctorCode,
+		reserveDate : reserveDate,
+		regFee : regFee,
+		timeFlag : timeFlag
+	};
 	var callback = sucess;
 	$(document).ready(function() {
 		$('#appointConfirm').click(function() {
@@ -156,14 +168,12 @@
 	});
 
 	function sucess(reponse) {
-		if (reponse == 'error') {
+		if (reponse == '0') {
+			showNoticeToast('请补全个人信息再尝试预约');
+		} else if (reponse == 'error') {
 			showErrorToast('订单请求失败');
 		} else {
-			var obj = JSON.parse(reponse);
-			var userId=obj.userId;
-			var psOrdNum = obj.psOrdNum;
-			var hisOrdNum= obj.hisOrdNum;
-			window.parent.location='/m/mfrg005/index?userId='+userId+'&psOrdNum='+psOrdNum+'&hisOrdNum='+hisOrdNum+'&payAmt='+regFee;
+			window.parent.location = '/m/mfrg005/index?psOrdNum=' + reponse;
 		}
 	}
 	//]]>

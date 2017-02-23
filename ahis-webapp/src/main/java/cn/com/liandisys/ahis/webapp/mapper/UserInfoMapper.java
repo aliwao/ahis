@@ -12,6 +12,8 @@ public interface UserInfoMapper {
 
     UserInfoEntity selectByPrimaryKey(Long userid);
 
+    UserInfoEntity selectByIdentityCardNo(String identityCardNo);
+
     int updateByPrimaryKeySelective(UserInfoEntity record);
 
     int updateByPrimaryKey(UserInfoEntity record);

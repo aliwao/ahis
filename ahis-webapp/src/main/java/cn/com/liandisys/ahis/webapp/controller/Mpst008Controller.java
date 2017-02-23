@@ -32,8 +32,8 @@ public class Mpst008Controller extends AbstractAhisController<Mpst008Form> {
 	@RequestMapping("index")
 	public String index(@ModelAttribute Mpst008Form mpst008Form, HttpServletRequest req) {
 		LoginUserInfo loginUser = AhisCommonUtil.getCurrentUserInfo();
-		mpst008Form.setIdCardNo(loginUser.getShenfenzhenghao());
-		mpst008Form.setOwnCardName(loginUser.getName()); // TODO 真实持卡姓名即身份证姓名
+		mpst008Form.setIdCardNo(loginUser.getIdentityCardNo());
+		mpst008Form.setOwnCardName(loginUser.getFullName()); // TODO 真实持卡姓名即身份证姓名
 		return forwardIndex();
 	}
 
@@ -60,8 +60,8 @@ public class Mpst008Controller extends AbstractAhisController<Mpst008Form> {
 		System.out.println(">>>>bank>>>>>>" + mpst008Form.getBank());
 		param.setBank(mpst008Form.getBank());
 		param.setBankCardType("1"); // TODO 真实银行卡类型 1：借记卡 2：信用卡 等。
-		param.setOwnCardName(loginUser.getName()); // TODO 真实持卡姓名即身份证姓名
-		param.setIdCardNo(loginUser.getShenfenzhenghao());
+		param.setOwnCardName(loginUser.getFullName()); // TODO 真实持卡姓名即身份证姓名
+		param.setIdCardNo(loginUser.getIdentityCardNo());
 		param.setPhoneNo(mpst008Form.getPhoneNo());
 
 		// 业务处理 存入DB

@@ -1,13 +1,10 @@
 package cn.com.liandisys.ahis.webapp.his.entity.response;
 
-import javax.xml.bind.annotation.XmlElement;
-
 public class BaseResponse {
 
 	private String resultCode;
 	private String resultMessage;
 
-	@XmlElement
 	public String getResultCode() {
 		return resultCode;
 	}
@@ -16,7 +13,6 @@ public class BaseResponse {
 		this.resultCode = resultCode;
 	}
 
-	@XmlElement
 	public String getResultMessage() {
 		return resultMessage;
 	}

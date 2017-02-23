@@ -13,7 +13,6 @@ import cn.com.liandisys.ahis.webapp.entity.UserLoginEntity;
 import cn.com.liandisys.ahis.webapp.form.Mplg002Form;
 import cn.com.liandisys.ahis.webapp.mapper.UserInfoMapper;
 import cn.com.liandisys.ahis.webapp.mapper.UserLoginMapper;
-import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
 
 @Service
 @Transactional
@@ -25,24 +24,45 @@ public class Mplg002Service extends AbstractAhisService<Mplg002Form> {
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 
+	public boolean verifyTelno(Mplg002Form f) {
+		UserLoginEntity entity = userLoginMapper.getByMobileNo(f.getTelno());
+		if(entity != null){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean verifyIdentityCardNo(Mplg002Form f) {
+		UserInfoEntity entity = userInfoMapper.selectByIdentityCardNo(f.getSfzhaoma());
+		if(entity != null){
+			return false;
+		}
+		return true;
+	}
+
 	public void insert(Mplg002Form f) {
+
 		UserLoginEntity userLoginEntity = new UserLoginEntity();
 		userLoginEntity.setMobileNo(f.getTelno());
-		userLoginEntity.setName(f.getUsername());
-		userLoginEntity.setPassword(f.getPasswd());
+		userLoginEntity.setPassword(f.getPassword());
 		userLoginMapper.insertSelective(userLoginEntity);
 
+		userLoginEntity = userLoginMapper.getByMobileNo(f.getTelno());
+
 		UserInfoEntity userInfoEntity = new UserInfoEntity();
-		userInfoEntity.setUserid(Long.valueOf(AhisCommonUtil.getCurrentUserInfo().getUserID()));
-		userInfoEntity.setShenfenzhenghao(f.getSfzhaoma());
+		userInfoEntity.setUserID(userLoginEntity.getUserID());
+		userInfoEntity.setIdentityCardNo(f.getSfzhaoma());
+		userInfoEntity.setFullName(f.getUsername());
 		userInfoMapper.insertSelective(userInfoEntity);
 
-		setUserinfoSession(userLoginEntity);
+		setUserinfoSession(userLoginEntity, userInfoEntity);
 	}
 
-	private void setUserinfoSession(UserLoginEntity userLoginEntity) {
+	private void setUserinfoSession(UserLoginEntity userLoginEntity, UserInfoEntity userInfoEntity) {
 		LoginUserInfo userinfo = new LoginUserInfo();
 		BeanUtils.copyProperties(userLoginEntity, userinfo);
+		BeanUtils.copyProperties(userInfoEntity, userinfo);
 		SessionService.setAttribute(AhisConstants.SESSION_KEY_USERINFO, userinfo);
 	}
+
 }

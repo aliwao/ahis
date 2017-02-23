@@ -25,18 +25,28 @@ public class Mfih003Form extends AbstractAhisForm {
 	private String hospitalName;
 	/** 医生姓名 */
 	private String doctorName;
+	/** 护士姓名 */
+	private String nurseName;
 	/** 科室name */
 	private String deptName;
 	/** 诊断信息 */
 	private String diagnoseInfo;
 	/** 病区 */
 	private String area;
+	/** 病床 */
+	private String bed;
 	/** 入院时间 */
 	private String inDate;
 	/** 出院时间 */
 	private String outDate;
-	/** 预缴费 */
-	private String advancedPay;
+	/** 住院天数 */
+	private String stayCount;
+	/** 住院总费用 */
+	private String totalFee;
+	/** 住院押金总额 */
+	private String totalDeposit;
+	/** 住院押金余额 */
+	private String balance;
 
 	public String getStatusFlg() {
 		return statusFlg;
@@ -78,6 +88,14 @@ public class Mfih003Form extends AbstractAhisForm {
 		this.doctorName = doctorName;
 	}
 
+	public String getNurseName() {
+		return nurseName;
+	}
+
+	public void setNurseName(String nurseName) {
+		this.nurseName = nurseName;
+	}
+
 	public String getDeptName() {
 		return deptName;
 	}
@@ -102,6 +120,14 @@ public class Mfih003Form extends AbstractAhisForm {
 		this.area = area;
 	}
 
+	public String getBed() {
+		return bed;
+	}
+
+	public void setBed(String bed) {
+		this.bed = bed;
+	}
+
 	public String getInDate() {
 		return inDate;
 	}
@@ -118,13 +144,36 @@ public class Mfih003Form extends AbstractAhisForm {
 		this.outDate = outDate;
 	}
 
-	public String getAdvancedPay() {
-		return advancedPay;
+	public String getStayCount() {
+		return stayCount;
 	}
 
-	public void setAdvancedPay(String advancedPay) {
-		this.advancedPay = advancedPay;
+	public void setStayCount(String stayCount) {
+		this.stayCount = stayCount;
 	}
 
+	public String getTotalFee() {
+		return totalFee;
+	}
+
+	public void setTotalFee(String totalFee) {
+		this.totalFee = totalFee;
+	}
+
+	public String getTotalDeposit() {
+		return totalDeposit;
+	}
+
+	public void setTotalDeposit(String totalDeposit) {
+		this.totalDeposit = totalDeposit;
+	}
+
+	public String getBalance() {
+		return balance;
+	}
+
+	public void setBalance(String balance) {
+		this.balance = balance;
+	}
 
 }

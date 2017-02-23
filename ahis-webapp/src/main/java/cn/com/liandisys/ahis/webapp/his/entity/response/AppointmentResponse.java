@@ -1,10 +1,5 @@
 package cn.com.liandisys.ahis.webapp.his.entity.response;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-
-@XmlRootElement(name = "Response")
 public class AppointmentResponse extends BaseResponse {
 	/**
 	 * 医院订单号
@@ -23,7 +18,6 @@ public class AppointmentResponse extends BaseResponse {
 	 */
 	private String visitDesc;
 
-	@XmlElement
 	public String getHisOrdNum() {
 		return hisOrdNum;
 	}
@@ -32,7 +26,6 @@ public class AppointmentResponse extends BaseResponse {
 		this.hisOrdNum = hisOrdNum;
 	}
 
-	@XmlElement
 	public String getSerialNum() {
 		return serialNum;
 	}
@@ -41,7 +34,6 @@ public class AppointmentResponse extends BaseResponse {
 		this.serialNum = serialNum;
 	}
 
-	@XmlElement
 	public String getVisitPosition() {
 		return visitPosition;
 	}
@@ -50,7 +42,6 @@ public class AppointmentResponse extends BaseResponse {
 		this.visitPosition = visitPosition;
 	}
 
-	@XmlElement
 	public String getVisitDesc() {
 		return visitDesc;
 	}

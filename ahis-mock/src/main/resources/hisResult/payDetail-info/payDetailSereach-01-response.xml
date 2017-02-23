@@ -1,0 +1,22 @@
+﻿<Response>
+    <item>
+    	<itemName>口腔器械盒</itemName>
+        <itemType>材料费</itemType>
+        <itemUnit></itemUnit>
+        <itemPrice>25.00</itemPrice>
+        <itemSpec>镊子+口镜</itemSpec>
+        <itemNumber>2</itemNumber>
+        <itemTotalFee>50.00</itemTotalFee>
+    </item>
+    <item>
+    	<itemName>口腔器械盒</itemName>
+        <itemType>材料费</itemType>
+        <itemUnit></itemUnit>
+        <itemPrice>25.00</itemPrice>
+        <itemSpec>探针</itemSpec>
+        <itemNumber>2</itemNumber>
+        <itemTotalFee>50.00</itemTotalFee>
+    </item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

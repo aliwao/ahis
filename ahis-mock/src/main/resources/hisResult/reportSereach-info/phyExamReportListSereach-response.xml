@@ -1,0 +1,14 @@
+﻿<Response>
+    <item>
+	<phyExamId>1000001</phyExamId>
+	<phyExamName>入职体检</phyExamName>
+	<phyExamTime>2014-02-07 15:20:00</phyExamTime>
+	</item>
+    	<item>
+	<phyExamId>8000002</phyExamId>
+	<phyExamName>入职体检</phyExamName>
+	<phyExamTime>2016-02-07 15:20:00</phyExamTime>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

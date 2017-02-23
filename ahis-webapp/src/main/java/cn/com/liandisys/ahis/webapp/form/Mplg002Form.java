@@ -19,7 +19,7 @@ public class Mplg002Form extends AbstractAhisForm {
 	private String sfzhaoma;
 
 	/** 密码 */
-	private String passwd;
+	private String password;
 
 	public String getTelno() {
 		return telno;
@@ -45,11 +45,11 @@ public class Mplg002Form extends AbstractAhisForm {
 		this.sfzhaoma = sfzhaoma;
 	}
 
-	public String getPasswd() {
-		return passwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswd(String passwd) {
-		this.passwd = passwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

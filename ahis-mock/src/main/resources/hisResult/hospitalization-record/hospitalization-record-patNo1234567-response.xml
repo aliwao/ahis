@@ -1,0 +1,25 @@
+<Response>
+	<!-- 住院信息查询 -->
+    <item>
+		<admissionNum>1566320</admissionNum>
+		<deptName>内科</deptName>
+		<bedNo>12-6床</bedNo>
+		<status>1</status>
+		<inDate>2017-01-13</inDate>
+		<outDate>2017-01-14</outDate>
+		<totalFee>600050</totalFee>
+		<balance>23013</balance>
+		<otherDesc></otherDesc>
+	</item>
+	<item>
+		<admissionNum>1566099</admissionNum>
+		<deptName>内科</deptName>
+		<bedNo>6号床</bedNo>
+		<status>2</status>
+		<inDate>2016-03-15</inDate>
+		<outDate>2016-03-16</outDate>
+		<totalFee>1200050</totalFee>
+		<balance>103050</balance>
+		<otherDesc></otherDesc>
+	</item>
+</Response>

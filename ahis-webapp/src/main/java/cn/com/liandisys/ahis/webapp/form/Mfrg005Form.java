@@ -12,6 +12,10 @@ public class Mfrg005Form extends AbstractAhisForm {
 	private String psOrdNum;
 	private String hisOrdNum;
 	private String payMode;
+	private String deptName;
+	private String doctorName;
+	private String scheduleDate;
+	private String timeFlag;
 	private String payAmt;
 
 	public long getUserId() {
@@ -52,5 +56,37 @@ public class Mfrg005Form extends AbstractAhisForm {
 
 	public void setPayAmt(String payAmt) {
 		this.payAmt = payAmt;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+	public String getScheduleDate() {
+		return scheduleDate;
+	}
+
+	public void setScheduleDate(String scheduleDate) {
+		this.scheduleDate = scheduleDate;
+	}
+
+	public String getTimeFlag() {
+		return timeFlag;
+	}
+
+	public void setTimeFlag(String timeFlag) {
+		this.timeFlag = timeFlag;
 	}
 }

@@ -1,21 +1,19 @@
 package cn.com.liandisys.ahis.webapp.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBException;
-
-import net.sf.json.JSONObject;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
 import cn.com.liandisys.ahis.webapp.dto.PatientsHospitalizedInfo;
@@ -25,6 +23,7 @@ import cn.com.liandisys.ahis.webapp.his.entity.response.DoctorInfoItem;
 import cn.com.liandisys.ahis.webapp.his.entity.response.HospitalDeptItem;
 import cn.com.liandisys.ahis.webapp.service.Mfih004Service;
 import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
+
 
 /**
  * 住院履历页面控制器。
@@ -82,27 +81,19 @@ public class Mfih004Controller extends AbstractAhisController<Mfih004Form> {
 
 			// 获取医生名称
 			JSONObject json = new JSONObject();
-			try {
+
 				json.put("deptCode", dto.getDeptCode());
 				json.put("doctorCode", dto.getDoctorCode());
 				DoctorInfoItem doctor = mfih004Service.getDoctorInfo(json);
 				entity.setDoctorName(doctor.getDoctorName());
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
+
 			// 获取科室名称
 			json = new JSONObject();
-			try {
+
 				json.put("deptCode", dto.getDeptCode());
 				HospitalDeptItem dept = mfih004Service.getDeptInfo(json);
 				entity.setDeptName(dept.getDeptName());
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			} catch (JAXBException e) {
-				e.printStackTrace();
-			}
+
 			enList.add(entity);
 		}
 		mfih004Form.setHospitalizedList(enList);

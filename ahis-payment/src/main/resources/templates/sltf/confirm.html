@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<title>支付确认</title>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation"
+        style="background-color: #6dbef6">
+        <div class="open-hover ldui-topnavbar">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">支付确认</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12" style="margin-top: 70px; margin-bottom: 15px; background-color: white; text-align:center">
+        <div>
+            <span style="color:red; font-size:25px;" th:text="${#numbers.formatDecimal(confirmForm.payfee / 100, 0, 'COMMA', 2, 'POINT')} + 元"></span>
+        </div>
+        <div>
+            <span th:text="${confirmForm.corpusername}"></span>
+        </div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 1px; background-color: white;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">流水号</div>
+        <div class="col-xs-9" style="margin-top: 10px; margin-bottom: 10px;">
+            <span th:text="${confirmForm.orderid}"></span>
+        </div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 15px; background-color: white;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">支付方式</div>
+        <div class="col-xs-9" style="margin-top: 10px; margin-bottom: 10px;">商联通付</div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 15px; background-color: white;">
+        <div>温馨提醒</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">1.请仔细核对支付信息是否准确无误，如果对订单有任何疑问，请致电客服电话。</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">2.本次支付将跳转至第三方支付平台，届时可能需要验证码提示，请妥善保管验证码。</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">3.本平台发票功能暂未开发，如果需要收费凭证或发票，请至医院柜台领取。</div>
+    </div>
+    <form th:action="${postUrl}" method="post">
+        <input type="hidden" name="version" th:value="${confirmForm.version}" />
+        <input type="hidden" name="charset" th:value="${confirmForm.charset}" />
+        <input type="hidden" name="systemid" th:value="${confirmForm.systemid}" />
+        <input type="hidden" name="businesstype" th:value="${confirmForm.businesstype}" />
+        <input type="hidden" name="paymentmode" th:value="${confirmForm.paymentmode}" />
+        <input type="hidden" name="corpid" th:value="${confirmForm.corpid}" />
+        <input type="hidden" name="itemid" th:value="${confirmForm.itemid}" />
+        <input type="hidden" name="msgseqno" th:value="${confirmForm.msgseqno}" />
+        <input type="hidden" name="uid" th:value="${confirmForm.uid}" />
+        <input type="hidden" name="corpuserid" th:value="${confirmForm.corpuserid}" />
+        <input type="hidden" name="corpusername" th:value="${confirmForm.corpusername}" />
+        <input type="hidden" name="orderid" th:value="${confirmForm.orderid}" />
+        <input type="hidden" name="orderfee" th:value="${confirmForm.orderfee}" />
+        <input type="hidden" name="payfee" th:value="${confirmForm.payfee}" />
+        <input type="hidden" name="orderdatetime" th:value="${confirmForm.orderdatetime}" />
+        <input type="hidden" name="accountNumber" th:value="${confirmForm.accountNumber}" />
+        <input type="hidden" name="customphone" th:value="${confirmForm.customphone}" />
+        <input type="hidden" name="fronturl" th:value="${confirmForm.fronturl}" />
+        <input type="hidden" name="receiveurl" th:value="${confirmForm.receiveurl}" />
+        <input type="hidden" name="note" th:value="${confirmForm.note}" />
+        <input type="hidden" name="custominfo" th:value="${confirmForm.custominfo}" />
+        <input type="hidden" name="reserved" th:value="${confirmForm.reserved}" />
+        <input type="hidden" name="signmsg" th:value="${confirmForm.signmsg}" />
+        <input type="submit" class="btn btn-primary btn-block" value="确认支付" />
+    </form>
+</body>
+</html>

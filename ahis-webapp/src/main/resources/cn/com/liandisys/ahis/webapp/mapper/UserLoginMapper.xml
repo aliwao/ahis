@@ -6,72 +6,64 @@
 		type="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
 		<id column="userID" property="userID" />
 		<result column="password" property="password" />
-		<result column="name" property="name" />
 		<result column="mobileNo" property="mobileNo" />
-		<result column="isEnabled" property="isEnabled" />
+		<result column="validFlag" property="validFlag" />
 	</resultMap>
 
 	<!-- 根据ID查询数据 -->
 	<select id="getAll" resultMap="userLoginEntity">
 		select
-		  UserID    as userID
-		, Password  as password
-		, Name      as name
-		, MobileNo  as mobileNo
-		, IsEnabled as isEnabled
+		  userID    as userID
+		, password  as password
+		, mobileNo  as mobileNo
+		, validFlag as validFlag
 		from UserLogin
 	</select>
 
 	<select id="getByMobileNo" parameterType="String" resultMap="userLoginEntity">
 		select
-		  UserID    as userID
-		, Password  as password
-		, Name      as name
-		, MobileNo  as mobileNo
-		, IsEnabled as isEnabled
+		  userID    as userID
+		, password  as password
+		, mobileNo  as mobileNo
+		, validFlag as validFlag
 		from UserLogin
 		where MobileNo = #{mobileNo}
 	</select>
 
 	<select id="getUserIdByMobileNo" parameterType="String" resultType="Integer">
 		select
-			UserID  as  userID
+			userID  as  userID
 		from UserLogin
-		where MobileNo = #{mobileNo}
+		where mobileNo = #{mobileNo}
 	</select>
 
 	<insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
 	    insert into UserLogin
-	        (UserID
-	        , Password
-	        , Name
-	        , MobileNo
-	        , IsEnabled)
+	        (userID
+	        , password
+	        , mobileNo
+	        , validFlag)
 	    values 
 	        (#{userID}
 	        , #{password}
-	        , #{name}
 	        , #{mobileNo}
-	        , #{isEnabled}); 
+	        , #{validFlag}); 
 	</insert>
 
     <insert id="insertSelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
      insert into UserLogin
      <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userID != null" >
-        UserID,
+        userID,
       </if>
       <if test="password != null" >
-        Password,
-      </if>
-      <if test="name != null" >
-        Name,
+        password,
       </if>
       <if test="mobileNo != null" >
-        MobileNo,
+        mobileNo,
       </if>
-      <if test="isEnabled != null" >
-        IsEnabled,
+      <if test="validFlag != null" >
+        validFlag,
       </if>
      </trim>
      <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -81,14 +73,11 @@
       <if test="password != null" >
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
       <if test="mobileNo != null" >
         #{mobileNo,jdbcType=VARCHAR},
       </if>
-      <if test="isEnabled != null" >
-        #{isEnabled,jdbcType=CHAR},
+      <if test="validFlag != null" >
+        #{validFlag,jdbcType=CHAR},
       </if>
      </trim>
     </insert>
@@ -96,11 +85,10 @@
     <update id="updateByPrimaryKeySelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
      update UserLogin
      <trim prefix="set" suffixOverrides=",">
-         <if test="password != null" >Password=#{password,jdbcType=VARCHAR},</if>
-         <if test="name != null" >Name=#{name,jdbcType=VARCHAR},</if>
-         <if test="mobileNo != null" >MobileNo=#{mobileNo,jdbcType=VARCHAR},</if>
-         <if test="isEnabled != null" >IsEnabled=#{isEnabled,jdbcType=CHAR},</if>
+         <if test="password != null" >password=#{password,jdbcType=VARCHAR},</if>
+         <if test="mobileNo != null" >mobileNo=#{mobileNo,jdbcType=VARCHAR},</if>
+         <if test="validFlag != null" >validFlag=#{validFlag,jdbcType=CHAR},</if>
      </trim>
-     where UserID = #{userID}
+     where userID = #{userID}
     </update>
 </mapper>

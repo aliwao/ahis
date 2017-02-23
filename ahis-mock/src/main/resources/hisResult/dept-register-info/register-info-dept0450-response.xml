@@ -1,0 +1,56 @@
+<Response>
+	<!-- 2017-01-17 -->
+	<!-- 产科门诊0450 -->
+    <item>
+		<deptCode>0450</deptCode>
+		<doctorCode>005216</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1010</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+    <item>
+		<deptCode>0450</deptCode>
+		<doctorCode>005216</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1020</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+	<item>
+		<deptCode>0450</deptCode>
+		<doctorCode>009223</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1030</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+    <item>
+		<deptCode>0450</deptCode>
+		<doctorCode>009223</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1040</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>0</leftNum>
+	</item>
+</Response>

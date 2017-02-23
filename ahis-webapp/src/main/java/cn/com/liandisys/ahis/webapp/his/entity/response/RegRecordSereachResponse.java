@@ -2,15 +2,13 @@ package cn.com.liandisys.ahis.webapp.his.entity.response;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.alibaba.fastjson.annotation.JSONField;
 
-@XmlRootElement(name = "Response")
 public class RegRecordSereachResponse extends BaseResponse{
 
+	@JSONField(name="item")
 	private List<RegRecordSereachItem> itemList;
 
-	@XmlElement(name = "item")
 	public List<RegRecordSereachItem> getItemList() {
 		return itemList;
 	}

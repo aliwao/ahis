@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
+import cn.com.liandisys.ahis.webapp.dto.DepartmentBasicEntity;
 import cn.com.liandisys.ahis.webapp.form.Mfrg001Form;
-import cn.com.liandisys.ahis.webapp.his.entity.response.HospitalDeptItem;
 import cn.com.liandisys.ahis.webapp.service.Mfrg001Service;
 
 /**
@@ -36,8 +36,8 @@ public class Mfrg001Controller extends AbstractAhisController<Mfrg001Form> {
 	@Autowired
 	private Mfrg001Service mfrg001Service;
 
-	/** WebService返回科室 */
-	private List<HospitalDeptItem> deptItemlist;
+	/** DB科室信息 */
+	private List<DepartmentBasicEntity> deptItemlist;
 
 	/**
 	 * 选择科室页面显示。
@@ -48,17 +48,8 @@ public class Mfrg001Controller extends AbstractAhisController<Mfrg001Form> {
 	 */
 	@RequestMapping("index")
 	public String index(@ModelAttribute Mfrg001Form mfrg001Form, HttpServletRequest req) {
-		try {
-			deptItemlist = mfrg001Service.getDeptItemList();
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Map<String, List<HospitalDeptItem>> deptMap = findDeptMap(mfrg001Form);
+		deptItemlist = mfrg001Service.getDBDeptListByHospital("0001");
+		Map<String, List<DepartmentBasicEntity>> deptMap = findDeptMap(mfrg001Form);
 		mfrg001Form.setDeptItemMap(deptMap);
 		return forwardIndex();
 	}
@@ -75,7 +66,7 @@ public class Mfrg001Controller extends AbstractAhisController<Mfrg001Form> {
 	@RequestMapping(value = "deptSearch", method = RequestMethod.POST)
 	public String deptSearch(@ModelAttribute Mfrg001Form mfrg001Form) throws UnsupportedEncodingException, JAXBException {
 
-		Map<String, List<HospitalDeptItem>> deptMap = findDeptMap(mfrg001Form);
+		Map<String, List<DepartmentBasicEntity>> deptMap = findDeptMap(mfrg001Form);
 		mfrg001Form.setDeptItemMap(deptMap);
 		return forwardIndex();
 	}
@@ -96,12 +87,12 @@ public class Mfrg001Controller extends AbstractAhisController<Mfrg001Form> {
 
 		StringBuffer dept = new StringBuffer();
 		deptItemlist.forEach(item -> {
-			if (item.getDeptName().contains(mfrg001Form.getDeptName())) {
+			if (item.getDepartmentName().contains(mfrg001Form.getDeptName())) {
 				if (dept.length() == 0) {
 					dept.append("[");
 				}
-				dept.append("{\"label\":\"" + item.getDeptName() + "\",\"value\":\"" + item.getDeptName() + "\",\"id\":\"" + item.getDeptCode()
-						+ "\"},");
+				dept.append("{\"label\":\"" + item.getDepartmentName() + "\",\"value\":\"" + item.getDepartmentName() + "\",\"id\":\""
+						+ item.getDepartmentCode() + "\"},");
 			}
 		});
 		String deptStr = dept.toString();
@@ -112,22 +103,29 @@ public class Mfrg001Controller extends AbstractAhisController<Mfrg001Form> {
 		return deptStr;
 	}
 
-	private Map<String, List<HospitalDeptItem>> findDeptMap(Mfrg001Form mfrg001Form) {
-		Map<String, List<HospitalDeptItem>> deptMap = new TreeMap<String, List<HospitalDeptItem>>();
+	private Map<String, List<DepartmentBasicEntity>> findDeptMap(Mfrg001Form mfrg001Form) {
+		Map<String, List<DepartmentBasicEntity>> deptMap = new TreeMap<String, List<DepartmentBasicEntity>>();
 
 		String searchWord = mfrg001Form.getDeptName();
 		deptItemlist.forEach(item -> {
-			if (searchWord != null && !searchWord.trim().isEmpty() && !item.getDeptName().contains(searchWord.trim())) {
+			if ((searchWord != null && !searchWord.trim().isEmpty() && !item.getDepartmentName().contains(searchWord.trim()))
+					|| !"0".equals(item.getHasChild())) {
 				return;
 			}
 
-			String[] rs = PinyinHelper.toHanyuPinyinStringArray(item.getDeptName().charAt(0));
-			String firstAlphabet = "#" + rs[0].substring(0, 1).toUpperCase();
+			String[] rs = PinyinHelper.toHanyuPinyinStringArray(item.getDepartmentName().charAt(0));
+			String firstAlphabet;
+			if (rs == null) {
+				firstAlphabet = "#" + item.getDepartmentName().substring(0, 1).toUpperCase();
+			} else {
+				firstAlphabet = "#" + rs[0].substring(0, 1).toUpperCase();
+			}
+
 			item.setCanRegister("1"); // 是否可挂号判断待
 
-				List<HospitalDeptItem> existList = deptMap.get(firstAlphabet);
+				List<DepartmentBasicEntity> existList = deptMap.get(firstAlphabet);
 				if (existList == null) {
-					List<HospitalDeptItem> list = new ArrayList<>();
+					List<DepartmentBasicEntity> list = new ArrayList<>();
 					list.add(item);
 					deptMap.put(firstAlphabet, list);
 				} else {

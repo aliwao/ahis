@@ -1,5 +1,9 @@
 package cn.com.liandisys.ahis.webapp.config;
 
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +15,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import cn.com.liandisys.ahis.webapp.auth.AhisAuthenticationSuccessHandler;
 import cn.com.liandisys.ahis.webapp.auth.AhisCustomLogoutSuccessHandler;
@@ -43,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/images/*/*",
 						"/fonts/*",
 						"/test/*",
+						"/rest/*",
+						"/rest/*/*",
 						"/g/*",
 						"/g/*/*")
 				.permitAll().anyRequest().authenticated()
@@ -63,6 +70,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().exceptionHandling()
 				.authenticationEntryPoint(new AhisLoginUrlAuthenticationEntryPoint("/login"))
 				;
+		// 解决CsrfFilter与Rest服务Post方式的矛盾
+		http.csrf().requireCsrfProtectionMatcher(new RequestMatcher() {
+			private Pattern allowedMethods = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
+
+			@Override
+			public boolean matches(HttpServletRequest request) {
+				String servletPath = request.getServletPath();
+
+				if (servletPath.contains("/rest/") || servletPath.contains("/m/mfis008/index") || servletPath.contains("/m/mfop001/init")) {
+					return false;
+				}
+				return !allowedMethods.matcher(request.getMethod()).matches();
+			}
+		});
 		// TODO 防止CSRF攻击，需要在页面添加CSRF Token
 		// 参考http://blog.csdn.net/sinat_28454173/article/details/52251004
 //		http.csrf().disable();

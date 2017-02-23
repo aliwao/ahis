@@ -33,7 +33,7 @@ public class UserLoginService {
 
 		for (int i = 0; i < 100; i++) {
 			userLoginEntity.setUserID(userLoginEntity.getUserID() + 1);
-			userLoginEntity.setName(userLoginEntity.getName() + "1");
+			//userLoginEntity.setName(userLoginEntity.getName() + "1");
 			userLoginMapper.insert(userLoginEntity);
 		}
 

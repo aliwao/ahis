@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<script src="/js/bootstrap-notify.min.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+
+<style>
+.row-ui {
+	 margin-right:0px;
+	 margin-left: 0px
+}
+.alert{
+	padding: 5px;
+}
+a, a:focus, a:hover{
+  background-color:#22a7f0;
+}
+
+a:focus, a:hover{
+  background-color:#22a7f0;
+}
+</style>
+
+<script type="text/javascript">
+//CSRF Token
+//<![CDATA[
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+$(document).ready(function(){
+	$.notify({
+		title: "<strong>提示：</strong> ",
+		message: "您的押金余额不足，请及时充值！"
+	},{
+		type: "warning",
+		placement: {
+			from: "bottom",
+			align: "right"
+		},
+		offset: 0,
+		delay: 0,
+		timer: 0,
+		template: '<div data-notify="container" class="col-xs-12 col-sm-4 alert alert-{0}" role="alert">' +
+				'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">&times;</button><span data-notify="icon"></span> ' +
+				'<span data-notify="title">{1}</span> <span data-notify="message">{2}</span><div class="progress" data-notify="progressbar">' +
+				'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">' +
+				'</div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'
+	});
+	
+	$("#orderDetail").click(function() {
+		window.location="/g/mfih005/index";
+	});
+	$("#goToPay").click(function() {
+		window.location="/g/mfih007/index";
+	});
+}); 
+//]]>
+</script>
+
+<title>住院详细</title>
+</head>
+<body>
+<form>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#f4f4f4">
+    <div class="open-hover ldui-topnavbar">
+    	<div class="row">
+        	<div class="col-xs-3">
+      			<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavById('hphp001');"></span>
+      		</div>
+      		<div class="col-xs-6">
+      			<div class="navbar-header">
+      		          <a class="navbar-brand" href="#">住院服务</a>
+      		    </div>
+      		</div>
+        </div>
+    </div>
+</div>
+
+<div class="" id="containerDiv" style="margin-top:50px;">
+	
+	<!-- 住院人 -->
+	<div class="row text-left" style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 10px">
+		<div class="col-xs-12" style="height: 45px; padding-top: 12px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span class="glyphicon glyphicon-user"></span> <span>住院人</span><span style="float:right;" th:text="${mfih003Form.userName}"></span>
+		</div>
+	</div>
+	
+	<div class="row row-ui" style="background-color: #fff; margin-bottom:10px">
+		<span class="col-xs-2"></span>
+    	<span onclick="pageNavOnLogin('mfis009')" class="col-xs-3" style="padding: 12px 12px; text-align: center">
+    		<span>
+        		<img class="ldui-menuimg" src="/images/hospitalization/pay.jpg" /><br/>
+        		<span>押金补缴</span>
+        	</span>
+    	</span> 
+    	<span class="col-xs-2"></span>
+    	<span onclick="pageNavOnLogin('mfis010')" class="col-xs-3" style="padding: 12px 12px; text-align: center">
+    		<span>
+            	<img class="ldui-menuimg" src="/images/hospitalization/bill.jpg" /><br />
+            	<span>住院清单</span>
+            </span>
+     	</span> 
+     	<span class="col-xs-2"></span>
+    </div> 
+	
+	<!-- 住院信息 -->
+	<div th:if="${mfih003Form.statusFlg} == '1'" class="row text-left" style="background-color: white; vertical-align: middle; margin: 0px 0px 0px 0px">
+		<div class="col-xs-9" style="height: 40px; padding-top: 12px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span>住院信息</span>
+		</div>
+	</div>
+	<div th:if="${mfih003Form.statusFlg} == '1'" class="row" style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">医院</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.hospitalName}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">医生</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.doctorName}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">科室</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.deptName}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">诊断</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.diagnoseInfo}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">病区</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.area}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">病床</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.bed}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">入院时间</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.inDate}"></span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">住院状态</div>
+			<div class="col-xs-7" style="padding-left: 0px" th:if="${mfih003Form.statusFlg} == '1'"><span >住院中</span></div>
+			<div class="col-xs-7" style="padding-left: 0px" th:if="${mfih003Form.statusFlg} == '2'"><span >已出院</span></div>
+		</div>
+		<div class="col-xs-12 col-sm-12" >
+			<div class="col-xs-5" style="padding-right: 0px">住院天数</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.stayCount}"></span>天</div>
+		</div>
+		<div class="col-xs-12 col-sm-12">
+			<div class="col-xs-5" style="padding-right: 0px">已产生费用</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.totalFee}"></span>元</div>
+		</div>
+		<div class="col-xs-12 col-sm-12" style="padding-bottom:10px">
+			<div class="col-xs-5" style="padding-right: 0px">押金总额</div>
+			<div class="col-xs-7" style="padding-left: 0px"><span th:text="${mfih003Form.totalDeposit}"></span>元</div>
+		</div>
+	</div>
+	
+	<div class="row text-right row-ui" style="background-color: white; height:40px;  padding: 10px 10px;">
+		<div class="col-xs-12 col-sm-12">
+			押金余额：<span th:text="${mfih003Form.balance}" style="color:#22a7f0"></span><span style="color:#22a7f0">元</span>
+		</div>
+	</div>
+</div>
+</form>
+</body>
+</html>

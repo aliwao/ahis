@@ -12,6 +12,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/bootstrap-theme.css" rel="stylesheet" />
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/sha1.js"></script>
     <link href="/css/common.css" rel="stylesheet" />
     <script src="/js/common.js"></script>
     <style>
@@ -92,7 +93,8 @@
           </div>
           <div class="has-feedback">
                <span class="glyphicon glyphicon-lock form-control-feedback ldui-form-control-feedback"></span>
-               <input type="password" class="form-control ldui-form-control" id="password" name="password" placeholder="请输入登录密码" />
+               <input type="hidden" id="password" name="password" value="" />
+               <input type="password" class="form-control ldui-form-control" id="inputPass" placeholder="请输入登录密码" />
           </div>
       </div>
       </form>
@@ -101,7 +103,7 @@
     <footer class="container">
        <button type="button" class="btn btn-primary btn-block" onclick="doLogin();">登录</button>
        <div style="width:50%;float:left;text-align:left;margin-top:10px;"><a href="g/mplg002/index">注册新账号</a></div>
-       <div style="width:50%;float:left;text-align:right;margin-top:10px;"><a href="#">忘记密码？</a></div>
+       <div style="width:50%;float:left;text-align:right;margin-top:10px;"><a href="g/mplg004/index">忘记密码？</a></div>
     </footer>
  <script>
     $(document).ready(
@@ -116,6 +118,10 @@
     );
     function doLogin() {
         localStorage.setItem('isloginflg', 1);
+        //alert($("#inputPass").val());
+        var sha = hex_sha1($("#inputPass").val())
+        //alert(sha);
+        $("#password").val(sha);
         $("#loginForm").submit();
         // self.location = 'MPMP001.html';
     }

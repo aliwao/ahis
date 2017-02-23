@@ -1,18 +1,18 @@
 package cn.com.liandisys.ahis.webapp.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.JAXBException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
 import cn.com.liandisys.ahis.webapp.entity.NumberSourceEntity;
@@ -20,7 +20,7 @@ import cn.com.liandisys.ahis.webapp.form.Mfrg003Form;
 import cn.com.liandisys.ahis.webapp.his.entity.response.DoctorInfoItem;
 import cn.com.liandisys.ahis.webapp.his.entity.response.RegisterInfoItem;
 import cn.com.liandisys.ahis.webapp.service.Mfrg003Service;
-import net.sf.json.JSONObject;
+
 
 @Controller
 @RequestMapping("/m/mfrg003/*")
@@ -39,7 +39,7 @@ public class Mfrg003Controller extends AbstractAhisController<Mfrg003Form> {
 		JSONObject registerInfoRequestJson = new JSONObject();
 		registerInfoRequestJson.put("deptCode", mfrg003Form.getDeptCode());
 		registerInfoRequestJson.put("doctorCode",mfrg003Form.getDoctorCode());
-		try {
+
 			doctorInfoItemList = mfrg003Service.getDoctorDetailList(doctorInfoRequestJson);
 			DoctorInfoItem doctorInfo = doctorInfoItemList.get(0);
 			mfrg003Form.setDeptName(doctorInfo.getDeptName());
@@ -60,13 +60,6 @@ public class Mfrg003Controller extends AbstractAhisController<Mfrg003Form> {
 			});
 			mfrg003Form.setEntityList(entities);
 
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return forwardIndex();
 	}
 

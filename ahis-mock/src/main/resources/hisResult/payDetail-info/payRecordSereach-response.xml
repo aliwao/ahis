@@ -1,0 +1,22 @@
+﻿<Response>
+    <item>
+    	<hisOrdNum>8261133</hisOrdNum>
+        <payName>诊疗费</payName>
+        <deptName>内科</deptName>
+        <doctorName>王大生</doctorName>
+        <totalAmt>200.00</totalAmt>
+        <medInsAmt>0.00</medInsAmt>
+        <selfAmt>200.00</selfAmt>
+    </item>
+    <item>
+    	<hisOrdNum>8261134</hisOrdNum>
+        <payName>医药费</payName>
+        <deptName>内科</deptName>
+        <doctorName>王大生</doctorName>
+        <totalAmt>300.00</totalAmt>
+        <medInsAmt>0.00</medInsAmt>
+        <selfAmt>300.00</selfAmt>
+    </item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

@@ -1,0 +1,23 @@
+﻿<Response>
+	<resultCode>0</resultCode>
+   	<resultMessage>查询成功</resultMessage>
+	<inspectId>000000001</inspectId>
+	<inspectName>耳鼻喉</inspectName>
+	<deptName>耳鼻喉科</deptName>
+	<doctorName>沈帆</doctorName>
+	<inspectTime>2017-02-07 09:20:00</inspectTime>
+	<reportTime>2017-02-07 12:00:00</reportTime>
+    <item>
+    	<itemName>耳</itemName>
+	<result>1.2</result>
+	<refRange>1.0~1.5</refRange>
+	<abnormal>0</abnormal>
+    </item>
+    <item>
+    	<itemName>鼻</itemName>
+	<result>1.6</result>
+	<refRange>1.0~1.5</refRange>
+	<abnormal>1</abnormal>
+    </item>
+    
+</Response>

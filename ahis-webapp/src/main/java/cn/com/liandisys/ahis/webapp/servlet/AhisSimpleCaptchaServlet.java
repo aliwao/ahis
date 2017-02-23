@@ -29,9 +29,6 @@ public class AhisSimpleCaptchaServlet extends SimpleCaptchaServlet {
 
 	// 背景色
 	private static final Color BACKGROUND_COLOR = new Color(100, 200, 200);
-	private static final char[] CHARS = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'k', 'm', 'n', 'p', 'r',
-			'w', 'x', 'y', '2', '3', '4', '5', '6', '7', '8' };
-	private static final char[] CALCULATE_OPERATION_CHARS = new char[] { '+', '-', '×', '÷' };
 	private static final Color WORD_COLOR = Color.BLACK;
 	private static final java.util.List<Color> WORD_COLORS;
 	private static final java.util.List<Font> WORD_FONTS;
@@ -46,7 +43,6 @@ public class AhisSimpleCaptchaServlet extends SimpleCaptchaServlet {
 
 	private static int _width = 200;
 	private static int _height = 50;
-	private static int _text_length = 4;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -56,9 +52,6 @@ public class AhisSimpleCaptchaServlet extends SimpleCaptchaServlet {
 		}
 		if (getInitParameter("captcha-width") != null) {
 			_width = Integer.valueOf(getInitParameter("captcha-width")).intValue();
-		}
-		if (getInitParameter("captcha-text-length") != null) {
-			_text_length = Integer.valueOf(getInitParameter("captcha-text-length")).intValue();
 		}
 	}
 
@@ -73,7 +66,5 @@ public class AhisSimpleCaptchaServlet extends SimpleCaptchaServlet {
 		
 		CaptchaServletUtil.writeImage(resp, captcha.getImage());
 		req.getSession().setAttribute(ATTR_NAME, captcha);
-		System.out.println(captcha.getAnswer());
-		System.out.println(captcha.getTimeStamp());
 	}
 }

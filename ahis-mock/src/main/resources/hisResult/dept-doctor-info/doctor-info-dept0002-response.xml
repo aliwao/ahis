@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0002</deptCode>
+		<deptName>儿科</deptName>
+		<doctorCode>0003</doctorCode>
+		<doctorName>徐严明</doctorName>
+		<doctorSkill>小儿内科</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0002</deptCode>
+		<deptName>儿科</deptName>
+		<doctorCode>0004</doctorCode>
+		<doctorName>赵芳丹</doctorName>
+		<doctorSkill>小儿外科</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

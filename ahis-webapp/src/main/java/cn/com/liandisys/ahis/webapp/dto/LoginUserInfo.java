@@ -11,57 +11,70 @@ public class LoginUserInfo extends AbstractAhisDto {
 
 	private int userID;
 	private String password;
-	private String name;
 	private String mobileNo;
-	private String isEnabled;
+	private String validFlag;
+	
 	/** 身份证号 */
-	private String shenfenzhenghao;
+	private String identityCardNo;
+	/** 姓名 */
+	private String fullName;
+    /** 头像 */
+    private byte[] portrait;
 
 	public int getUserID() {
 		return userID;
-	}
-
-	public void setUserID(int userID) {
-		this.userID = userID;
 	}
 
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getMobileNo() {
 		return mobileNo;
+	}
+
+	public String getValidFlag() {
+		return validFlag;
+	}
+
+	public String getIdentityCardNo() {
+		return identityCardNo;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
 
-	public String getIsEnabled() {
-		return isEnabled;
+	public void setValidFlag(String validFlag) {
+		this.validFlag = validFlag;
 	}
 
-	public void setIsEnabled(String isEnabled) {
-		this.isEnabled = isEnabled;
+	public void setIdentityCardNo(String identityCardNo) {
+		this.identityCardNo = identityCardNo;
 	}
 
-	public String getShenfenzhenghao() {
-		return shenfenzhenghao;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setShenfenzhenghao(String shenfenzhenghao) {
-		this.shenfenzhenghao = shenfenzhenghao;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
+
+	public byte[] getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(byte[] portrait) {
+		this.portrait = portrait;
+	}
+
 }

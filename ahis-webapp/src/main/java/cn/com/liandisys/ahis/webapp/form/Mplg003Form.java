@@ -3,6 +3,7 @@ package cn.com.liandisys.ahis.webapp.form;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisForm;
 
@@ -14,9 +15,9 @@ public class Mplg003Form extends AbstractAhisForm {
 	private static final long serialVersionUID = -6163606064923668039L;
 
 	/**
-	 * 头像 TODO
+	 * 头像
 	 */
-	private String toupic;
+	private MultipartFile portrait;
 
 	/**
 	 * 姓名
@@ -26,7 +27,7 @@ public class Mplg003Form extends AbstractAhisForm {
 	/**
 	 * 身份证号码
 	 */
-	private String sfzhao;
+	private String identityCardNo;
 
 	/**
 	 * 出生日期
@@ -47,61 +48,62 @@ public class Mplg003Form extends AbstractAhisForm {
 	/**
 	 * 职业
 	 */
-	private String zhiye;
+	private String occupation;
 
-	public String getToupic() {
-		return toupic;
-	}
-
-	public void setToupic(String toupic) {
-		this.toupic = toupic;
+	public MultipartFile getPortrait() {
+		return portrait;
 	}
 
 	public String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getSfzhao() {
-		return sfzhao;
-	}
-
-	public void setSfzhao(String sfzhao) {
-		this.sfzhao = sfzhao;
+	public String getIdentityCardNo() {
+		return identityCardNo;
 	}
 
 	public Date getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
 	public String getSex() {
 		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
 	}
 
 	public String getAddress() {
 		return address;
 	}
 
+	public String getOccupation() {
+		return occupation;
+	}
+
+	public void setPortrait(MultipartFile portrait) {
+		this.portrait = portrait;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setIdentityCardNo(String identityCardNo) {
+		this.identityCardNo = identityCardNo;
+	}
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public String getZhiye() {
-		return zhiye;
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
 	}
 
-	public void setZhiye(String zhiye) {
-		this.zhiye = zhiye;
-	}
 }

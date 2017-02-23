@@ -5,14 +5,14 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.com.liandisys.ahis.webapp.dto.PatientsHospitalizedInfo;
 import cn.com.liandisys.ahis.webapp.entity.PatientsHospitalizedEntity;
@@ -34,7 +34,7 @@ import cn.com.liandisys.ahis.webapp.mapper.Mfih001Mapper;
 public class Mfih004Service {
 
 	@Autowired
-	private Mfih001Mapper mfih001Mapper;
+	public Mfih001Mapper mfih001Mapper;
 
 	private static final Logger logger = LoggerFactory.getLogger(Mfih004Service.class);
 
@@ -58,7 +58,7 @@ public class Mfih004Service {
 	 * @throws JAXBException
 	 */
 	@RequestMapping
-	public DoctorInfoItem getDoctorInfo(JSONObject request) throws UnsupportedEncodingException, JAXBException {
+	public DoctorInfoItem getDoctorInfo(JSONObject request) {
 
 		JSONObject json = HisHttpJson.executeHisApi("doctor-info", request);
 		DoctorInfoResponse respone = HisHttpJson.convJsonToBean(json, DoctorInfoResponse.class);
@@ -84,7 +84,7 @@ public class Mfih004Service {
 	 * @throws JAXBException
 	 */
 	@RequestMapping
-	public HospitalDeptItem getDeptInfo(JSONObject request) throws UnsupportedEncodingException, JAXBException {
+	public HospitalDeptItem getDeptInfo(JSONObject request) {
 
 		JSONObject json = HisHttpJson.executeHisApi("dept-info", request);
 		HospitalDeptResponse respone = HisHttpJson.convJsonToBean(json, HospitalDeptResponse.class);

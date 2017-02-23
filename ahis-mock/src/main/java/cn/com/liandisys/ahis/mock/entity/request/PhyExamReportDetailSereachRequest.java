@@ -1,5 +1,6 @@
 package cn.com.liandisys.ahis.mock.entity.request;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import cn.com.liandisys.ahis.mock.entity.BaseRequest;
@@ -14,6 +15,7 @@ public class PhyExamReportDetailSereachRequest extends BaseRequest {
 	// 检验报告ID
 	private String phyExamId;
 
+	@XmlElement
 	public String getPatName() {
 		return patName;
 	}
@@ -22,6 +24,7 @@ public class PhyExamReportDetailSereachRequest extends BaseRequest {
 		this.patName = patName;
 	}
 
+	@XmlElement
 	public String getPatCardNo() {
 		return patCardNo;
 	}
@@ -30,6 +33,7 @@ public class PhyExamReportDetailSereachRequest extends BaseRequest {
 		this.patCardNo = patCardNo;
 	}
 
+	@XmlElement
 	public String getPhyExamId() {
 		return phyExamId;
 	}

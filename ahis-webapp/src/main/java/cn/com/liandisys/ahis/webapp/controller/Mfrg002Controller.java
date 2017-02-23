@@ -8,8 +8,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,14 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
+import cn.com.liandisys.ahis.webapp.entity.DoctorBasicInfoEntity;
 import cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity;
 import cn.com.liandisys.ahis.webapp.entity.RegDocInfoEntity;
 import cn.com.liandisys.ahis.webapp.form.Mfrg002Form;
-import cn.com.liandisys.ahis.webapp.his.entity.response.DoctorInfoItem;
 import cn.com.liandisys.ahis.webapp.his.entity.response.RegisterInfoItem;
 import cn.com.liandisys.ahis.webapp.service.Mfrg002Service;
 import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
+
 
 /**
  * 预约挂号页面控制器。
@@ -98,9 +99,9 @@ public class Mfrg002Controller extends AbstractAhisController<Mfrg002Form> {
 		json.put("beginDate", year + "-" + month + "-" + day);
 		json.put("endDate", year + "-" + month + "-" + day);
 		json.put("deptCode", mfrg002Form.getDeptCode());
-		try {
+
 			List<RegisterInfoItem> regInfoList = mfrg002Service.getRegisterInfoList(json);
-			List<DoctorInfoItem> docInfoList = getDocInfoList(mfrg002Form.getDeptCode());
+			List<DoctorBasicInfoEntity> docEntityList = getDocInfoList(mfrg002Form.getDeptCode());
 
 			List<FavoriteDoctorsEntity> favDoctors = new ArrayList<>();
 			if (AhisCommonUtil.getCurrentUserInfo() != null) {
@@ -140,25 +141,19 @@ public class Mfrg002Controller extends AbstractAhisController<Mfrg002Form> {
 				}
 				entity.setRegFee(String.valueOf(Integer.valueOf(dbItem.getRegFee()) / 100.00));
 
-				DoctorInfoItem docInfo = getDoctorInfo(dbItem.getDoctorCode(), docInfoList);
-				if (docInfo != null) {
-					entity.setDoctorName(docInfo.getDoctorName());
-					entity.setDoctorIntrodution(docInfo.getDoctorIntrodution());
-					entity.setDoctorSkill(docInfo.getDoctorSkill());
-					entity.setDoctorTitle(docInfo.getDoctorTitle());
+				DoctorBasicInfoEntity docEntity = getDoctorInfo(dbItem.getDoctorCode(), docEntityList);
+				if (docEntity != null) {
+					entity.setDoctorName(docEntity.getDoctorName());
+					entity.setDoctorIntrodution(docEntity.getSummary());
+					entity.setDoctorSkill(docEntity.getSkill());
+					entity.setDoctorTitle(docEntity.getRank());
 				}
 				// TODO 暂无医生图片，用默认的
 				entity.setDoctorPic("/images/doctor/default.jpg");
 				regDocList.add(entity);
 			}
 			mfrg002Form.setRegDocList(regDocList);
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		return forwardIndex();
 	}
 
@@ -241,20 +236,12 @@ public class Mfrg002Controller extends AbstractAhisController<Mfrg002Form> {
 		return "2";
 	}
 
-	private List<DoctorInfoItem> getDocInfoList(String deptCode) {
-		JSONObject json = new JSONObject();
-		json.put("deptCode", deptCode);
-		try {
-			List<DoctorInfoItem> list = mfrg002Service.getDoctorInfoList(json);
-			return list;
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<>();
+	private List<DoctorBasicInfoEntity> getDocInfoList(String deptCode) {
+		DoctorBasicInfoEntity entity = new DoctorBasicInfoEntity();
+		entity.setHospitalCode("0001");
+		entity.setDepartmentCode(deptCode);
+		List<DoctorBasicInfoEntity> list = mfrg002Service.getDBDoctorListByHospital(entity);
+		return list;
 	}
 
 	private RegDocInfoEntity getDoctor(String doctorCode, List<RegDocInfoEntity> regDocList) {
@@ -275,10 +262,10 @@ public class Mfrg002Controller extends AbstractAhisController<Mfrg002Form> {
 		return false;
 	}
 
-	private DoctorInfoItem getDoctorInfo(String doctorCode, List<DoctorInfoItem> regDocList) {
-		for (int i = 0; i < regDocList.size(); i++) {
-			if (regDocList.get(i).getDoctorCode().equals(doctorCode)) {
-				return regDocList.get(i);
+	private DoctorBasicInfoEntity getDoctorInfo(String doctorCode, List<DoctorBasicInfoEntity> docEntityList) {
+		for (int i = 0; i < docEntityList.size(); i++) {
+			if (docEntityList.get(i).getDoctorCode().equals(doctorCode)) {
+				return docEntityList.get(i);
 			}
 		}
 		return null;

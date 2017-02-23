@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ribbon-consumer
+  resources:
+    static-locations: http://localhost:8080
+
+server:
+  port: 3333
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1111/eureka/
+
+AHIS-WEBAPP:
+  ribbon:
+    NFLoadBalancerRuleClassName: cn.com.liandisys.ahis.balancerrule.MyRule
+    ServerListRefreshInterval: 600000

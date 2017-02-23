@@ -1,5 +1,6 @@
 package cn.com.liandisys.ahis.mock.entity.request;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import cn.com.liandisys.ahis.mock.entity.BaseRequest;
@@ -31,6 +32,11 @@ public class AppointPaymentRequest extends BaseRequest {
 	 */
 	private String payTime;
 
+	private String serialNum;
+
+	private String registerType;
+
+	@XmlElement
 	public String getHisOrdNum() {
 		return hisOrdNum;
 	}
@@ -39,6 +45,7 @@ public class AppointPaymentRequest extends BaseRequest {
 		this.hisOrdNum = hisOrdNum;
 	}
 
+	@XmlElement
 	public String getPsOrdNum() {
 		return psOrdNum;
 	}
@@ -47,6 +54,7 @@ public class AppointPaymentRequest extends BaseRequest {
 		this.psOrdNum = psOrdNum;
 	}
 
+	@XmlElement
 	public String getPayMode() {
 		return payMode;
 	}
@@ -55,6 +63,7 @@ public class AppointPaymentRequest extends BaseRequest {
 		this.payMode = payMode;
 	}
 
+	@XmlElement
 	public String getPayAmt() {
 		return payAmt;
 	}
@@ -63,6 +72,7 @@ public class AppointPaymentRequest extends BaseRequest {
 		this.payAmt = payAmt;
 	}
 
+	@XmlElement
 	public String getAgtOrdNum() {
 		return agtOrdNum;
 	}
@@ -71,11 +81,30 @@ public class AppointPaymentRequest extends BaseRequest {
 		this.agtOrdNum = agtOrdNum;
 	}
 
+	@XmlElement
 	public String getPayTime() {
 		return payTime;
 	}
 
 	public void setPayTime(String payTime) {
 		this.payTime = payTime;
+	}
+
+	@XmlElement
+	public String getSerialNum() {
+		return serialNum;
+	}
+
+	public void setSerialNum(String serialNum) {
+		this.serialNum = serialNum;
+	}
+
+	@XmlElement
+	public String getRegisterType() {
+		return registerType;
+	}
+
+	public void setRegisterType(String registerType) {
+		this.registerType = registerType;
 	}
 }

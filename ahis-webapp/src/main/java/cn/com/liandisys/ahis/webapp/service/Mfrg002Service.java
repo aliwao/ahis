@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
-import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSONObject;
+
+import cn.com.liandisys.ahis.webapp.dto.DoctorBasicInfoDto;
+import cn.com.liandisys.ahis.webapp.entity.DoctorBasicInfoEntity;
 import cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity;
 import cn.com.liandisys.ahis.webapp.his.HisHttpJson;
 import cn.com.liandisys.ahis.webapp.his.entity.response.DoctorInfoItem;
@@ -46,8 +48,8 @@ public class Mfrg002Service {
 	 * @throws JAXBException
 	 */
 	@RequestMapping
-	public List<RegisterInfoItem> getRegisterInfoList(JSONObject request) throws UnsupportedEncodingException, JAXBException {
-		JSONObject json = HisHttpJson.executeHisApi("register-info", request);
+	public List<RegisterInfoItem> getRegisterInfoList(JSONObject request) {
+		JSONObject json = HisHttpJson.executeHisApi("QueryYRegisterSource", request);
 		RegisterInfoResponse respone = HisHttpJson.convJsonToBean(json, RegisterInfoResponse.class);
 
 		logger.debug(respone.getResultCode());
@@ -64,7 +66,7 @@ public class Mfrg002Service {
 	}
 
 	/**
-	 * 医生信息查询mock请求。
+	 * 无锡三院 医生信息查询mock请求。
 	 * 
 	 * @return 医生信息
 	 * @throws UnsupportedEncodingException
@@ -73,7 +75,7 @@ public class Mfrg002Service {
 	@RequestMapping
 	public List<DoctorInfoItem> getDoctorInfoList(JSONObject request) throws UnsupportedEncodingException, JAXBException {
 
-		JSONObject json = HisHttpJson.executeHisApi("doctor-info", request);
+		JSONObject json = HisHttpJson.executeHisApi("QueryDoctInfo", request);
 		DoctorInfoResponse respone = HisHttpJson.convJsonToBean(json, DoctorInfoResponse.class);
 
 		logger.debug(respone.getResultCode());
@@ -87,6 +89,61 @@ public class Mfrg002Service {
 			return respone.getItemList();
 		}
 		return new ArrayList<>();
+	}
+
+	/**
+	 * 获取某医院某科室的所有医生 的表数据。
+	 * 
+	 * @param entity
+	 *            医院code、医生code
+	 * @return 医生信息List
+	 */
+	public List<DoctorBasicInfoEntity> getDBDoctorListByHospital(DoctorBasicInfoEntity entity) {
+		List<DoctorBasicInfoDto> dtoList = mfrg002Mapper.getDeptDoctors(entity);
+		List<DoctorBasicInfoEntity> entityList = new ArrayList<>();
+		dtoList.forEach(dto -> {
+			DoctorBasicInfoEntity en = new DoctorBasicInfoEntity();
+			en.setHospitalCode(dto.getHospitalCode());
+			en.setDepartmentCode(dto.getDepartmentCode());
+			en.setDepartmentName(dto.getDepartmentName());
+			en.setDoctorCode(dto.getDoctorCode());
+			en.setDoctorName(dto.getDoctorName());
+			en.setRank(dto.getRank());
+			en.setSkill(dto.getSkill());
+			en.setSummary(dto.getSummary());
+			en.setPortrait(dto.getPortrait());
+			entityList.add(en);
+		});
+		return entityList;
+	}
+
+	/**
+	 * mock获取医生信息插入DB。
+	 * 
+	 * @param deptItem
+	 *            mock数据
+	 * @return 插入个数
+	 */
+	public int insertDoctor(DoctorInfoItem doctorItem) {
+		DoctorBasicInfoDto dto = new DoctorBasicInfoDto();
+		dto.setHospitalCode(doctorItem.getHospitalCode());
+		dto.setDepartmentCode(doctorItem.getDeptCode());
+		dto.setDepartmentName(doctorItem.getDeptName());
+		dto.setDoctorCode(doctorItem.getDoctorCode());
+		dto.setDoctorName(doctorItem.getDoctorName());
+		dto.setRank(doctorItem.getDoctorTitle());
+		dto.setSkill(doctorItem.getDoctorSkill());
+		dto.setSummary(doctorItem.getDoctorIntrodution());
+		return mfrg002Mapper.insertDoctor(dto);
+	}
+
+	/**
+	 * 清空医生信息表。
+	 * 
+	 * @return 删除个数
+	 */
+	public int delAllDoctor() {
+		return mfrg002Mapper.deleteAllDoctor();
 	}
 
 	/**

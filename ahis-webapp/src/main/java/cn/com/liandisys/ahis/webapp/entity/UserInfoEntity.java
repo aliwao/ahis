@@ -12,37 +12,27 @@ public class UserInfoEntity implements Serializable {
 	/**
     * 用户ID
     */
-    private Long userid;
+    private int userID;
 
     /**
     * 身份证号
     */
-    private String shenfenzhenghao;
-
-    /**
-    * 医保卡号
-    */
-    private String yibaokahao;
-
-    /**
-    * 住址
-    */
-    private String address;
-
-    /**
-    * 就诊卡号
-    */
-    private String jzcardno;
+    private String identityCardNo;
 
     /**
     * 姓名
     */
-    private String username;
+    private String fullName;
+
+    /**
+     * 头像
+     */
+    private byte[] portrait;
 
     /**
     * 出生日期
     */
-    private Date birthdate;
+    private Date birthDate;
 
     /**
     * 性别
@@ -50,79 +40,77 @@ public class UserInfoEntity implements Serializable {
     private String sex;
 
     /**
+    * 住址
+    */
+    private String address;
+
+    /**
     * 职业
     */
-    private String zhiye;
+    private String occupation;
 
-    public Long getUserid() {
-        return userid;
-    }
+	public int getUserID() {
+		return userID;
+	}
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
-    }
+	public String getIdentityCardNo() {
+		return identityCardNo;
+	}
 
-    public String getShenfenzhenghao() {
-        return shenfenzhenghao;
-    }
+	public String getFullName() {
+		return fullName;
+	}
 
-    public void setShenfenzhenghao(String shenfenzhenghao) {
-        this.shenfenzhenghao = shenfenzhenghao;
-    }
+	public byte[] getPortrait() {
+		return portrait;
+	}
 
-    public String getYibaokahao() {
-        return yibaokahao;
-    }
+	public Date getBirthDate() {
+		return birthDate;
+	}
 
-    public void setYibaokahao(String yibaokahao) {
-        this.yibaokahao = yibaokahao;
-    }
+	public String getSex() {
+		return sex;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getOccupation() {
+		return occupation;
+	}
 
-    public String getJzcardno() {
-        return jzcardno;
-    }
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 
-    public void setJzcardno(String jzcardno) {
-        this.jzcardno = jzcardno;
-    }
+	public void setIdentityCardNo(String identityCardNo) {
+		this.identityCardNo = identityCardNo;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public void setPortrait(byte[] portrait) {
+		this.portrait = portrait;
+	}
 
-    public Date getBirthdate() {
-        return birthdate;
-    }
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
-    }
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 
-    public String getSex() {
-        return sex;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
 
-    public String getZhiye() {
-        return zhiye;
-    }
-
-    public void setZhiye(String zhiye) {
-        this.zhiye = zhiye;
-    }
 }

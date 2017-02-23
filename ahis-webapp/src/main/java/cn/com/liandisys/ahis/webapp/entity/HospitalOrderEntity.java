@@ -9,22 +9,16 @@ public class HospitalOrderEntity implements Serializable {
 	private int userId;
 	private int hisOrdNum;
 	private String payName;
+	private String deptCode;
 	private String deptName;
+	private String doctorCode;
 	private String doctorName;
 	private double totalAmt;
 	private double medInsAmt;
 	private double selfAmt;
-	private double totalAmt_all;
-	private double totalAmt_paid;
-	private double totalAmt_pay;
-	private double medIns_all;
-	private double medIns_paid;
-	private double medIns_pay;
-	private double selfAmt_all;
-	private double selfAmt_paid;
-	private double selfAmt_pay;
 	private String scheduleDate;
 	private String timeFlag;
+	private String payTime;
 
 	public int getUserId() {
 		return userId;
@@ -107,107 +101,8 @@ public class HospitalOrderEntity implements Serializable {
 		return selfAmt;
 	}
 
-	public void setSelfAmt(Double selfAmt) {
+	public void setSelfAmt(double selfAmt) {
 		this.selfAmt = selfAmt;
-	}
-
-	/**
-	 * 总费用全金额
-	 */
-	public double getTotalAmt_all() {
-		return totalAmt_all;
-	}
-
-	public void setTotalAmt_all(double totalAmt_all) {
-		this.totalAmt_all = totalAmt_all;
-	}
-
-	/**
-	 * 总费用已支付
-	 */
-	public double getTotalAmt_paid() {
-		return totalAmt_paid;
-	}
-
-	public void setTotalAmt_paid(double totalAmt_paid) {
-		this.totalAmt_paid = totalAmt_paid;
-	}
-
-	/**
-	 * 总费用待支付
-	 */
-	public double getTotalAmt_pay() {
-		return totalAmt_pay;
-	}
-
-	public void setTotalAmt_pay(double totalAmt_pay) {
-		this.totalAmt_pay = totalAmt_pay;
-	}
-
-	/**
-	 * 医保部分全金额
-	 */
-	public double getMedIns_all() {
-		return medIns_all;
-	}
-
-	public void setMedIns_all(double medIns_all) {
-		this.medIns_all = medIns_all;
-	}
-
-	/**
-	 * 医保部分已支付
-	 */
-	public double getMedIns_paid() {
-		return medIns_paid;
-	}
-
-	public void setMedIns_paid(double medIns_paid) {
-		this.medIns_paid = medIns_paid;
-	}
-
-	/**
-	 * 医保部分待支付
-	 */
-	public double getMedIns_pay() {
-		return medIns_pay;
-	}
-
-	public void setMedIns_pay(double medIns_pay) {
-		this.medIns_pay = medIns_pay;
-	}
-
-	/**
-	 * 自费部分全金额
-	 */
-	public double getSelfAmt_all() {
-		return selfAmt_all;
-	}
-
-	public void setSelfAmt_all(Double selfAmt_all) {
-		this.selfAmt_all = selfAmt_all;
-	}
-
-	/**
-	 * 自费部分已支付
-	 */
-	public double getSelfAmt_paid() {
-		return selfAmt_paid;
-	}
-
-	public void setSelfAmt_paid(Double selfAmt_paid) {
-		this.selfAmt_paid = selfAmt_paid;
-	}
-
-	/**
-	 * 自费部分待支付
-	 */
-	public double getSelfAmt_pay() {
-		return selfAmt_pay;
-	}
-
-	public void setSelfAmt_pay(Double selfAmt_pay) {
-		this.selfAmt_pay = selfAmt_pay;
 	}
 
 	/**
@@ -230,7 +125,35 @@ public class HospitalOrderEntity implements Serializable {
 		return timeFlag;
 	}
 
+	/**
+	 * 支付时间
+	 */
 	public void setTimeFlag(String timeFlag) {
 		this.timeFlag = timeFlag;
 	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
+	}
+
+	public String getDeptCode() {
+		return deptCode;
+	}
+
+	public void setDeptCode(String deptCode) {
+		this.deptCode = deptCode;
+	}
+
+	public String getDoctorCode() {
+		return doctorCode;
+	}
+
+	public void setDoctorCode(String doctorCode) {
+		this.doctorCode = doctorCode;
+	}
+
 }

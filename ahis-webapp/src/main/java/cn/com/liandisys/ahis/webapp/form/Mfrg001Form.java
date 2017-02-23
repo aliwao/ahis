@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisForm;
-import cn.com.liandisys.ahis.webapp.his.entity.response.HospitalDeptItem;
+import cn.com.liandisys.ahis.webapp.dto.DepartmentBasicEntity;
 
 /**
  * 选择科室页面Form。
@@ -23,7 +23,7 @@ public class Mfrg001Form extends AbstractAhisForm {
 	private String deptName;
 
 	/** 科室list */
-	private Map<String, List<HospitalDeptItem>> deptItemMap;
+	private Map<String, List<DepartmentBasicEntity>> deptItemMap;
 
 	public String getDeptName() {
 		return deptName;
@@ -33,11 +33,11 @@ public class Mfrg001Form extends AbstractAhisForm {
 		this.deptName = deptName;
 	}
 
-	public Map<String, List<HospitalDeptItem>> getDeptItemMap() {
+	public Map<String, List<DepartmentBasicEntity>> getDeptItemMap() {
 		return deptItemMap;
 	}
 
-	public void setDeptItemMap(Map<String, List<HospitalDeptItem>> deptItemMap) {
+	public void setDeptItemMap(Map<String, List<DepartmentBasicEntity>> deptItemMap) {
 		this.deptItemMap = deptItemMap;
 	}
 

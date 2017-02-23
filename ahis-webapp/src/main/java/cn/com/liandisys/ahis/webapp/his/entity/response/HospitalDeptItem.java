@@ -2,14 +2,21 @@ package cn.com.liandisys.ahis.webapp.his.entity.response;
 
 public class HospitalDeptItem {
 
+	private String hospitalCode;
 	private String deptCode;
 	private String deptName;
 	private String hasChild;
 	private String parentDeptCode;
 	private String deptDescription;
 	private String deptLocation;
-	/* 是否可挂号 0：不可 1：可 */
-	private String canRegister;
+
+	public String getHospitalCode() {
+		return hospitalCode;
+	}
+
+	public void setHospitalCode(String hospitalCode) {
+		this.hospitalCode = hospitalCode;
+	}
 
 	public String getDeptCode() {
 		return deptCode;
@@ -57,14 +64,6 @@ public class HospitalDeptItem {
 
 	public void setDeptLocation(String deptLocation) {
 		this.deptLocation = deptLocation;
-	}
-
-	public String getCanRegister() {
-		return canRegister;
-	}
-
-	public void setCanRegister(String canRegister) {
-		this.canRegister = canRegister;
 	}
 
 }

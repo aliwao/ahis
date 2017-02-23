@@ -30,6 +30,8 @@ public class Mfop001Form extends AbstractAhisForm {
 	private String hidPatCardNo;
 	/** 已支付一览初期表示flg */
 	private String isPaid;
+	/** 已支付一览缴费时间 */
+	private String payTime;
 
 	public String getBalance() {
 		return balance;
@@ -85,6 +87,14 @@ public class Mfop001Form extends AbstractAhisForm {
 
 	public void setIsPaid(String isPaid) {
 		this.isPaid = isPaid;
+	}
+
+	public String getPayTime() {
+		return payTime;
+	}
+
+	public void setPayTime(String payTime) {
+		this.payTime = payTime;
 	}
 
 }

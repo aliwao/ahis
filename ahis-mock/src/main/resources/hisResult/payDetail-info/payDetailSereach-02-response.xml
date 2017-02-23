@@ -1,0 +1,22 @@
+﻿<Response>
+    <item>
+    	<itemName>白加黑感冒胶囊</itemName>
+        <itemType>医药费</itemType>
+        <itemUnit></itemUnit>
+        <itemPrice>30.00</itemPrice>
+        <itemSpec>盒</itemSpec>
+        <itemNumber>3</itemNumber>
+        <itemTotalFee>90.00</itemTotalFee>
+    </item>
+<item>
+    	<itemName>板蓝根冲剂</itemName>
+        <itemType>医药费</itemType>
+        <itemUnit></itemUnit>
+        <itemPrice>10.00</itemPrice>
+        <itemSpec>袋</itemSpec>
+        <itemNumber>2</itemNumber>
+        <itemTotalFee>20.00</itemTotalFee>
+    </item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

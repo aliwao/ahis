@@ -16,7 +16,7 @@ public class Mpmp001Service extends AbstractAhisService<Mpmp001Form> {
 
 		LoginUserInfo userinfo = AhisCommonUtil.getCurrentUserInfo();
 		if(userinfo != null) {
-			f.setUsername(userinfo.getName());
+			f.setUsername(userinfo.getFullName());
 		}
 
 	}

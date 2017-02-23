@@ -1,0 +1,20 @@
+﻿<Response>
+ 	<resultCode>0</resultCode>
+    	<resultMessage>查询成功</resultMessage>
+	<patName>王大</patName>
+	<patSex>男</patSex>
+	<phyExamNo>1234</phyExamNo>
+	<deptName>外科</deptName>
+	<doctorName>刘六</doctorName>
+	<phyExamTime>2017-02-09 13:00:00</phyExamTime>
+	<phyExamReview>没毛病</phyExamReview>
+	<doctorAdvice>早起早睡</doctorAdvice>
+	<item>
+		<itemId>001</itemId>
+		<itemName>耳鼻喉</itemName>
+	</item>
+	<item>
+		<itemId>002</itemId>
+		<itemName>身高体重</itemName>
+	</item>
+</Response>

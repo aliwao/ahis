@@ -23,6 +23,16 @@ public class Mpst002Service extends AbstractAhisService<Mpst002Form> {
         f.setMobileNo(AhisCommonUtil.getCurrentUsernameTelno());
 	}
 
+	public boolean verifyTelno(Mpst002Form f) {
+		UserLoginEntity entity = userLoginMapper.getByMobileNo(f.getMobileNo());
+		//int myuserid = AhisCommonUtil.getCurrentUserInfo().getUserID();
+		//if(entity != null && entity.getUserID() != myuserid){
+		if(entity != null){
+			return false;
+		}
+		return true;
+	}
+
     public void save(Mpst002Form f){
         String oldMobileNo = AhisCommonUtil.getCurrentUsernameTelno();
         UserLoginEntity userloginInfo = userLoginMapper.getByMobileNo(oldMobileNo);

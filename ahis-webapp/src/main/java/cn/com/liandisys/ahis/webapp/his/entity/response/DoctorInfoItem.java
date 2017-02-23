@@ -7,6 +7,8 @@ package cn.com.liandisys.ahis.webapp.his.entity.response;
  * @version 1.0
  */
 public class DoctorInfoItem {
+	/** 医院代码 */
+	private String hospitalCode;
 	/** 科室代码 */
 	private String deptCode;
 	/** 科室名称 */
@@ -21,6 +23,14 @@ public class DoctorInfoItem {
 	private String doctorIntrodution;
 	/** 医生职称 */
 	private String doctorTitle;
+
+	public String getHospitalCode() {
+		return hospitalCode;
+	}
+
+	public void setHospitalCode(String hospitalCode) {
+		this.hospitalCode = hospitalCode;
+	}
 
 	public String getDeptCode() {
 		return deptCode;

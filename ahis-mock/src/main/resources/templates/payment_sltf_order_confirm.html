@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<title>商联通付</title>
+</head>
+<body>
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation"
+		style="background-color: #6dbef6">
+		<div class="open-hover ldui-topnavbar">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="navbar-header">
+						<a class="navbar-brand">商联通付</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12"
+		style="margin-top: 50px; margin-bottom: 15px; background-color: white;">
+		<div class="col-xs-9" style="padding-top: 15px; padding-bottom: 15px;">
+			<span>无锡第三人民医院-挂号费</span>
+		</div>
+		<div class="col-xs-3" style="padding-top: 15px; padding-bottom: 15px;">
+			<span style="color: red;" th:text="${#numbers.formatDecimal(orderPaymentForm.payfee / 100, 0, 'COMMA', 2, 'POINT')}">59.00</span>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span>银行卡支付</span>
+	</div>
+	<div class="col-xs-12"
+		style="margin-bottom: 15px; background-color: white;">
+		<div class="col-xs-3" style="padding-top: 5px; padding-bottom: 5px;">
+			<img alt="cmbchina" src="/images/bank/cmbchina.png"
+				style="height: 40px;" />
+		</div>
+		<div class="col-xs-9" style="margin-top: 15px;">
+			<div>
+				<span>招商银行储蓄卡（尾号1234）</span>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<span>本次交易需要短信确认，校验码将发送至您的手机138****1234</span>
+	</div>
+	<div class="col-xs-12"
+		style="margin-bottom: 15px; background-color: white;">
+		<div class="col-xs-6" style="margin-left: -15px; padding-right: 0px; margin-top: 10px; margin-bottom: 10px;">
+			<input type="text"
+				class="form-control ldui-form-control ldui-form-control-vilid"
+				id="yzm" name="yzm" placeholder="请输入验证码" />
+		</div>
+		<div class="col-xs-6" style="margin-top: 10px; margin-bottom: 10px;">
+			<input type="button" id="btnGetYzm" class="btn btn-primary btn-block"
+				onclick="getYzm(this);" value="获取验证码" />
+		</div>
+	</div>
+	<form action="/mock/payment/sltf/payment_sltf_order_success.html" method="post">
+	    <input type="hidden" name="version" th:value="${orderPaymentForm.version}" />
+		<input type="hidden" name="charset" th:value="${orderPaymentForm.charset}" />
+		<input type="hidden" name="systemid" th:value="${orderPaymentForm.systemid}" />
+		<input type="hidden" name="businesstype" th:value="${orderPaymentForm.businesstype}" />
+		<input type="hidden" name="paymentmode" th:value="${orderPaymentForm.paymentmode}" />
+		<input type="hidden" name="corpid" th:value="${orderPaymentForm.corpid}" />
+		<input type="hidden" name="itemid" th:value="${orderPaymentForm.itemid}" />
+		<input type="hidden" name="msgseqno" th:value="${orderPaymentForm.msgseqno}" />
+		<input type="hidden" name="uid" th:value="${orderPaymentForm.uid}" />
+		<input type="hidden" name="corpuserid" th:value="${orderPaymentForm.corpuserid}" />
+		<input type="hidden" name="corpusername" th:value="${orderPaymentForm.corpusername}" />
+		<input type="hidden" name="orderid" th:value="${orderPaymentForm.orderid}" />
+		<input type="hidden" name="orderfee" th:value="${orderPaymentForm.orderfee}" />
+		<input type="hidden" name="payfee" th:value="${orderPaymentForm.payfee}" />
+		<input type="hidden" name="orderdatetime" th:value="${orderPaymentForm.orderdatetime}" />
+		<input type="hidden" name="accountNumber" th:value="${orderPaymentForm.accountNumber}" />
+		<input type="hidden" name="customphone" th:value="${orderPaymentForm.customphone}" />
+		<input type="hidden" name="fronturl" th:value="${orderPaymentForm.fronturl}" />
+		<input type="hidden" name="receiveurl" th:value="${orderPaymentForm.receiveurl}" />
+		<input type="hidden" name="note" th:value="${orderPaymentForm.note}" />
+		<input type="hidden" name="custominfo" th:value="${orderPaymentForm.custominfo}" />
+		<input type="hidden" name="reserved" th:value="${orderPaymentForm.reserved}" />
+		<input type="hidden" name="signmsg" th:value="${orderPaymentForm.signmsg}" />
+		<input type="submit" class="btn btn-primary btn-block" value="确认支付" />
+	</form>
+	<script type="text/javascript" th:inline="javascript">
+		//<![CDATA[
+		var countdown = 60;
+		function getYzm(that) {
+			$("#yzm").focus();
+			showNoticeToast("验证码是：1234");
+			settime(that);
+		}
+
+		function settime(obj) {
+			if (countdown == 0) {
+				obj.removeAttribute("disabled");
+				$(obj).addClass('active');
+				obj.value = "获取验证码";
+				countdown = 60;
+				localStorage.setItem('sendyzm_time', '');
+				return;
+			} else {
+				if (countdown == 60 || obj.value == "获取验证码") {
+					if (countdown == 60) {
+						localStorage.setItem('sendyzm_time', getTimestamp());
+					}
+					obj.setAttribute("disabled", true);
+					$(obj).removeClass('active');
+				}
+				obj.value = "重新发送(" + countdown + ")";
+				countdown--;
+			}
+			setTimeout(function() {
+				settime(obj)
+			}, 1000);
+		}
+
+		// 获取当前时间戳(以s为单位) 
+		function getTimestamp() {
+			var timestamp = Date.parse(new Date()) / 1000;
+			//console.log("当前时间戳为：" + timestamp);
+			return timestamp;
+		}
+		//]]>
+	</script>
+</body>
+</html>

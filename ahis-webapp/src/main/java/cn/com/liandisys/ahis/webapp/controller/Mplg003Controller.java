@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
 import cn.com.liandisys.ahis.webapp.form.Mplg003Form;
 import cn.com.liandisys.ahis.webapp.service.Mplg003Service;
-import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
 
 /**
  * 个人信息页面控制器

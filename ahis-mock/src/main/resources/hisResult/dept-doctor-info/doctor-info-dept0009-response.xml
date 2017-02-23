@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0009</deptCode>
+		<deptName>感染科</deptName>
+		<doctorCode>0017</doctorCode>
+		<doctorName>朱宜</doctorName>
+		<doctorSkill>直肠肛管疾病</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0009</deptCode>
+		<deptName>感染科</deptName>
+		<doctorCode>0018</doctorCode>
+		<doctorName>徐绵绵</doctorName>
+		<doctorSkill>肠炎</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

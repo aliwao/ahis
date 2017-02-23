@@ -12,6 +12,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/bootstrap-theme.css" rel="stylesheet" />
     <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/sha1.js"></script>
     <link href="/css/common.css" rel="stylesheet" />
     <script src="/js/common.js"></script>
     <style>
@@ -58,19 +59,21 @@
            <li class="list-group-item row ldui-row">
                <div class="col-xs-3 label-row-left"><span>原密码</span></div>
                <div class="col-xs-9">
-                    <input type="password" class="form-control" id="oldpasswd" name="oldpasswd" placeholder="请输入原密码" />
+                    <input type="hidden" id="oldpasswd" name="oldpasswd" />
+                    <input type="password" class="form-control" id="inpOldpasswd" name="inpOldpasswd" placeholder="请输入原密码" />
                </div>
            </li>
            <li class="list-group-item row ldui-row">
                <div class="col-xs-3 label-row-left"><span>新密码</span></div>
                <div class="col-xs-9">
-                    <input type="password" class="form-control" id="passwd" name="passwd" placeholder="请输入新密码" />
+                    <input type="hidden" id="passwd" name="passwd" />
+                    <input type="password" class="form-control" id="inpPasswd" name="inpPasswd" placeholder="请输入新密码" />
                </div>
            </li>
            <li class="list-group-item row ldui-row">
                <div class="col-xs-3 label-row-left"><span>确认密码</span></div>
                <div class="col-xs-9">
-                    <input type="password" class="form-control" id="passwd2" name="passwd2" placeholder="请再次确认密码" />
+                    <input type="password" class="form-control" id="inpPasswd2" name="inpPasswd2" placeholder="请再次确认密码" />
                </div>
            </li>
        </ul>
@@ -109,24 +112,26 @@
     }
     
     function checkPassWd() {
-        var oldpasswd = $("#oldpasswd").val();
-        if(!oldpasswd){
+        var inpOldpasswd = $("#inpOldpasswd").val();
+        if(!inpOldpasswd){
             showErrorToast("请输入原密码!");
-            $("#oldpasswd").focus();
+            $("#inpOldpasswd").focus();
             return false;
         }
-        var passwd = $("#passwd").val();
+        var passwd = $("#inpPasswd").val();
         if(!passwd){
             showErrorToast("密码不能为空!");
-            $("#passwd").focus();
+            $("#inpPasswd").focus();
             return false;
         }
-        var passwd2 = $("#passwd2").val();
+        var passwd2 = $("#inpPasswd2").val();
         if(passwd != passwd2){
             showErrorToast("密码不一致!");
-            $("#passwd").focus();
+            $("#inpPasswd").focus();
             return false;
         }
+        $("#oldpasswd").val(hex_sha1(inpOldpasswd));
+        $("#passwd").val(hex_sha1(passwd));
         return true;
     }
 </script>

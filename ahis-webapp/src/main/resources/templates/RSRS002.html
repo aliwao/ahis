@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js">
+	
+</script>
+<script type="text/javascript" src="/js/bootstrap.min.js">
+	
+</script>
+<script src="/js/common.js">
+	
+</script>
+<script src="/js/jquery-ui.js">
+	
+</script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<script type="text/javascript">
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	function goDetail(index, type) {
+
+		$("#hidItemId").attr("value", $("#itemId" + index).val());
+		
+		$("#rsrs002Form").attr("action", "/m/rsrs002/goDetail");
+		$("#rsrs002Form").submit();
+	}
+</script>
+</head>
+
+<body>
+	<form id="rsrs002Form" name="rsrs002Form" action=""
+		th:object="${rsrs002Form}">
+
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation"
+			style="background-color: #f4f4f4">
+			<div class="open-hover ldui-topnavbar">
+				<div class="row">
+					<div class="col-xs-3">
+						<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left"
+							onclick="goBack();"> </span>
+					</div>
+					<div class="col-xs-6">
+						<div class="navbar-header" th:if="*{inspResultDetail != null}">
+							<a class="navbar-brand" href="#"> 检查报告详情 </a>
+						</div>
+						<div class="navbar-header" th:if="*{inspReportDetail != null}">
+							<a class="navbar-brand" href="#"> 检验报告详情 </a>
+						</div>
+						<div class="navbar-header" th:if="*{phyExamReportDetail != null}">
+							<a class="navbar-brand" href="#"> 体检报告详情 </a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="hidItemId" name="hidItemId" />
+		<div class="in active" id="jiancha"
+			th:if="*{inspResultDetail != null}">
+			<div class="row" style="height: 60px;"></div>
+			<div class="row text-left"
+				style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-9 col-sm-11"
+					style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+					<span
+						style="padding-left: 20px; color: #22a7f0; font-weight: bold;">
+						| </span> <span th:text="*{inspResultDetail.checkName}"> 血常规 </span>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">送检科室</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.deptName}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">送检医生</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.doctorName}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">报告时间</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.reportTime}"> </span>
+					</div>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">检查部位</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.checkPart}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">检查方法</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.checkMethod}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">检查所见</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.checkSituation}"> </span>
+					</div>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">诊断意见</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.option}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">医嘱项</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspResultDetail.advice}"> </span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="in active" id="jianyan"
+			th:if="*{inspReportDetail != null}">
+			<div class="row" style="height: 60px;"></div>
+			<div class="row text-left"
+				style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-9 col-sm-11"
+					style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+					<span
+						style="padding-left: 20px; color: #22a7f0; font-weight: bold;">
+						| </span> <span th:text="*{inspReportDetail.inspectName}"> 血常规 </span>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">送检科室</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspReportDetail.deptName}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">送检医生</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspReportDetail.doctorName}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">送检时间</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspReportDetail.inspectTime}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">报告时间</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{inspReportDetail.reportTime}"> </span>
+					</div>
+				</div>
+			</div>
+			<div class="text-center"
+				style="background-color: white; height: 33px; font-size: 16px; margin-top: 10px; padding-top: 6px;">
+				<div class="col-xs-12 col-sm-12 ">
+					<span> 详细结果 </span>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+			</div>
+			<div class="row text-left"
+				th:each="inspList:*{inspReportDetail.inspReportDetailList}"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-9 col-sm-11">
+					<span
+						style="padding-left: 10px; color: #22a7f0; font-weight: bold;">
+						✵ </span> <span th:text="${inspList.itemName}"> </span>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-6 col-sm-6 text-left">
+						<span style="padding-left: 20px;"> 结果 </span>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<span th:text="${inspList.result}"></span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-6 col-sm-6 text-left">
+						<span style="padding-left: 20px;"> 参考范围 </span>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<span th:text="${inspList.refRange}"></span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-6 col-sm-6 text-left">
+						<span style="padding-left: 20px;"> 结果异常提示 </span>
+					</div>
+					<div class="col-xs-6 col-sm-6">
+						<span th:text="${inspList.abnormal}"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="in active" id="tijian"
+			th:if="*{phyExamReportDetail != null}">
+			<div class="row" style="height: 60px;"></div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">体检人</div>
+					<div class="col-xs-4 col-sm-4">
+						<span th:text="*{phyExamReportDetail.patName}"> </span>
+					</div>
+					<div class="col-xs-4 col-sm-4">
+						<span th:text="*{phyExamReportDetail.patSex}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">编号</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.phyExamNo}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">体检科室</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.deptName}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">体检医生</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.doctorName}"> </span>
+					</div>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">体检时间</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.phyExamTime}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">综述</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.phyExamReview}"> </span>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4">医生意见</div>
+					<div class="col-xs-8 col-sm-8">
+						<span th:text="*{phyExamReportDetail.doctorAdvice}"> </span>
+					</div>
+				</div>
+			</div>
+			<div class="text-center"
+				style="background-color: white; height: 33px; font-size: 16px; margin-top: 10px; padding-top: 6px;">
+				<div class="col-xs-12 col-sm-12 ">
+					<span> 详细结果 </span>
+				</div>
+			</div>
+			<div class="row text-left"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+			</div>
+			<div class="row text-left"
+				th:each="examList,examStat:*{phyExamReportDetail.itemList}"
+				style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+				<input type="hidden" th:id="${'itemId' + examStat.index}"
+					th:attr="value=${examList.itemId}" />
+				<div class="col-xs-12 col-sm-12">
+					<div class="col-xs-4 col-sm-4"
+						style="height: 33px; padding-top: 6px; padding-left: 0px;">
+						<span> 项目名称 </span>
+					</div>
+					<div class="col-xs-5 col-sm-7"
+						style="height: 33px; padding-top: 6px; padding-left: 0px;">
+						<span th:text="${examList.itemName}"></span>
+					</div>
+					<div class="col-xs-3 col-sm-1 "
+						style="color: buttonface; font-size: small;">
+						<button type="button" class="list-group-item"
+							th:onclick="${'goDetail(' + examStat.index +')'}"
+							style="border-style: none; color: buttonface;">
+							<span
+								class="pull-right glyphicon glyphicon-chevron-right ldui-btn-icon-rgiht">
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+
+</html>

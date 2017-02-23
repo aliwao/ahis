@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0011</deptCode>
+		<deptName>化验科</deptName>
+		<doctorCode>0021</doctorCode>
+		<doctorName>朱宜</doctorName>
+		<doctorSkill>微量元素检测</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0011</deptCode>
+		<deptName>化验科</deptName>
+		<doctorCode>0022</doctorCode>
+		<doctorName>徐绵绵</doctorName>
+		<doctorSkill>人体免疫</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

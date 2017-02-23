@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0006</deptCode>
+		<deptName>高级专家诊疗科</deptName>
+		<doctorCode>0011</doctorCode>
+		<doctorName>朱宜</doctorName>
+		<doctorSkill>心脑血管系统疾病</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0006</deptCode>
+		<deptName>高级专家诊疗科</deptName>
+		<doctorCode>0012</doctorCode>
+		<doctorName>徐绵绵</doctorName>
+		<doctorSkill>内科疑难杂症</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

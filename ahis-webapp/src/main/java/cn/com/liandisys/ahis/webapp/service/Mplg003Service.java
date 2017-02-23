@@ -1,25 +1,24 @@
 package cn.com.liandisys.ahis.webapp.service;
 
+import java.io.IOException;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisService;
+import cn.com.liandisys.ahis.webapp.constants.AhisConstants;
 import cn.com.liandisys.ahis.webapp.dto.LoginUserInfo;
 import cn.com.liandisys.ahis.webapp.entity.UserInfoEntity;
-import cn.com.liandisys.ahis.webapp.entity.UserLoginEntity;
 import cn.com.liandisys.ahis.webapp.form.Mplg003Form;
 import cn.com.liandisys.ahis.webapp.mapper.UserInfoMapper;
-import cn.com.liandisys.ahis.webapp.mapper.UserLoginMapper;
 import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
 
 @Service
 @Transactional
 public class Mplg003Service extends AbstractAhisService<Mplg003Form> {
 
-	@Autowired
-	private UserLoginMapper userLoginMapper;
-	
 	@Autowired
 	private UserInfoMapper userInfoMapper;
 
@@ -29,45 +28,66 @@ public class Mplg003Service extends AbstractAhisService<Mplg003Form> {
 
         UserInfoEntity userInfo = userInfoMapper.selectByPrimaryKey(Long.valueOf(userlogin.getUserID()));
 
-        f.setUsername(userlogin.getName());
+        f.setUsername(userlogin.getFullName());
         if(userInfo != null){
-            f.setSfzhao(userInfo.getShenfenzhenghao());
-            f.setBirthDate(userInfo.getBirthdate());
+            f.setIdentityCardNo(userInfo.getIdentityCardNo());
+            f.setBirthDate(userInfo.getBirthDate());
             f.setSex(userInfo.getSex());
             f.setAddress(userInfo.getAddress());
-            f.setZhiye(userInfo.getZhiye());
+            f.setOccupation(userInfo.getOccupation());
         }
 
 	}
 
-    public void save(Mplg003Form f){
-        int userid = AhisCommonUtil.getCurrentUserInfo().getUserID();
+	public void save(Mplg003Form f){
+		int userid = AhisCommonUtil.getCurrentUserInfo().getUserID();
 
-        UserInfoEntity userInfo = userInfoMapper.selectByPrimaryKey(Long.valueOf(userid));
+		UserInfoEntity userInfo = userInfoMapper.selectByPrimaryKey(Long.valueOf(userid));
 
-        UserLoginEntity userlogin = new UserLoginEntity();
-        userlogin.setUserID(userid);
-        userlogin.setName(f.getUsername());
-        userLoginMapper.updateByPrimaryKeySelective(userlogin);
-
-        if(userInfo != null){
-            userInfo.setUsername(f.getUsername());
-            userInfo.setBirthdate(f.getBirthDate());
+		if(userInfo != null){
+			userInfo.setFullName(f.getUsername());
+			try {
+				if(f.getPortrait() != null && !f.getPortrait().isEmpty()) {
+					userInfo.setPortrait(f.getPortrait().getBytes());
+				}
+				else {
+					userInfo.setPortrait(null);
+				}
+			} catch (IOException e) {
+				userInfo.setPortrait(null);
+			}
+            userInfo.setBirthDate(f.getBirthDate());
             userInfo.setSex(f.getSex());
             userInfo.setAddress(f.getAddress());
-            userInfo.setZhiye(f.getZhiye());
+            userInfo.setOccupation(f.getOccupation());
             userInfoMapper.updateByPrimaryKeySelective(userInfo);
         }
         else {
             userInfo = new UserInfoEntity();
-            userInfo.setUserid(Long.valueOf(userid));
-            userInfo.setUsername(f.getUsername());
-            userInfo.setBirthdate(f.getBirthDate());
+            userInfo.setUserID(userid);
+            userInfo.setFullName(f.getUsername());
+            try {
+            	if(f.getPortrait() != null && !f.getPortrait().isEmpty()) {
+					userInfo.setPortrait(f.getPortrait().getBytes());
+				}
+				else {
+					userInfo.setPortrait(null);
+				}
+			} catch (IOException e) {
+				userInfo.setPortrait(null);
+			}
+            userInfo.setBirthDate(f.getBirthDate());
             userInfo.setSex(f.getSex());
             userInfo.setAddress(f.getAddress());
-            userInfo.setZhiye(f.getZhiye());
+            userInfo.setOccupation(f.getOccupation());
             userInfoMapper.insertSelective(userInfo);
         }
+        setUserinfoSession(userInfo);
+	}
 
+	private void setUserinfoSession(UserInfoEntity userInfoEntity) {
+		LoginUserInfo userinfo = new LoginUserInfo();
+		BeanUtils.copyProperties(userInfoEntity, userinfo);
+		SessionService.setAttribute(AhisConstants.SESSION_KEY_USERINFO, userinfo);
 	}
 }

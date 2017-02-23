@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.com.liandisys.ahis.webapp.common.AbstractAhisController;
 import cn.com.liandisys.ahis.webapp.dto.LoginUserInfo;
-import cn.com.liandisys.ahis.webapp.entity.AppointmentOrderEntity;
+import cn.com.liandisys.ahis.webapp.entity.RegisterHistoryEntity;
 import cn.com.liandisys.ahis.webapp.form.Mfrg004Form;
 import cn.com.liandisys.ahis.webapp.service.Mfrg004Service;
 import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("m/mfrg004/*")
@@ -27,7 +26,7 @@ public class Mfrg004Controller extends AbstractAhisController<Mfrg004Form> {
 	public String index(@ModelAttribute Mfrg004Form mfrg004Form, HttpServletRequest req) {
 		LoginUserInfo userInfo = AhisCommonUtil.getCurrentUserInfo();
 		mfrg004Form.setUserID(userInfo.getUserID());
-		mfrg004Form.setUserName(userInfo.getName());
+		mfrg004Form.setUserName(userInfo.getFullName());
 		String doctorName = mfrg004Form.getDoctorName();
 		mfrg004Form.setIsExpert(doctorName != null && !doctorName.isEmpty());
 		return forwardIndex();
@@ -37,11 +36,15 @@ public class Mfrg004Controller extends AbstractAhisController<Mfrg004Form> {
 	@ResponseBody
 	public String appoint(@ModelAttribute Mfrg004Form mfrg004Form) {
 		LoginUserInfo userInfo = AhisCommonUtil.getCurrentUserInfo();
-		AppointmentOrderEntity entiy = mfrg004Service.appoint(mfrg004Form, userInfo);
+		boolean isInfoComplete=mfrg004Service.isInfoComplete(userInfo);
+	    if(!isInfoComplete){
+	    	return "0";
+	    }
+		RegisterHistoryEntity entiy = mfrg004Service.appoint(mfrg004Form, userInfo);
 		if (null == entiy) {
 			return "error";
 		} else {
-			return JSONObject.fromObject(entiy).toString();
+			return entiy.getRegisterNo();
 		}
 	}
 }

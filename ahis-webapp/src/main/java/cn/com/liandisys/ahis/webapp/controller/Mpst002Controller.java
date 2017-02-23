@@ -44,6 +44,12 @@ public class Mpst002Controller extends AbstractAhisController<Mpst002Form> {
         return f;
     }
 
+    @RequestMapping(value="verifyTelno", method = RequestMethod.POST) 
+    @ResponseBody
+    public boolean verifyTelno(@ModelAttribute Mpst002Form f) {
+        return mpst002Service.verifyTelno(f);
+    }
+
     @RequestMapping(value="save", method = RequestMethod.POST)  
     public String save(HttpServletRequest request, @ModelAttribute Mpst002Form f, RedirectAttributes attr) {
 

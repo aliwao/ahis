@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.PersonPaymentInfoMapper">
+	<update id="updateDiagnosisCardNoByUserID">
+		update PersonPaymentInfo
+		set
+		diagnosisCardNo=#{diagnosisCardNo,jdbcType=VARCHAR}
+		where
+		userID=#{userID,jdbcType=BIGINT}
+	</update>
+	<insert id="insertNewRecord"
+		parameterType="cn.com.liandisys.ahis.webapp.dto.PersonPaymentInfoEntity">
+		insert PersonPaymentInfo
+		(userID,
+		diagnosisCardNo,
+		socailSecurityCardNo,
+		medicareCardNo,
+		healthCardNo,
+		loginUser,
+		updateUser
+		)
+		values(
+		#{userID,jdbcType=BIGINT},
+		#{diagnosisCardNo,jdbcType=CHAR},
+		#{socailSecurityCardNo,jdbcType=CHAR},
+		#{medicareCardNo,jdbcType=CHAR},
+		#{healthCardNo,jdbcType=CHAR},
+		#{loginUser,jdbcType=BIGINT},
+		#{updateUser,jdbcType=BIGINT}
+		)
+	</insert>
+	<select id="getDiagnosisCardNoByUserID" parameterType="java.lang.Long"
+		resultType="cn.com.liandisys.ahis.webapp.dto.PersonPaymentInfoEntity">
+		select *
+		from PersonPaymentInfo
+		where
+		userID=#{userID,jdbcType=BIGINT}
+	</select>
+</mapper>

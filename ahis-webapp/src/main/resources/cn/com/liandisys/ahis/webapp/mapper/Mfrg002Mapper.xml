@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfrg002Mapper" >
+
+  <resultMap id="doctorResultMap" type="cn.com.liandisys.ahis.webapp.dto.DoctorBasicInfoDto">
+    <id column="hospitalCode" property="hospitalCode" jdbcType="VARCHAR" />
+    <id column="departmentCode" property="departmentCode" jdbcType="VARCHAR" />
+    <id column="doctorCode" property="doctorCode" jdbcType="VARCHAR" />
+    <result column="doctorName" property="doctorName" jdbcType="VARCHAR" />
+    <result column="departmentName" property="departmentName" jdbcType="VARCHAR" />
+    <result column="portrait" property="portrait" jdbcType="BLOB" />
+    <result column="skill" property="skill" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="rank" property="rank" jdbcType="VARCHAR" />
+  </resultMap>
  
   <resultMap id="FavDoctorResultMap" type="cn.com.liandisys.ahis.webapp.entity.FavoriteDoctorsEntity" >
     <id column="userId" property="userId" jdbcType="BIGINT" />
@@ -10,6 +22,31 @@
     <result column="doctorName" property="doctorName" jdbcType="VARCHAR" />
     <result column="insertTimeStamp" property="insertTimeStamp" jdbcType="TIMESTAMP" />
   </resultMap>
+  
+  <sql id="Base_doctor_List">
+    hospitalCode, departmentCode, departmentName, doctorCode, doctorName, portrait, skill, summary, rank
+  </sql>
+  
+  <select id="getDeptDoctors" resultMap="doctorResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.DoctorBasicInfoEntity">
+    select 
+    <include refid="Base_doctor_List" />
+    from DoctorBasicInfo
+    where hospitalCode = #{hospitalCode,jdbcType=VARCHAR} AND departmentCode = #{departmentCode,jdbcType=VARCHAR}
+    order by departmentCode, doctorCode
+  </select>
+  
+  <insert id="insertDoctor" parameterType="cn.com.liandisys.ahis.webapp.dto.DoctorBasicInfoDto">
+    insert into DoctorBasicInfo (hospitalCode, departmentCode, departmentName, doctorCode, doctorName, skill, summary, rank, portrait)
+    values (#{hospitalCode,jdbcType=VARCHAR}, #{departmentCode,jdbcType=VARCHAR}, #{departmentName,jdbcType=VARCHAR},
+    		#{doctorCode,jdbcType=VARCHAR}, #{doctorName,jdbcType=VARCHAR}, #{skill,jdbcType=VARCHAR},
+    		#{summary,jdbcType=VARCHAR}, #{rank,jdbcType=VARCHAR}, #{portrait,jdbcType=BLOB})
+  </insert>
+  
+  <delete id="deleteAllDoctor">
+    delete from DoctorBasicInfo
+  </delete>
+  
+  
   
   <sql id="Base_favdoctor_List">
     userId, deptCode, deptName, doctorCode, doctorName, insertTimeStamp

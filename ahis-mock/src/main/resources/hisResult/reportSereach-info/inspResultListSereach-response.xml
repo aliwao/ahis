@@ -1,0 +1,36 @@
+﻿<Response>
+    <item>
+    	<checkId>123456789</checkId>
+        <checkName>血常规</checkName>
+        <checkTime>2017-02-07 15:20:00</checkTime>
+        <checkStatus>1</checkStatus>
+        <reportTime>2017-02-07 17:00:00</reportTime>
+	<examTime>2017-02-08 09:00:00</examTime>
+        <deptCode>0453</deptCode>
+	<deptName>内科</deptName>
+	<doctorCode>100001</doctorCode>
+	<doctorName>黄小明</doctorName>
+	<exeDeptCode>0453</exeDeptCode>
+        <exeDeptName>内科</exeDeptName>
+	<reporter>黄小明</reporter>
+	<auditor>王梅梅</auditor>
+    </item>
+    <item>
+    	<checkId>987654321</checkId>
+        <checkName>血常规</checkName>
+        <checkTime>2017-02-02 15:20:00</checkTime>
+        <checkStatus>3</checkStatus>
+        <reportTime>2017-02-02 17:00:00</reportTime>
+	<examTime>2017-02-03 09:00:00</examTime>
+        <deptCode>0453</deptCode>
+	<deptName>内科</deptName>
+	<doctorCode>100001</doctorCode>
+	<doctorName>黄小明</doctorName>
+	<exeDeptCode>0453</exeDeptCode>
+        <exeDeptName>内科</exeDeptName>
+	<reporter>黄小明</reporter>
+	<auditor>王梅梅</auditor>
+    </item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

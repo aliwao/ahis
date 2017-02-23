@@ -97,6 +97,7 @@
        <div class="form-group" style="margin-top:63px;">
           <div class="has-feedback">
                <span class="glyphicon glyphicon-user form-control-feedback ldui-form-control-feedback"></span>
+               <input type="hidden" id="currentMobileno" />
                <input type="text" class="form-control ldui-form-control" id="telno" name="mobileNo" placeholder="请输入手机号" autofocus="autofocus" value="" />
           </div>
           <div class="has-feedback">
@@ -108,7 +109,6 @@
     </div>
     <footer class="container">
        <button type="button" class="btn btn-primary btn-block" onclick="doSubmit();">确定</button>
-       <input type="hidden" id="sendYzm" value="7890" />
     </footer>
  <script type="text/javascript" th:inline="javascript">
  //<![CDATA[
@@ -138,7 +138,8 @@
             async: false,
             success:function(data){
                 //alert(data.loginUserId);
-                $("#telno").val(data.loginUserId);
+                $("#telno").val(data.mobileNo);
+                $("#currentMobileno").val(data.mobileNo);
             },
             error:function(e) {
                 alert("出错："+e);
@@ -163,9 +164,77 @@
 
     function getYzm(that) {
         $("#yzm").focus();
-        showNoticeToast("验证码是：" + $("#sendYzm").val());
-        console.log("验证码是：" + $("#sendYzm").val());
-        settime(that);
+        var mnocallback = function(data){
+            if(data){
+                // 手机号没有问题，发送验证码
+                var telno = $("#telno").val();
+                // 异步请求获取短信验证码
+                sendSmsCode(telno);
+                //showNoticeToast("验证码是：" + $("#sendYzm").val());
+                //console.log("验证码是：" + $("#sendYzm").val());
+                settime(that);
+            }
+            else {
+                showErrorToast("该手机号已被注册，无法使用!");
+                $("#telno").focus();
+            }
+        };
+        checkTelno(mnocallback);
+    }
+
+    function sendSmsCode(mobileNo) {
+        var params = {mobileNo:mobileNo};
+        $.ajax({
+            type:"POST",
+            url:"/g/smscode/send",
+            data:params,
+            async: false,
+            success:function(data){
+                //alert(data.msgType);
+                //alert(data.message);
+                if(data.msgType != 0){
+                    showErrorToast(data.message);
+                    $("#yzm").focus();
+                }
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+
+    function verifySmsCode(chkcallback) {
+        var mobileNo = $("#telno").val();
+        var inputVcode = $("#yzm").val();
+        if(!inputVcode) {
+            showErrorToast('请输入短信验证码！');
+            $("#yzm").focus();
+        }
+        else {
+            var params = {mobileNo:mobileNo, inputVcode:inputVcode};
+            $.ajax({
+                type:"POST",
+                url:"/g/smscode/verify",
+                data:params,
+                async: false,
+                success:function(data){
+                    //alert(data.msgType);
+                    //alert(data.message);
+                    if(data.msgType == 0){
+                        chkcallback();
+                    }
+                    else {
+                        showErrorToast('短信验证失败！');
+                        $("#yzm").focus();
+                    }
+                },
+                error:function(e) {
+                    //alert("出错："+e);
+                    showErrorToast('短信验证失败！');
+                    $("#yzm").focus();
+                }
+            });
+        }
     }
 
     function settime(obj) {
@@ -198,21 +267,23 @@
     }
 
     function doSubmit() {
-        var chkflg = checkAll();
-        if(chkflg) {
-            $("#telnoForm").submit();
-        }
+        var mnocallback = function(data){
+            if(data){
+                var submitcallback = function() {
+                    localStorage.removeItem('mpst002_sendyzm_time');
+                    $("#telnoForm").submit();
+                };
+                verifySmsCode(submitcallback);
+            }
+            else {
+                showErrorToast("该手机号已被注册!");
+                $("#telno").focus();
+            }
+        };
+        checkTelno(mnocallback);
     }
 
-    function checkAll() {
-        var chkflg = checkTelno();
-        if(chkflg) {
-            chkflg = checkYzm();
-        }
-        return chkflg;
-     }
-
-    function checkTelno() {
+    function checkTelno(mnocallback) {
         var telno = $("#telno").val();
         if(!telno){
             showErrorToast("手机号不能为空!");
@@ -234,17 +305,23 @@
             $("#telno").focus();
             return false; 
         }
-        return true;
-    }
 
-    function checkYzm() {
-        if($("#sendYzm").val() != $("#yzm").val()) {
-            showErrorToast('验证码不正！');
-            $("#yzm").focus();
+        var currentMobileno = $("#currentMobileno").val();
+        if(currentMobileno == telno) {
+            showErrorToast('手机号并未被修改！');
+            $("#telno").focus();
             return false; 
         }
-        return true;
+
+        // 检查手机号是否已被他人注册
+        if(mnocallback){
+            postAjax("verifyTelno", {mobileNo:telno}, mnocallback);
+        }
+        else {
+            return true;
+        }
     }
+
  //]]>
  </script>
 </body>

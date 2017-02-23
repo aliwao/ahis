@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0008</deptCode>
+		<deptName>感染科</deptName>
+		<doctorCode>0015</doctorCode>
+		<doctorName>朱宜</doctorName>
+		<doctorSkill>肝硬化</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0008</deptCode>
+		<deptName>感染科</deptName>
+		<doctorCode>0016</doctorCode>
+		<doctorName>徐绵绵</doctorName>
+		<doctorSkill>丙肝，新生儿黄疸</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

@@ -24,21 +24,21 @@ var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
 
-function goToRegister(deptCode) {
-	var deptName = $("#" + deptCode + " span:eq(0)").text();
-	window.parent.location ="/g/mfrg002/index?deptCode=" + deptCode +"&deptName=" + deptName;
+function goToRegister(departmentCode) {
+	var departmentName = $("#" + departmentCode + " span:eq(0)").text();
+	window.parent.location ="/g/mfrg002/index?deptCode=" + departmentCode +"&deptName=" + departmentName;
 }
 
 $(function() {
 
      // 检索autocomplete
-     $("#deptName").autocomplete({
+     $("#departmentName").autocomplete({
          source: function(request, response ) {
              $.ajax( {
                  url: "/g/mfrg001/deptList",
                  dataType: "json",
                  data: {
-                    deptName: $('#deptName').val()
+                    departmentName: $('#departmentName').val()
                  },
                  success: function(data) {
                       response($.map(data, function(item) {  
@@ -147,7 +147,7 @@ $(function() {
 		<div class="ldui-list-group" style="height:100%;">
 	 		<div class="form-group" style="padding-top:10px;">
 	    		<div class="container input-group">
-	            <input class="form-control" id="deptName" placeholder="输入关键字搜索" th:field="${mfrg001Form.deptName}" th:value="${mfrg001Form.deptName}" />
+	            <input class="form-control" id="departmentName" placeholder="输入关键字搜索" th:field="${mfrg001Form.deptName}" th:value="${mfrg001Form.deptName}" />
 	            <span class="input-group-addon"><span class="glyphicon glyphicon-search" 
 	            	onclick="document.getElementById('mfrg001Form').submit();"></span></span>
 	        	</div>
@@ -159,19 +159,19 @@ $(function() {
 	<div style="padding-top:113px;">
 		<div class="ldui-list-group" th:each="map:${mfrg001Form.deptItemMap}" th:id="${map.key.substring(1)}" style="margin-top:-113px;padding-top:113px">
     		<h3 class="panel-title ldui-section-title" th:text="${map.key.substring(1)}"></h3>
-    		<div th:id="${dept.deptCode}"  th:if="${dept.canRegister == '1'}"
+    		<div th:id="${dept.departmentCode}"  th:if="${dept.canRegister == '1'}"
         		class="ldui-content-row"  th:each="dept:${map.value}" onclick="goToRegister(this.id)">
-        		<span class="text-bold" th:text="${dept.deptName}"></span><br />
-        		<span class="text-light" th:text="${dept.deptDescription}"></span>
+        		<span class="text-bold" th:text="${dept.departmentName}"></span><br />
+        		<span class="text-light" th:text="${dept.departmentDescription}"></span>
     		</div>
-    		<div th:id="${dept.deptCode}" th:if="${dept.canRegister == '0'}" 
+    		<div th:id="${dept.departmentCode}" th:if="${dept.canRegister == '0'}" 
         		class="ldui-content-row"  th:each="dept:${map.value}">
-        		<span class="text-bold" th:text="${dept.deptName}"></span>
+        		<span class="text-bold" th:text="${dept.departmentName}"></span>
         		<span class="pull-right" style="margin-bottom:5px;margin-right:50px;">
         			<button type="button" class="btn" style="padding: 0px 2px;">无号</button>
         		</span>
         		<br />
-        		<span class="text-light" th:text="${dept.deptDescription}"></span>
+        		<span class="text-light" th:text="${dept.departmentDescription}"></span>
     		</div>
 		</div>
 	</div>

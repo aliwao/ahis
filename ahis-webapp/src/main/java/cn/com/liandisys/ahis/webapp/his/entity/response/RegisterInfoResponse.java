@@ -2,8 +2,7 @@ package cn.com.liandisys.ahis.webapp.his.entity.response;
 
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 预约号源信息Response。
@@ -11,12 +10,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author xuyue
  * @version 1.0
  */
-@XmlRootElement(name = "Response")
 public class RegisterInfoResponse extends BaseResponse {
 
+	@JSONField(name="item")
 	private List<RegisterInfoItem> itemList;
 
-	@XmlElement(name = "item")
 	public List<RegisterInfoItem> getItemList() {
 		return itemList;
 	}

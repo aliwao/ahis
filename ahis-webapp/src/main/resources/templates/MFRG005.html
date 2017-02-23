@@ -37,21 +37,59 @@
 				</nav>
 			</div>
 		</div>
-		<input type="hidden" id="userId" th:field="${mfrg005Form.userId}" />
-		<input type="hidden" id="psOrdNum" th:field="${mfrg005Form.psOrdNum}" />
-		<input type="hidden" id="hisOrdNum"
-			th:field="${mfrg005Form.hisOrdNum}" /> <input type="hidden"
-			id="payAmt" th:field="${mfrg005Form.payAmt}" />
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">丨 挂号详情</h3>
+			</div>
+			<table class="table table-condensed">
+				<tr>
+					<td>挂号单号</td>
+					<td><span id="psOrdNum" th:text="${mfrg005Form.psOrdNum}">00002</span></td>
+				</tr>
+				<tr>
+					<td>科室</td>
+					<td><span id="deptName" th:text="${mfrg005Form.deptName}">內科</span></td>
+				</tr>
+				<tr>
+					<td>医生</td>
+					<td><span id="doctorName" th:text="${mfrg005Form.doctorName}">艾旧仁</span></td>
+				</tr>
+				<tr>
+					<td>就诊时间</td>
+					<td><span th:text="${mfrg005Form.scheduleDate}">2017-02-15</span>&nbsp;
+						<span th:if="${mfrg005Form.timeFlag}=='1'">上午</span><span
+						th:if="${mfrg005Form.timeFlag}=='2'">下午</span></td>
+				</tr>
+				<tr>
+					<td>挂号费</td>
+					<td><span th:text="${mfrg005Form.payAmt}">50</span>元</td>
+				</tr>
+			</table>
+		</div>
+
 		<center>
-			<button id="payNow" class="btn btn-payment">立即支付</button>
+			<form action="payNow" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" /> <input type="hidden" id="psOrdNum"
+					name="psOrdNum" th:field="${mfrg005Form.psOrdNum}" /> <input
+					type="hidden" id="deptName" name="deptName"
+					th:field="${mfrg005Form.deptName}" /> <input type="hidden"
+					id="doctorName" name="doctorName"
+					th:field="${mfrg005Form.doctorName}" /> <input type="hidden"
+					id="hisOrdNum" name="hisOrdNum" th:field="${mfrg005Form.hisOrdNum}" />
+				<input type="hidden" id="payAmt" name="payAmt"
+					th:field="${mfrg005Form.payAmt}" />
+				<button id="payNow" class="btn btn-payment center-block">立即支付</button>
+			</form>
 			<br />
-			<button id="appointmentlist" class="btn btn-appointmentlist">预约一览</button>
+			<button id="appointmentlist" type="submit"
+				class="btn btn-appointmentlist">预约一览</button>
 		</center>
 	</div>
 </body>
 <style>
 .btn-payment {
-	margin-top: 80px;
+	margin-top: 40px;
 	text-align: center;
 	line-height: 40px;
 	height: 50px;
@@ -146,30 +184,18 @@
 	$(document).ajaxSend(function(e, xhr, options) {
 		xhr.setRequestHeader(header, token);
 	});
-	var urlpath = '/m/mfrg005/updateStatus';
-	var userId = $('#userId').val();
-	var psOrdNum = $('#psOrdNum').val();
+
+	var deptName = $('#deptName').text();
+	var doctorName = $('#doctorName').text();
 	var hisOrdNum = $('#hisOrdNum').val();
 	var payAmt = $('#payAmt').val();
-	var params = {
-		userId : userId,
-		psOrdNum : psOrdNum,
-		hisOrdNum : hisOrdNum
-	};
-	var callback = toPay;
+	var psOrdNum = $('#psOrdNum').text();
 	$(document).ready(function() {
 		$('#appointmentlist').on('click', function() {
 			window.parent.location = '/m/mprg009/index';
 		});
-		$('#payNow').on('click', function() {
-			postAjax(urlpath, params, callback);
-		});
 	});
-	function toPay(reponse) {
-		window.parent.location = '/m/mfrg006/index?userId=' + userId
-				+ '&psOrdNum=' + psOrdNum + '&hisOrdNum=' + hisOrdNum
-				+ "&payAmt=" + payAmt;
-	}
+
 	//]]>
 </script>
 </html>

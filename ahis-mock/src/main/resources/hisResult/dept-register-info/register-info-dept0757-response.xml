@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+	<!-- 2017-01-17 -->
+	<!-- 肠道门诊0757 -->
+    <item>
+		<deptCode>0757</deptCode>
+		<doctorCode>0003</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1050</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+    <item>
+		<deptCode>0757</deptCode>
+		<doctorCode>0003</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1060</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+	<item>
+		<deptCode>0757</deptCode>
+		<doctorCode>0004</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>1</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1070</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>40</leftNum>
+	</item>
+    <item>
+		<deptCode>0757</deptCode>
+		<doctorCode>0004</doctorCode>
+		<scheduleDate>2017-01-17</scheduleDate>
+		<timeFlag>2</timeFlag>
+		<hasDetailTime>0</hasDetailTime>
+		<beginTime></beginTime>
+		<endTime></endTime>
+		<workStatus>1</workStatus>
+		<regFee>1080</regFee>
+		<totalNum>50</totalNum>
+		<leftNum>0</leftNum>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

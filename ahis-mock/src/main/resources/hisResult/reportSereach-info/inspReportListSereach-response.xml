@@ -1,0 +1,36 @@
+﻿<Response>
+    <item>
+    	<inspectId>000000001</inspectId>
+        <inspectName>耳鼻喉</inspectName>
+        <inspectTime>2017-02-07 09:20:00</inspectTime>
+        <inspectStatus>2</inspectStatus>
+        <reportTime>2017-02-07 12:00:00</reportTime>
+	<examTime>2017-02-08 09:00:00</examTime>
+        <deptCode>0343</deptCode>
+	<deptName>耳鼻喉科</deptName>
+	<doctorCode>011206</doctorCode>
+	<doctorName>沈帆</doctorName>
+	<exeDeptCode>0343</exeDeptCode>
+        <exeDeptName>耳鼻喉科</exeDeptName>
+	<reporter>沈帆</reporter>
+	<auditor>王梅</auditor>
+    </item>
+    <item>
+    	<inspectId>000000002</inspectId>
+        <inspectName>耳鼻喉</inspectName>
+        <inspectTime>2017-02-02 09:20:00</inspectTime>
+        <inspectStatus>3</inspectStatus>
+        <reportTime>2017-02-02 12:00:00</reportTime>
+	<examTime>2017-02-03 09:00:00</examTime>
+        <deptCode>0343</deptCode>
+	<deptName>耳鼻喉科</deptName>
+	<doctorCode>011206</doctorCode>
+	<doctorName>沈帆</doctorName>
+	<exeDeptCode>0343</exeDeptCode>
+        <exeDeptName>耳鼻喉科</exeDeptName>
+	<reporter>沈帆</reporter>
+	<auditor>王梅</auditor>
+    </item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

@@ -1,0 +1,20 @@
+<Response>
+	<item>
+		<deptCode>0001</deptCode>
+		<deptName>耳鼻喉科</deptName>
+		<hasChild>0</hasChild>
+		<parentDeptCode>0</parentDeptCode>
+		<deptDescription></deptDescription>
+		<deptLocation></deptLocation>
+	</item>
+	<item>
+		<deptCode>0001</deptCode>
+		<deptName>耳鼻喉科</deptName>
+		<hasChild>0</hasChild>
+		<parentDeptCode>0</parentDeptCode>
+		<deptDescription></deptDescription>
+		<deptLocation></deptLocation>
+	</item>
+	<resultCode>0</resultCode>
+	<resultMessage>查询成功</resultMessage>
+</Response>

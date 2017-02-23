@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0010</deptCode>
+		<deptName>呼吸内科</deptName>
+		<doctorCode>0019</doctorCode>
+		<doctorName>朱宜</doctorName>
+		<doctorSkill>哮喘病</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0010</deptCode>
+		<deptName>呼吸内科</deptName>
+		<doctorCode>0020</doctorCode>
+		<doctorName>徐绵绵</doctorName>
+		<doctorSkill>肺结核病</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<title>支付成功</title>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation"
+        style="background-color: #6dbef6">
+        <div class="open-hover ldui-topnavbar">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">支付成功</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12"
+        style="text-align: center; color: #34ce4d; font-size: 20px; margin-top: 70px; margin-bottom: 15px; background-color: white; padding-top: 15px; padding-bottom: 15px;">
+        <span>支付成功！</span>
+    </div>
+
+    <div class="col-xs-12" style="margin-bottom: 1px; background-color: white;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">流水号</div>
+        <div class="col-xs-9" style="margin-top: 10px; margin-bottom: 10px;">
+            <span th:text="${orderPaymentResultForm.orderid}"></span>
+        </div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 1px; background-color: white;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">支付方式</div>
+        <div class="col-xs-9" style="margin-top: 10px; margin-bottom: 10px;">商联通付</div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 15px; background-color: white;">
+        <div class="col-xs-3" style="margin-top: 10px; margin-bottom: 10px;">支付金额</div>
+        <div class="col-xs-9" style="margin-top: 10px; margin-bottom: 10px;">
+            <!-- <span th:text="${#numbers.formatDecimal(orderPaymentResultForm.orderfee / 100, 0, 'COMMA', 2, 'POINT')} + 元"></span> -->
+        </div>
+    </div>
+    <div class="col-xs-12" style="margin-bottom: 15px; background-color: white;">
+        <div>温馨提醒</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">1.</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">2.</div>
+        <div class="col-xs-12" style="margin-top: 1px; margin-bottom: 1px;">3.</div>
+    </div>
+    <form th:action="${postUrl}" method="post">
+        <input type="hidden" name="version" th:value="${orderPaymentResultForm.version}" />
+        <input type="hidden" name="charset" th:value="${orderPaymentResultForm.charset}" />
+        <input type="hidden" name="systemid" th:value="${orderPaymentResultForm.systemid}" />
+        <input type="hidden" name="msgseqno" th:value="${orderPaymentResultForm.msgseqno}" />
+        <input type="hidden" name="uid" th:value="${orderPaymentResultForm.uid}" />
+        <input type="hidden" name="orderid" th:value="${orderPaymentResultForm.orderid}" />
+        <input type="hidden" name="orderfee" th:value="${orderPaymentResultForm.orderfee}" />
+        <input type="hidden" name="custominfo" th:value="${orderPaymentResultForm.custominfo}" />
+        <input type="hidden" name="reserved" th:value="${orderPaymentResultForm.reserved}" />
+        <input type="hidden" name="resultcode" th:value="${orderPaymentResultForm.resultcode}" />
+        <input type="hidden" name="resultmsg" th:value="${orderPaymentResultForm.resultmsg}" />
+        <input type="hidden" name="signmsg" th:value="${orderPaymentResultForm.signmsg}" />
+        <input type="hidden" name="isPaid" th:value="${isPaid}" />
+        <input type="submit" class="btn btn-primary btn-block" value="查看缴费一览" />
+    </form>
+</body>
+</html>

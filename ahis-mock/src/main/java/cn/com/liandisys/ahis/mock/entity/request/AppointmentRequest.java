@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import cn.com.liandisys.ahis.mock.entity.BaseRequest;
+
 @XmlRootElement(name = "Request")
 public class AppointmentRequest extends BaseRequest {
 	/**
@@ -90,6 +91,20 @@ public class AppointmentRequest extends BaseRequest {
 	 * 监护人证件号码
 	 */
 	private String guardIdNo;
+
+	private String reglevlcode;
+
+	private String schemaid;
+
+	private String isexpert;
+
+	private String deptName;
+
+	private String doctorName;
+
+	private String serialNum;
+
+	private String registerType;
 
 	@XmlElement
 	public String getPsOrdNum() {
@@ -278,5 +293,68 @@ public class AppointmentRequest extends BaseRequest {
 
 	public void setGuardIdNo(String guardIdNo) {
 		this.guardIdNo = guardIdNo;
+	}
+
+	@XmlElement
+	public String getReglevlcode() {
+		return reglevlcode;
+	}
+
+	public void setReglevlcode(String reglevlcode) {
+		this.reglevlcode = reglevlcode;
+	}
+
+	@XmlElement
+	public String getSchemaid() {
+		return schemaid;
+	}
+
+	public void setSchemaid(String schemaid) {
+		this.schemaid = schemaid;
+	}
+
+	@XmlElement
+	public String getIsexpert() {
+		return isexpert;
+	}
+
+	public void setIsexpert(String isexpert) {
+		this.isexpert = isexpert;
+	}
+
+	@XmlElement
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	@XmlElement
+	public String getDoctorName() {
+		return doctorName;
+	}
+
+	public void setDoctorName(String doctorName) {
+		this.doctorName = doctorName;
+	}
+
+	@XmlElement
+	public String getSerialNum() {
+		return serialNum;
+	}
+
+	public void setSerialNum(String serialNum) {
+		this.serialNum = serialNum;
+	}
+
+	@XmlElement
+	public String getRegisterType() {
+		return registerType;
+	}
+
+	public void setRegisterType(String registerType) {
+		this.registerType = registerType;
 	}
 }

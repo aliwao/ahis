@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import cn.com.liandisys.ahis.webapp.service.AuthService;
-import cn.com.liandisys.ahis.webapp.service.UserLoginService;
 import cn.com.liandisys.ahis.webapp.utils.AhisCommonUtil;
 
 @Controller
@@ -18,9 +17,6 @@ public class LoginController {
 
 	@Autowired
 	AuthService authService;
-
-	@Autowired
-	UserLoginService userLoginService;
 
 	@RequestMapping("/login")
 	public String login(RedirectAttributes attr){

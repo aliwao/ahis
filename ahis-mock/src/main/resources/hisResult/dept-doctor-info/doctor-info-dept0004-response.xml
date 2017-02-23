@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Response>
+    <item>
+		<deptCode>0004</deptCode>
+		<deptName>放射科介入科</deptName>
+		<doctorCode>0007</doctorCode>
+		<doctorName>周瑛</doctorName>
+		<doctorSkill>肿瘤</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+	<item>
+		<deptCode>0004</deptCode>
+		<deptName>放射科介入科</deptName>
+		<doctorCode>0008</doctorCode>
+		<doctorName>徐景帆</doctorName>
+		<doctorSkill>血管病</doctorSkill>
+		<doctorIntrodution></doctorIntrodution>
+		<doctorTitle>主任医师</doctorTitle>
+	</item>
+    <resultCode>0</resultCode>
+    <resultMessage>查询成功</resultMessage>
+</Response>
