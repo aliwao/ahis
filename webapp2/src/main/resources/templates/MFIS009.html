@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<script type="text/javascript" src="/js/jquery-3.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/jquery-ui.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+
+<style>
+.row-ui {
+	 margin-right:0px;
+	 margin-left: 0px
+}
+a, a:focus, a:hover{
+  text-decoration:none;
+}
+a:focus, a:hover{
+  text-decoration:none;
+}
+
+.deposit_ul { overflow: hidden; width: 100%; }
+.deposit_ul li { float: left; width: 27%; height: 40px; border: 1px solid #ddd; font-size: 18px; color: #666; margin-right: 5%; text-align: center; margin-bottom: 25px; overflow: hidden; cursor: pointer; }
+.deposit_ul li p { line-height: 18px; font-size: 14px; color: #999; margin-top: 5px; }
+.deposit_ul li.on { background: url(/images/hospitalization/payfocus.jpg) no-repeat center; background-size:100%  38px; color: #169ed8; border: 1px solid #169ed8; }
+.deposit_ul li.on p { color: #169ed8; }
+</style>
+
+<script type="text/javascript">
+//CSRF Token
+//<![CDATA[
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+$(document).ready(function(){
+	$("[id$='collapse']").collapse('hide');
+});
+
+//]]>
+</script>
+
+<title>住院清单</title>
+</head>
+<body>
+<form id="mfis009Form">
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#f4f4f4">
+    <div class="open-hover ldui-topnavbar">
+    	<div class="row">
+        	<div class="col-xs-3">
+      			<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mfis007');"></span>
+      		</div>
+      		<div class="col-xs-6">
+      			<div class="navbar-header">
+      		          <a class="navbar-brand" href="#">住院清单</a>
+      		    </div>
+      		</div>
+        </div>
+    </div>
+</div>
+
+<div class="" id="containerDiv" style="margin-top:50px;">
+	
+	<!-- 住院人 -->
+	<div class="row row-ui" style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 10px">
+		<div class="col-xs-12" style="height: 45px; padding-top: 12px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span class="glyphicon glyphicon-user"></span> <span>住院人</span><span style="float:right;" th:text="${mfis009Form.userName}"></span>
+		</div>
+	</div>
+	
+	<!-- 缴费情况 -->
+	<div class="row row-ui" style="background-color: #fff;">
+    	<span class="col-xs-1" style="padding-right:8%"></span>
+    	<span class="col-xs-3" style="padding: 12px 12px; text-align: center">
+    		<span>
+        		<span th:text="${mfis009Form.recievedDeposit}"></span><br/>
+        		<span>已收押金</span>
+        	</span>
+    	</span> 
+    	<span class="col-xs-3" style="padding: 12px 12px; text-align: center">
+    		<span>
+            	<span th:text="${mfis009Form.notPayed}"></span><br />
+            	<span>未缴费</span>
+            </span>
+     	</span> 
+     	<span class="col-xs-3" style="padding: 12px 12px; text-align: center">
+    		<span>
+            	<span th:text="${mfis009Form.totalFee}"></span><br />
+            	<span>总费用</span>
+        </span>
+     	</span> 
+    </div> 
+    
+    <!-- 日期 & 费用情况 -->
+    <div th:each="info:${mfis009Form.dayFeeList}">
+	<div class="row text-left" style="padding-top:10px;background-color: white; vertical-align: middle; margin:10px 0px 0px 0px;">
+		<div class="col-xs-12" style="height: 33px; padding-top: 4px; padding-left: 0px;">
+			<span style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+			<span th:text="${info.dateStr}"></span>&emsp;
+			 <a data-toggle="collapse" th:href="${'#' + info.date + '_collapse'}" style="float:right">
+			 	¥<span th:text="${info.totalFee}"></span>&nbsp;<span class="glyphicon glyphicon-chevron-down" ></span>
+			 </a>
+		</div>
+	</div>
+	<div th:id="${info.date + '_collapse'}" class="row panel-collapse collapse" style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px;margin-bottom: 1px">
+		<div th:if="${info.feeA} != null">
+			<div class="col-xs-8">甲类金额</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.feeA}"></span></div>
+		</div>
+		<div th:if="${info.feeB} != null">
+			<div class="col-xs-8">乙类金额</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.feeB}"></span></div>
+		</div>
+		<div th:if="${info.feeC} != null">
+			<div class="col-xs-8">丙类金额</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.feeC}"></span></div>
+		</div>
+		<div th:if="${info.bedFee} != null">
+			<div class="col-xs-8">床位费</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.bedFee}"></span></div>
+		</div>
+		<div th:if="${info.westMedFee} != null">
+			<div class="col-xs-8">西药费</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.westMedFee}"></span></div>
+		</div>
+		<div th:if="${info.readyMedFee} != null">
+			<div class="col-xs-8">成药费</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.readyMedFee}"></span></div>
+		</div>
+		<div th:if="${info.herbMedFee} != null">
+			<div class="col-xs-8">草药费</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.herbMedFee}"></span></div>
+		</div>
+		<div th:if="${info.treatFee} != null">
+			<div class="col-xs-8">诊疗费</div>
+			<div class="col-xs-4 text-right">¥<span th:text="${info.treatFee}"></span></div>
+		</div>
+	</div>
+	</div>
+	
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfrg005Mapper">
+	<sql id="registerNoAsSearchCondition">
+		where A.registerNo=#{registerNo,jdbcType=CHAR}
+	</sql>
+	<sql id="allColumns_RegisterRelateEntity">
+		A.registerNo as A_registerNo,
+		A.userID as A_userID,
+		A.hospitalCode as A_hospitalCode,
+		A.departmentCode as A_departmentCode,
+		A.doctorCode as A_doctorCode,
+		A.registerDate as A_registerDate,
+		A.happenDate as A_happenDate,
+		A.happenPeriod as A_happenPeriod,
+		A.registerFee as A_registerFee,
+		A.returnOrderNo as A_returnOrderNo,
+		A.stopFlag as A_stopFlag,
+		A.hisOrdNum as A_hisOrdNum,
+		A.registerStatus
+		as A_registerStatus,
+		A.serialNum as A_serialNum,
+		A.visitPosition as
+		A_visitPosition,
+		B.hospitalCode as B_hospitalCode,
+		B.departmentCode as
+		B_departmentCode,
+		B.departmentName as B_departmentName,
+		B.doctorCode as
+		B_doctorCode,
+		B.doctorName as B_doctorName,
+		B.skill as B_skill,
+		B.summary as B_summary,
+		B.rank as B_rank,
+		B.portrait as B_portrait,
+		C.paymentNo as C_paymentNo,
+		C.paymentRefType as C_paymentRefType,
+		C.hisOrdNum as C_hisOrdNum,
+		C.userID as C_userID,
+		C.departmentName as
+		C_departmentName,
+		C.doctorName as C_doctorName,
+		C.paymentName as
+		C_paymentName,
+		C.orderFee as C_orderFee,
+		C.payFee as C_payFee,
+		C.orderDateTime as C_orderDateTime,
+		C.medicalInsuranceAmount as
+		C_medicalInsuranceAmount,
+		C.medicalselfAmount as C_medicalselfAmount,
+		C.paidDate as C_paidDate,
+		C.paidState as C_paidState,
+		C.orderType as
+		C_orderType,
+		C.paymentNotice as C_paymentNotice
+	</sql>
+	<sql id="selectRegister">
+		SELECT
+		<include
+			refid="cn.com.liandisys.ahis.webapp.mapper.Mfrg005Mapper.allColumns_RegisterRelateEntity" />
+		from RegisterHistory A
+		left join DoctorBasicInfo B
+		on
+		A.hospitalCode=B.hospitalCode
+		and A.departmentCode= B.departmentCode
+		and A.doctorCode=B.doctorCode
+		left join PaymentRecord C
+		on
+		A.hisOrdNum=C.hisOrdNum
+	</sql>
+	<resultMap id="resultMap_RegisterHistoryEntity" autoMapping="true"
+		type="cn.com.liandisys.ahis.webapp.entity.RegisterHistoryEntity">
+		<id property="registerNo" column="A_registerNo" />
+		<result property="userID" column="A_userID" />
+		<result property="hospitalCode" column="A_hospitalCode" />
+		<result property="departmentCode" column="A_departmentCode" />
+		<result property="doctorCode" column="A_doctorCode" />
+		<result property="registerDate" column="A_registerDate" />
+		<result property="happenDate" column="A_happenDate" />
+		<result property="happenPeriod" column="A_happenPeriod" />
+		<result property="registerFee" column="A_registerFee" />
+		<result property="stopFlag" column="A_stopFlag" />
+		<result property="returnOrderNo" column="A_returnOrderNo" />
+		<result property="hisOrdNum" column="A_hisOrdNum" />
+		<result property="registerStatus" column="A_registerStatus" />
+		<result property="serialNum" column="A_serialNum" />
+		<result property="visitPosition" column="A_visitPosition" />
+	</resultMap>
+	<resultMap id="resultMap_DoctorBasicInfoDto" autoMapping="true"
+		type="cn.com.liandisys.ahis.webapp.dto.DoctorBasicInfoDto">
+		<id property="hospitalCode" column="B_hospitalCode" />
+		<id property="departmentCode" column="B_departmentCode" />
+		<id property="doctorCode" column="B_doctorCode" />
+		<result property="departmentName" column="B_departmentName" />
+		<result property="doctorName" column="B_doctorName" />
+		<result property="skill" column="B_skill" />
+		<result property="summary" column="B_summary" />
+		<result property="rank" column="B_rank" />
+		<result property="portrait" column="B_portrait" />
+	</resultMap>
+	<resultMap id="resultMap_PaymentRecordDto"
+		type="cn.com.liandisys.ahis.webapp.dto.PaymentRecordDto" autoMapping="true">
+		<id property="paymentNo" column="C_paymentNo" />
+		<result property="paymentRefType" column="C_paymentRefType" />
+		<result property="hisOrdNum" column="C_hisOrdNum" />
+		<result property="userID" column="C_userID" />
+		<result property="departmentName" column="C_departmentName" />
+		<result property="doctorName" column="C_doctorName" />
+		<result property="paymentName" column="C_paymentName" />
+		<result property="orderFee" column="C_orderFee" />
+		<result property="payFee" column="C_payFee" />
+		<result property="orderDateTime" column="C_orderDateTime" />
+		<result property="medicalInsuranceAmount" column="C_medicalInsuranceAmount" />
+		<result property="medicalselfAmount" column="C_medicalselfAmount" />
+		<result property="paidDate" column="C_paidDate" />
+		<result property="paidState" column="C_paidState" />
+		<result property="orderType" column="C_orderType" />
+		<result property="paymentNotice" column="C_paymentNotice" />
+	</resultMap>
+	<resultMap id="resultMap_RegisterRelateEntity" autoMapping="true"
+		type="cn.com.liandisys.ahis.webapp.entity.RegisterRelateEntity">
+		<id property="registerNo" column="A_registerNo" />
+		<association property="registerHistoryEntity" resultMap="resultMap_RegisterHistoryEntity" />
+		<association property="doctorBasicInfoEntity" resultMap="resultMap_DoctorBasicInfoDto" />
+		<association property="paymentRecordEntity" resultMap="resultMap_PaymentRecordDto" />
+	</resultMap>
+	<select id="selectRegisterByRegisterNo" parameterType="java.lang.String"
+		resultMap="resultMap_RegisterRelateEntity">
+		<include refid="selectRegister" />
+		<include refid="registerNoAsSearchCondition" />
+	</select>
+</mapper>

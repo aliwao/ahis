@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    #containerDiv .mylogin {
+       background-color: #fff;
+       color: #fff;
+       height:70px;
+       margin-top:15px;
+       padding:10px 0;
+       cursor:pointer;
+    }
+    #containerDiv .mylogin p:first-child {
+       margin-top: 6px;
+    }
+    #containerDiv .mylogin p {
+       margin: 0;
+       color:#000;
+    }
+    #containerDiv .mylogin p:last-child {
+       color:#666;
+    }
+    #containerDiv .mylogin span {
+       color: #ccc;
+       margin:16px 0;
+    }
+    img.ldui-my-icon {
+        width:20px;
+        height:20px;
+        border-radius: 20px;
+    }
+    button.list-group-item:focus {
+        outline:none;
+    }
+    </style>
+</head>
+<body th:object="${mpmp001Form}">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container ldui-topnavbar" style="height: 59px;">
+        <!--向左对齐-->
+        <div class="row">
+            <div class="col-xs-3">
+                
+            </div>
+            <div class="col-xs-6">
+                <div class="navbar-header" style="padding-top:5px;">
+                  <a class="navbar-brand" href="#">我的</a>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <!--<button type="button" class="btn btn-default navbar-btn">首页</button>-->
+            </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="container" id="containerDiv">
+        <div th:if="*{mobileNo == null}" class="row mylogin" id="login_no" onclick="goNav(6);">
+           <div class="col-xs-2">
+              <img src="/images/tx_n.png" style="width:50px;height:50px;border-radius:25px;" />
+           </div>
+           <div class="col-xs-8">
+                <p>立即登录</p>
+                <p>登陆后可享受更多特权</p>
+           </div>
+           <div class="col-xs-2">
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+           </div>
+       </div>
+       <div th:if="*{mobileNo != null}" class="row mylogin" id="login_yes" onclick="goNav(2);">
+           <div class="col-xs-2">
+              <img src="/images/portrait" style="width:50px;height:50px;border-radius:25px;" />
+           </div>
+           <div class="col-xs-8">
+                <p th:text="*{username}">XXX</p>
+                <p th:text="*{mobileNo}">15012345678</p>
+           </div>
+           <div class="col-xs-2">
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+           </div>
+       </div>
+
+    <div class="list-group row" style="margin-top:10px;">
+      
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(8);">
+          <img class="ldui-my-icon pull-left" src="/images/myicon/my_pay_icon.png" />&nbsp;支付安全
+          <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+    <div class="list-group row" style="margin-top:10px;">
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(9);">
+          <img class="ldui-my-icon pull-left" src="/images/myicon/my_guahao_icon.png" />&nbsp;我的挂号
+          <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(3);">
+           <img class="ldui-my-icon pull-left" src="/images/myicon/my_addr_icon.png" />&nbsp;我的地址
+           <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(5);">
+            <img class="ldui-my-icon pull-left" src="/images/myicon/my_sc_icon.png" />&nbsp;我的收藏
+            <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+    <div class="list-group row" style="margin-top:10px;">
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(0);">
+             <img class="ldui-my-icon pull-left" src="/images/myicon/my_comment_icon.png" />&nbsp;欢迎评分
+             <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+      <button type="button" class="list-group-item ldui-group-item" onclick="goNav(0);">
+             <img class="ldui-my-icon pull-left" src="/images/myicon/my_about_icon.png" />&nbsp;关于我们
+             <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+    
+    <button th:if="*{mobileNo != null}" id="btn_logout" type="button" class="btn btn-primary btn-block" onclick="doLogout();">退出当前用户</button>
+    <input type="hidden" id="msg" th:value="${msg}" />
+    <input type="hidden" id="msgtype" th:value="${msgtype}" />
+    <!-- <input type="hidden" id="message" th:value="${#httpServletRequest.getAttribute('message')}" /> -->
+    <input type="hidden" id="message" th:value="${#httpServletRequest.getParameter('message')}" />
+  </div>
+    <!--<button class="btn btn-success">按钮</button>
+    <span>http://how2j.cn/k/boostrap/boostrap-setup/539.html#step1254</span>-->
+
+        <footer>
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                <ul class="nav nav-tabs  ldui-bottomtabbar">
+                    <li>
+                        <a onclick="pageNavById('HPHP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-home">
+                            </span> -->
+                            <img alt="首页" src="/images/footer/home.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                首页
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('HMHH001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-book">
+                            </span> -->
+                            <img alt="健康手冊" src="/images/footer/handbook.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                健康手册
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('EMEM001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-th-large">
+                            </span> -->
+                            <img alt="电子病历" src="/images/footer/form.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                电子病历
+                            </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a onclick="pageNavById('MPMP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-user">
+                            </span> -->
+                            <img alt="我的" src="/images/footer/my-fill.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                我的
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+
+    <script type="text/javascript">
+       $(document).ready(
+           function() {
+             showMyToastMsg();
+             //checkLogin();
+           }
+       );
+
+       function showMyToastMsg() {
+           var content = $("#msg").val() || $("#message").val();
+           var type = $("#msgtype").val() || "success";
+           if(content){
+               showToastMsg(content, type)
+               $("#msg").val("");
+               $("#msgtype").val("");
+               $("#message").val("");
+               //localStorage.setItem('isloginflg', 1);
+           }
+       }
+
+       function goNav(i) {
+          if(i==2){
+             //self.location='MPLG003.html'; 
+             self.location='/m/mplg003/index';
+          }
+          else if(i==3){
+             //self.location='MPAD001.html';
+             self.location='/m/mpad001/index';
+          }
+          else if(i==5) {
+             //self.location='MPFA001.html';
+             self.location='/m/mpfa001/index';
+          }
+          else if(i==6) {
+             //self.location='MPLG001.html'; 
+             self.location='/login'; 
+          }
+          else if(i==8) {
+             //self.location='MPST001.html';
+             self.location='/m/mpst001/index';
+          }
+          else if(i==9) {
+              //self.location='MPRG009.html';
+              self.location='/m/mprg009/index';
+          }
+          else if(i==0) {
+              showNoticeToast("该功能暂未实现，敬请期待！");
+          }
+       }
+       
+       function doLogout() {
+          //localStorage.setItem('isloginflg', 0);
+          self.location='/logout';
+       }
+       
+       /* function checkLogin() {
+          var isloginflg = localStorage.getItem('isloginflg');
+          var ret = 0;
+          if(isloginflg == 1) {
+             $("#btn_logout").show();
+             //$("#login_no").hide();
+             //$("#login_yes").show();
+             ret = 1;
+          }
+          else {
+             $("#btn_logout").hide();
+             //$("#login_no").show();
+             //$("#login_yes").hide();
+          }
+          return ret;
+       } */
+    </script>
+</body>
+</html>

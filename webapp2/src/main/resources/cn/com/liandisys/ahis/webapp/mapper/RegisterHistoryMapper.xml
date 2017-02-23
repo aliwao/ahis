@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.RegisterHistoryMapper">
+	<insert id="insertRegisterHistory"
+		parameterType="cn.com.liandisys.ahis.webapp.entity.RegisterHistoryEntity">
+		insert into RegisterHistory
+		(registerNo,
+		userID,
+		hospitalCode,
+		departmentCode,
+		doctorCode,
+		registerDate,
+		happenDate,
+		happenPeriod,
+		registerFee,
+		returnOrderNo,
+		stopFlag,
+		hisOrdNum,
+		registerStatus,
+		serialNum,
+		visitPosition,
+		loginUser,
+		updateUser)
+		values (
+		#{registerNo,jdbcType=CHAR},
+		#{userID,jdbcType=BIGINT},
+		#{hospitalCode,jdbcType=CHAR},
+		#{departmentCode,jdbcType=CHAR},
+		#{doctorCode,jdbcType=CHAR},
+		#{registerDate,jdbcType=DATE},
+		#{happenDate,jdbcType=DATE},
+		#{happenPeriod,jdbcType=CHAR},
+		#{registerFee,jdbcType=DOUBLE},
+		#{returnOrderNo,jdbcType=VARCHAR},
+		#{stopFlag,jdbcType=CHAR},
+		#{hisOrdNum,jdbcType=CHAR},
+		#{registerStatus,jdbcType=CHAR},
+		#{serialNum,jdbcType=VARCHAR},
+		#{visitPosition,jdbcType=VARCHAR},
+		#{loginUser,jdbcType=VARCHAR},
+		#{updateUser,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="getRegisterInfoByKey" parameterType="java.lang.String"
+		resultType="cn.com.liandisys.ahis.webapp.entity.RegisterHistoryEntity">
+		select *
+		from RegisterHistory
+		where
+		registerNo=#{registerNo,jdbcType=CHAR}
+	</select>
+	<update id="updateStatusByKey">
+		update RegisterHistory
+		set
+		registerStatus=#{registerStatus,jdbcType=CHAR}
+		where
+		registerNo=#{registerNo,jdbcType=CHAR}
+	</update>
+
+</mapper>

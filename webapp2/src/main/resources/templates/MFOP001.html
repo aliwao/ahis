@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+
+<script type="text/javascript" src="/js/jquery-3.1.1.js">
+	
+</script>
+<script type="text/javascript" src="/js/bootstrap.min.js">
+	
+</script>
+<script src="/js/common.js">
+	
+</script>
+<script src="/js/jquery-ui.js">
+	
+</script>
+<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="/css/common.css" rel="stylesheet" />
+<link href="/css/jquery-ui.css" rel="stylesheet" />
+<link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+	media="screen" />
+
+<script type="text/javascript">
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+
+	$(document).ready(function() {
+		var isPaid = $("#isPaid").val();
+		if (isPaid == '1') {
+			$("#pay").removeClass("in active");
+			$("#payLi").removeClass("active");
+			$("#paid").addClass("in active");
+			$("#paidLi").addClass("active");
+		}
+	});
+	function goDetail(index, type) {
+
+		if (type == 1) {
+			$("#hidHisOrdNum").attr("value", $("#hisOrdNum" + index).val());
+		} else {
+			$("#hidHisOrdNum").attr("value", $("#paidHisOrdNum" + index).val());
+		}
+		$("#mfop001Form").attr("action", "/m/mfop001/goDetail");
+		$("#mfop001Form").submit();
+	}
+
+	function doPay(index) {
+
+		$("#hidHisOrdNum").attr("value", $("#hisOrdNum" + index).val());
+		$("#mfop001Form").attr("action", "/m/mfop001/doPay");
+		$("#mfop001Form").submit();
+	}
+</script>
+<style>
+/* Custom Styles */
+ul.nav-tabs {
+	width: 30px;
+	border: 0px;
+}
+
+ul.nav-tabs li {
+	margin: 0;
+}
+
+ul.nav-tabs li:first-child {
+	border-top: none;
+	border: 0px;
+}
+
+ul.nav-tabs li a {
+	margin: 0;
+	padding: 0px 6px;
+}
+
+ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
+	color: #fff;
+	background: #0088cc;
+	border: none;
+}
+
+ul.nav-tabs.affix {
+	top: 60px; /* Set the top position of pinnedelement */
+}
+
+ul.nav-tabs>li>a {
+	margin-right: 2px;
+	line-height: 1.4;
+	border: 0px;
+	border-radius: 0px 0px 0 0;
+}
+
+.content-row {
+	color: #31708f;
+	margin: 5px;
+	background-color: #FCFCFC;
+}
+
+.text-bold {
+	font-weight: bold;
+	margin-left: 7px;
+	color: black;
+}
+
+.text-light {
+	margin-left: 16px;
+	color: #6C6C6C;
+}
+
+.ui-menu .ui-menu-item {
+	font-family: "KaiTi", Arial, sans-serif;
+	margin: 0;
+	cursor: pointer;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover
+	{
+	color: black;
+	background-color: white;
+}
+
+.nav-pills>li.active {
+	border-bottom: 2px solid #22a7f0;
+}
+
+.nav-pills>li>a, .nav-pills>li>a:focus, .nav-pills>li>a:hover {
+	color: #6c6c6c;
+	background-color: white;
+}
+</style>
+</head>
+
+<body>
+	<form id="mfop001Form" name="mfop001Form" action=""
+		th:object="${mfop001Form}">
+		<div class="navbar navbar-default navbar-fixed-top" role="navigation"
+			style="background-color: #f4f4f4">
+			<div class="open-hover ldui-topnavbar">
+				<div class="row">
+					<div class="col-xs-3">
+						<span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left"
+							onclick="goBack();"> </span>
+					</div>
+					<div class="col-xs-6">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="#"> 缴费一览 </a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<ul class="nav nav-pills"
+					style="width: 100%; background-color: white;">
+					<li class="active" id="payLi"
+						style="text-align: center; width: 50%;"><a href="#pay"
+						id="payHref" data-toggle="tab"> 待支付 </a></li>
+					<li id="paidLi" style="text-align: center; width: 49%;"><a
+						href="#paid" id="paidHref" data-toggle="tab"> 已支付 </a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="ldui-content-row" style="height: 90px;"></div>
+		<input type="hidden" id="hidHisOrdNum" name="hidHisOrdNum" /> <input
+			type="hidden" id="hidPatCardNo" name="hidPatCardNo"
+			th:attr="value=*{hidPatCardNo}" /> <input type="hidden"
+			id="hidPatCardType" name="hidPatCardType"
+			th:attr="value=*{hidPatCardType}" /> <input type="hidden"
+			id="isPaid" name="isPaid" th:attr="value=*{isPaid}" />
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="pay">
+				<!-- 挂号费 -->
+				<div th:each="order,orderStat:*{orderList}"
+					style="margin-bottom: 10px">
+					<div class="row text-left"
+						style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+						<input type="hidden" th:id="${'hisOrdNum' + orderStat.index}"
+							th:attr="value=${order.hisOrdNum}" />
+						<div class="col-xs-9 col-sm-11"
+							style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+							<span
+								style="padding-left: 20px; color: #22a7f0; font-weight: bold;">
+								| </span> <span th:text="${order.payName}"> 挂号费 </span>
+						</div>
+						<div class="col-xs-3 col-sm-1 " th:if="${order.payName !='挂号费'}"
+							style="color: buttonface; font-size: small;">
+							<button type="button" class="list-group-item"
+								th:onclick="${'goDetail(' + orderStat.index + ',1)'}"
+								style="border-style: none; color: buttonface;">
+								<span
+									class="pull-right glyphicon glyphicon-chevron-right ldui-btn-icon-rgiht">
+								</span>
+							</button>
+						</div>
+					</div>
+					<div class="row text-left"
+						style="background-color: white; padding-left: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+						<div class="col-xs-12 col-sm-12" th:if="${order.payName =='挂号费'}">
+							<div class="col-xs-4 col-sm-4">就诊日</div>
+							<div class="col-xs-5 col-sm-5">
+								<span th:text="${order.scheduleDate}"> 2017-01-18 </span>
+							</div>
+							<div class="col-xs-3 col-sm-3" th:if="${order.timeFlag =='1'}">
+								<span> 上午 </span>
+							</div>
+							<div class="col-xs-3 col-sm-3" th:if="${order.timeFlag =='2'}">
+								<span> 下午 </span>
+							</div>
+							<div class="col-xs-3 col-sm-3" th:if="${order.timeFlag =='3'}">
+								<span> 晚上 </span>
+							</div>
+							<div class="col-xs-3 col-sm-3" th:if="${order.timeFlag =='4'}">
+								<span> 全天 </span>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-4 col-sm-4">就诊科室</div>
+							<div class="col-xs-8 col-sm-8">
+								<span th:text="${order.deptName}"> 内科 </span>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-12">
+							<div class="col-xs-4 col-sm-4">就诊医生</div>
+							<div class="col-xs-8 col-sm-8">
+								<span th:text="${order.doctorName}"> 王一 </span>
+							</div>
+						</div>
+					</div>
+					<div class="row text-left"
+						style="background-color: white; padding-left: 10px; padding-right: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+						<div class="col-xs-12 col-sm-12"
+							style="font-size: 12px; color: #6C6C6C;"
+							th:if="${order.payName !='挂号费'}">
+							<span class="col-xs-6 col-sm-6"> 医保部分 </span> <span
+								class="col-xs-6 col-sm-6 text-right"
+								th:text="${order.medInsAmt}"> 200.00 </span>
+						</div>
+						<div class="col-xs-12 col-sm-12"
+							style="font-size: 12px; color: #6C6C6C;"
+							th:if="${order.payName !='挂号费'}">
+							<span class="col-xs-6 col-sm-6"> 个人部分 </span> <span
+								class="col-xs-6 col-sm-6 text-right"
+								th:text="${ + order.selfAmt}"> 100.00 </span>
+						</div>
+						<div class="col-xs-12 col-sm-12" th:if="${order.payName !='挂号费'}">
+							<span class="col-xs-6 col-sm-6"> 总费用 </span> <span
+								class="col-xs-6 col-sm-6 text-right" th:text="${order.totalAmt}"
+								style="color: red;"> 400.00 </span>
+						</div>
+						<div class="col-xs-12 col-sm-12" th:if="${order.payName =='挂号费'}">
+							<span class="col-xs-6 col-sm-6"> 挂号费 </span> <span
+								class="col-xs-6 col-sm-6 text-right" th:text="${order.totalAmt}"
+								style="color: red;"> 400.00 </span>
+						</div>
+					</div>
+					<div class="row text-left"
+						style="background-color: white; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+						<div class="text-right">
+							<span>
+								<button type="button" class="btn btn-primary navbar-btn"
+									th:onclick="${'doPay(' + orderStat.index + ')'}"
+									style="margin-right: 40px;">结算</button>
+							</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<!--已支付-->
+			<div class="tab-pane fade" id="paid" style="margin-bottom: 10px">
+
+				<div class="row" style="background-color: white; margin-top: 10px;">
+					<div class="col-xs-6 col-sm-9 row text-left"
+						style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+						<div
+							style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+							<span
+								style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+							<span>缴费时间</span>
+						</div>
+					</div>
+					<div class="col-xs-6 col-sm-3" style="text-align: left">
+						<div class='input-group date' id='datetimepicker'>
+							<input type='text' id="payTime" class="form-control"
+								th:value="*{payTime}" th:field="*{payTime}" /> <span
+								class="input-group-addon"> <span
+								class="glyphicon glyphicon-calendar"></span>
+							</span>
+						</div>
+					</div>
+
+				</div>
+				<div class="div" th:each="hasPaid,hasPaidStat:*{hasPaidList}"
+					style="margin-bottom: 10px; margin-top: 10px">
+					<div class="payDate" th:attr="name=${hasPaid.payTime}"
+						th:id="${'payDateId' + hasPaidStat.index}"
+						style="margin-bottom: 10px;">
+
+						<!-- 挂号费 -->
+						<div class="row text-left"
+							style="background-color: white; vertical-align: middle; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+							<div class="col-xs-9 col-sm-11"
+								style="height: 33px; padding-top: 6px; padding-left: 0px; font-size: 16px;">
+								<span
+									style="padding-left: 20px; color: #22a7f0; font-weight: bold;">|</span>
+								<span th:text="${hasPaid.payName}">挂号费</span>
+							</div>
+						</div>
+
+						<div class="row text-left"
+							style="background-color: white; padding-left: 10px; padding-right: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+
+							<div class="col-xs-12">
+								<div class="col-xs-4">就诊科室</div>
+								<div class="col-xs-8">
+									<span th:text="${hasPaid.deptName}">内科</span>
+								</div>
+							</div>
+							<div class="col-xs-12">
+								<div class="col-xs-4">就诊医生</div>
+								<div class="col-xs-8">
+									<span th:text="${hasPaid.doctorName}">王一</span>
+								</div>
+							</div>
+						</div>
+						<div class="row text-left"
+							style="background-color: white; padding-left: 10px; padding-right: 10px; margin-left: 0px; margin-right: 0px; margin-bottom: 1px">
+							<div class="col-xs-12" style="font-size: 12px; color: #6C6C6C;"
+								th:if="${hasPaid.payName !='挂号费'}">
+								<span class="col-xs-6">医保部分</span> <span
+									class="col-xs-6 text-right" th:text="${hasPaid.medInsAmt}">200.00</span>
+							</div>
+							<div class="col-xs-12" style="font-size: 12px; color: #6C6C6C;"
+								th:if="${hasPaid.payName !='挂号费'}">
+								<span class="col-xs-6">个人部分</span> <span
+									class="col-xs-6 text-right" th:text="${ + hasPaid.selfAmt}">100.00</span>
+							</div>
+							<div class="col-xs-12" th:if="${hasPaid.payName !='挂号费'}">
+								<span class="col-xs-6">总费用</span> <span
+									class="col-xs-6 text-right" th:text="${hasPaid.totalAmt}"
+									style="color: red;">400.00</span>
+							</div>
+							<div class="col-xs-12 col-sm-12"
+								th:if="${hasPaid.payName =='挂号费'}">
+								<span class="col-xs-6 col-sm-6"> 挂号费 </span> <span
+									class="col-xs-6 col-sm-6 text-right"
+									th:text="${hasPaid.totalAmt}" style="color: red;">
+									400.00 </span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="margin-top: 50px"></div>
+			<div
+				style="left: 0; bottom: 0; position: fixed; width: 100%; opacity: 0.9; padding: 10px; background-color: white; border-top: 2px solid #F0F0F6">医保卡账户余额
+				0.00元</div>
+		</div>
+
+		<script type="text/javascript" src="/js/bootstrap-datetimepicker.js"
+			charset="UTF-8"></script>
+		<script type="text/javascript"
+			src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+		<script type="text/javascript">
+			$('#datetimepicker').datetimepicker({
+				format : 'yyyy年m月dd日',
+				startDate : new Date(2017, 1, 1),
+				language : 'zh-CN',
+				weekStart : 1,
+				todayBtn : 1,
+				autoclose : 1,
+				todayHighlight : 1,
+				startView : 2,
+				minView : 2,
+				forceParse : 0
+			}).on('changeDate', function(ev) {
+				$(".payDate").each(function() {
+					$(this).removeClass("hide");
+					$(this).addClass("active");
+				});
+
+				$(".payDate").each(function() {
+					if ($(this).attr("name") == $("#payTime").val()) {
+						$(this).removeClass("hide");
+						$(this).addClass("active");
+					} else {
+						$(this).removeClass("active");
+						$(this).addClass("hide");
+
+					}
+				});
+			});
+		</script>
+	</form>
+</body>
+
+</html>

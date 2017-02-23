@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mpst005Mapper" >
+ 
+  <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.entity.HospitalCardInfoEntity" >
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <id column="jiuzhenkahao" property="jiuzhenkahao" jdbcType="VARCHAR" />
+    <result column="insertTimeStamp" property="insertTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    userId, jiuzhenkahao, insertTimeStamp
+  </sql>
+  
+  <select id="getCardByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.HospitalCardInfoEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from HospitalCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and jiuzhenkahao = #{jiuzhenkahao,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getCardByUserId" resultType="String" parameterType="Integer" >
+    select 
+       jiuzhenkahao
+    from HospitalCardInfo
+    where userId = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.HospitalCardInfoEntity" >
+    insert into HospitalCardInfo (userId, jiuzhenkahao, insertTimeStamp)
+    values (#{userId,jdbcType=BIGINT}, #{jiuzhenkahao,jdbcType=VARCHAR}, #{insertTimeStamp,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.liandisys.ahis.webapp.entity.HospitalCardInfoEntity" >
+    delete from HospitalCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and jiuzhenkahao = #{jiuzhenkahao,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

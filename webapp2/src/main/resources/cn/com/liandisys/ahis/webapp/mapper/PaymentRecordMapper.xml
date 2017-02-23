@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.PaymentRecordMapper">
+	<insert id="insertPaymentRecord" parameterType="cn.com.liandisys.ahis.webapp.dto.PaymentRecordDto">
+		insert into
+		PaymentRecord
+		(paymentNo
+		, paymentRefType
+		, hisOrdNum
+		, userID
+		,
+		departmentName
+		, doctorName
+		, paymentName
+		, orderFee
+		, payFee
+		,
+		orderDateTime
+		, medicalInsuranceAmount
+		, medicalselfAmount
+		, paidDate
+		,
+		paidState
+		, orderType
+		, paymentNotice
+		,loginTime
+		,loginUser
+		,updateTime
+		,updateUser)
+		values (
+		#{paymentNo,jdbcType=BIGINT},
+		#{paymentRefType,jdbcType=CHAR},
+		#{hisOrdNum,jdbcType=BIGINT},
+		#{userID,jdbcType=BIGINT},
+		#{departmentName,jdbcType=VARCHAR},
+		#{doctorName,jdbcType=VARCHAR},
+		#{paymentName,jdbcType=VARCHAR},
+		#{orderFee,jdbcType=DOUBLE},
+		#{payFee,jdbcType=DOUBLE},
+		#{orderDateTime,jdbcType=DATE},
+		#{medicalInsuranceAmount,jdbcType=DOUBLE},
+		#{medicalselfAmount,jdbcType=DOUBLE},
+		#{paidDate,jdbcType=DATE},
+		#{paidState,jdbcType=CHAR},
+		#{orderType,jdbcType=CHAR},
+		#{paymentNotice,jdbcType=CHAR},
+		#{loginTime,jdbcType=TIMESTAMP},
+		#{loginUser,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<resultMap id="BaseResultMap"
+		type="cn.com.liandisys.ahis.webapp.dto.PaymentRecordDto">
+		<id column="paymentNo" property="paymentNo" jdbcType="BIGINT" />
+		<result column="paymentRefType" property="paymentRefType"
+			jdbcType="CHAR" />
+		<result column="hisOrdNum" property="hisOrdNum" jdbcType="BIGINT" />
+		<result column="userID" property="userID" jdbcType="BIGINT" />
+		<result column="departmentName" property="departmentName"
+			jdbcType="VARCHAR" />
+		<result column="doctorName" property="doctorName" jdbcType="VARCHAR" />
+		<result column="paymentName" property="paymentName" jdbcType="VARCHAR" />
+		<result column="orderFee" property="orderFee" jdbcType="DOUBLE" />
+		<result column="payFee" property="payFee" jdbcType="DOUBLE" />
+		<result column="orderDateTime" property="orderDateTime"
+			jdbcType="TIMESTAMP" />
+		<result column="medicalInsuranceAmount" property="medicalInsuranceAmount"
+			jdbcType="DOUBLE" />
+		<result column="medicalselfAmount" property="medicalselfAmount"
+			jdbcType="DOUBLE" />
+		<result column="paidDate" property="paidDate" jdbcType="TIMESTAMP" />
+		<result column="paidState" property="paidState" jdbcType="CHAR" />
+		<result column="orderType" property="orderType" jdbcType="CHAR" />
+		<result column="paymentNotice" property="paymentNotice"
+			jdbcType="CHAR" />
+		<result column="loginTime" property="loginTime" jdbcType="TIMESTAMP" />
+		<result column="loginUser" property="loginUser" jdbcType="VARCHAR" />
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updateUser" property="updateUser" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		paymentNo, paymentRefType, hisOrdNum, userID,
+		departmentName, doctorName,
+		paymentName,
+		orderFee, payFee,
+		orderDateTime, medicalInsuranceAmount, medicalselfAmount,
+		paidDate,
+		paidState, orderType, paymentNotice, loginTime, loginUser, updateTime,
+		updateUser
+	</sql>
+
+	<select id="getPaymentRecord" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from PaymentRecord
+		where paymentNo = #{paymentNo,jdbcType=BIGINT}
+	</select>
+
+	<update id="updatePaymentNoticeByKey">
+		update PaymentRecord
+		set paymentNotice=#{paymentNotice,jdbcType=CHAR}
+		where paymentNo = #{paymentNo,jdbcType=BIGINT}
+	</update>
+</mapper>

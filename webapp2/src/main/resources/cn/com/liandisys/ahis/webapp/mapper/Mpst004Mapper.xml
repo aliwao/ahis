@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mpst004Mapper" >
+ 
+  <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.entity.MedicareCardInfoEntity" >
+    <id column="userId" property="userId" jdbcType="BIGINT" />
+    <id column="yibaokahao" property="yibaokahao" jdbcType="VARCHAR" />
+    <result column="insertTimeStamp" property="insertTimeStamp" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    userId, yibaokahao, insertTimeStamp
+  </sql>
+  
+  <select id="getCardByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.com.liandisys.ahis.webapp.entity.MedicareCardInfoEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from MedicareCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and yibaokahao = #{yibaokahao,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getCardByUserId" resultType="String" parameterType="Integer" >
+    select 
+       yibaokahao
+    from MedicareCardInfo
+    where userId = #{userId,jdbcType=BIGINT}
+  </select>
+
+  <insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.MedicareCardInfoEntity" >
+    insert into MedicareCardInfo (userId, yibaokahao, insertTimeStamp)
+    values (#{userId,jdbcType=BIGINT}, #{yibaokahao,jdbcType=VARCHAR}, #{insertTimeStamp,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.liandisys.ahis.webapp.entity.MedicareCardInfoEntity" >
+    delete from MedicareCardInfo
+    where userId = #{userId,jdbcType=BIGINT} and yibaokahao = #{yibaokahao,jdbcType=VARCHAR}
+  </delete>
+
+</mapper>

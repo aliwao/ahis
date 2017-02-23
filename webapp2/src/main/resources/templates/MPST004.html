@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>医保卡绑定</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+	<script src="/js/common.js"></script>
+	<script src="/js/jquery-confirm.js"></script>
+	<link href="/css/jquery-confirm.css" rel="stylesheet" />
+    <style>
+     .label-row-left {
+        line-height:32px;
+     }
+     .btn.gray {
+     	color: #fff;
+  		background-color: #3c3c3c;
+  		border-color: none;
+	 }
+	 .row-ui {
+	 	margin-right:0px;
+	 	margin-left: -15px
+	 }
+    </style>
+    
+<script type="text/javascript">
+	// CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+	
+	var InterValObj; //timer变量，控制时间
+	var count = 60; //间隔函数，1秒执行
+	var curCount; //当前剩余秒数
+
+    $(document).ready(function(){
+    	// 绑定 医保卡
+    	$("#cardBind").click(function() {
+    		if (!checkInput()) {
+    			return;
+    		}
+    		$.confirm({
+				title: '',
+			    content: '确认绑定尾号' + $('#patCardNo').val().substring($('#patCardNo').val().length-4) +'医保卡？',
+				buttons: {
+					是: function () {
+						$("#cardBind").attr("disabled", "true");
+						$("#cardUnBind").attr("disabled", "true");
+						$('#infoArea').html('正在处理，请稍后...');
+    					$.ajax({
+    						url: "/m/mpst004/bind",
+    						type: "POST",
+    						async: false,
+    						data: {patCardNo: $('#patCardNo').val(), identifyingCode: $('#identifyingCode').val()},
+    						success: function(result){
+    							if (result == '') {
+    								$('#infoArea').html('绑定成功！正在跳转...');
+    									setTimeout(function () {  
+    									self.location= '/m/mpst001/index';
+    			    					}, 3000);
+    							} else {
+    								$("#cardBind").removeAttr("disabled");
+    								$("#cardUnBind").removeAttr("disabled");
+    								$("#infoArea").html(result);
+    							}
+    						}
+    					});
+					},
+			                   否: 	{ btnClass: 'btn-blue',
+				    	  action: function () {}
+				    }
+				}
+	         });
+    	});
+    		
+    	// 解除绑定 医保卡
+    	$("#cardUnBind").click(function() {
+    		if (!checkInput()) {
+    			return;
+    		}
+    		$.confirm({
+				title: '',
+			    content: '确认解除绑定尾号' + $('#patCardNo').val().substring($('#patCardNo').val().length-4) +'医保卡？',
+				buttons: {
+					是: function () {
+						$("#cardBind").attr("disabled", "true");
+						$("#cardUnBind").attr("disabled", "true");
+						$('#infoArea').html('正在处理，请稍后...');
+    					$.ajax({
+    						url: "/m/mpst004/unbind",
+    						type: "POST",
+    						async: false,
+    						data: {patCardNo: $('#patCardNo').val(), identifyingCode: $('#identifyingCode').val()},
+    						success: function(result){
+    							if (result == '') {
+    								$('#infoArea').html('解除绑定成功！正在跳转...');
+    									setTimeout(function () {  
+    									self.location= '/m/mpst001/index';
+    			    					}, 3000);
+    							} else {
+    								$("#cardBind").removeAttr("disabled");
+    								$("#cardUnBind").removeAttr("disabled");
+    								$("#infoArea").html(result);
+    							}
+    						}
+    					});
+					},
+			                   否: 	{ btnClass: 'btn-blue',
+				    	  action: function () {}
+				    }
+				}
+	         });
+    	});
+    	
+    	// 发送手机验证码并倒计时
+    	$("#identifyingCodeBtn").click(function() {
+    	    $("#identifyingCode").focus();
+    		//设置button效果，开始计时
+    		curCount = count;
+    		$("#identifyingCodeBtn").addClass('gray');
+    		$("#identifyingCodeBtn").attr("disabled", "true");
+    		$("#identifyingCodeBtn").removeClass('btn-info');
+    		$("#identifyingCodeBtn").html("重新发送(" + curCount + ")");
+    		InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+    		//后台发送验证码到手机
+    		$.ajax({
+    			url: "/m/mpst004/codeFetch",
+    			type: "POST", 
+    			dataType: "text",
+    			error: function (XMLHttpRequest, textStatus, errorThrown) { },
+    			success: function (code){ 
+    				$("#sendYzm").val(code);
+    				showNoticeToast("验证码是：" + $("#sendYzm").val());
+    	    	    console.log("验证码是：" + $("#sendYzm").val());	
+    			}
+    		});
+    	});
+    });
+    
+    //timer处理函数
+    function SetRemainTime() {
+        if (curCount == 1) {                
+        	window.clearInterval(InterValObj); //停止计时器
+            $("#identifyingCodeBtn").removeClass("gray");
+            $("#identifyingCodeBtn").removeAttr("disabled");
+            $("#identifyingCodeBtn").addClass('btn-info');
+            $("#identifyingCodeBtn").html("重新发送");
+        } else {
+            curCount--;
+            $("#identifyingCodeBtn").removeClass('btn-info');
+            $("#identifyingCodeBtn").html("重新发送(" + curCount + ")");
+        }
+    }
+  //<![CDATA[
+    function checkInput() {
+    	// 医保卡验证
+    	if($('#patCardNo').val().length < 16) { 
+            showErrorToast('医保卡号不正确');
+            $("#patCardNo").focus();
+            return false; 
+        } 
+    	// 验证码验证
+    	if ($("#identifyingCode").val() == '' || $('#identifyingCode').val() != $("#sendYzm").val()) {
+    		showErrorToast("验证码不正确");
+            $("#identifyingCode").focus();
+            return false;
+    	}
+    	return true;
+    }
+  //]]>
+ </script>
+</head>
+<body>
+<form id="mpst004Form" method="post">
+<input type="hidden" id="sendYzm" />
+
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="pageNavOnLogin('mpst001');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a class="navbar-brand" href="#">医保卡绑定</a>
+                     </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div id="containerDiv" style="margin-top:65px">
+       <ul class="list-group">
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left" style="padding-right: 0px">医保卡号</div>
+               <div class="col-xs-9 label-row-left">
+                    <input type="text" th:if="${mpst004Form.existCard} != '1'" id="patCardNo" class="form-control" 
+                    	th:value="${mpst004Form.patCardNo}" placeholder="请输入医保卡号" maxlength="20" />
+                    <div th:if="${mpst004Form.existCard} == '1'">
+                    	<span th:text="${mpst004Form.patCardNo}" ></span>
+                    	<input type="hidden" th:value="${mpst004Form.patCardNo}" id="patCardNo" />
+                    </div>
+               </div>
+           </li>
+           <li class="list-group-item row row-ui">
+               <div class="col-xs-3 label-row-left"><span>验证码</span></div>
+               <div class="col-xs-9" style="padding-right: 0px">
+               <input type="text" class="form-control" id="identifyingCode"
+               		style="width:53%; display:inline" placeholder="请输入验证码" maxlength="6" />
+               <button type="button" id="identifyingCodeBtn" 
+               		class="btn btn-info" style="line-height:19px;vertical-align:top;font-size:8px;padding:6px 8px">获取验证码</button> 
+               </div>
+           </li>
+       </ul>
+    </div>
+    <div id="infoArea" style="margin-top:10px;color:red;text-align:left"></div>
+    <footer class="container" style="text-align:center">
+    	<ul class="nav navbar-fixed-bottom">
+        	<li>
+        		<button type="button" th:if="${mpst004Form.existCard} != '1'" id="cardBind" class="btn btn-primary btn-block" style="width:100%;" >绑&nbsp;定</button>
+       			<button type="button" th:if="${mpst004Form.existCard} == '1'" id="cardUnBind" class="btn btn-primary btn-block" style="width:100%;">解除绑定</button> 
+        	</li>
+    	</ul>
+    </footer>
+</form>
+</body>
+</html>

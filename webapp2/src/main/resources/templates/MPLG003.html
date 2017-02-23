@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的信息</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    .list-group-item > .my-badge {
+        float: right;
+    }
+    .my-badge {
+        display: inline-block;
+        position: relative;
+        top:-33px;
+        min-width: 10px;
+        padding: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        color: #000;
+        white-space: nowrap;
+    }
+    </style>
+</head>
+<body>
+<form id="saveForm" enctype="multipart/form-data" th:action="@{save}" method="post">
+  <div id="mPage">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goMyBack();"></span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#">个人信息</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv">
+        <div style="display:none;"><input id="portrait" name="portrait" type="file" accept="image/*" onchange="handleFiles(this)" /></div>
+        <ul class="list-group">
+            <li class="list-group-item ldui-group-item" style="height:50px;line-height:26px;" onclick="chooseProtrait();">
+                <span class="pull-right glyphicon glyphicon-chevron-right" style="line-height:28px;"></span>
+                <span class="pull-right ldui-text-disp">
+                     <img id="portraitDisp" src="/images/portrait" style="width:30px;height:30px;border-radius:15px;" />
+                </span>头像
+            </li>
+            <li class="list-group-item ldui-group-item" style="cursor:pointer;" onclick="updItem(1);">
+                <span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right ldui-text-disp" id="username_disp"></span>姓名
+            </li>
+            <li class="list-group-item ldui-group-item"><span class="pull-right ldui-text-disp" id="identityCardNo"></span>身份证号</li>
+        </ul>
+
+        <div class="panel panel-default">
+            <ul class="list-group">
+                <li class="list-group-item ldui-group-item">出生日期<input class="pull-right" type="date" id="birthDate" name="birthDate" value="" /></li>
+                <li class="list-group-item ldui-group-item" style="cursor:pointer;" onclick="updItem(2);">
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right ldui-text-disp" id="sex_disp"></span>性别
+                </li>
+                <li class="list-group-item ldui-group-item">居住地址<textarea rows="2" style="width:100%;" id="address" name="address"></textarea></li>
+                <li class="list-group-item ldui-group-item">职业
+                    <select class="pull-right" id="occupation" name="occupation">
+                        <option value="0"></option>
+                        <option value="1">公司职员</option>
+                        <option value="2">个体户</option>
+                        <option value="3">学生</option>
+                        <option value="4">其他</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <footer class="container">
+       <button type="button" class="btn btn-primary btn-block" onclick="saveToDb();">保存</button>
+    </footer>
+  </div>
+  
+  <div id="dPage" style="display:none;">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon ldui-btn-icon-left" onclick="goMPage();">取消</span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#" id="dpageTitle">XXX</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                  </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="" id="containerDiv">
+        <div style="height:10px;"><input type="hidden" id="hidupdkbn" /></div>
+        <div class="has-feedback dispdetaildiv" id="detaildiv1">
+             <input type="text" class="form-control ldui-form-control" id="username" name="username" autofocus="autofocus" />
+        </div>
+        <div class="list-group dispdetaildiv" id="detaildiv2">
+             <input type="hidden" id="sex" name="sex" value="" />
+             <!--<a id="sex_m" href="#" class="list-group-item disabled">男<span id="" class="pull-right glyphicon glyphicon-ok" style="color:#337ab7;"></span></a>-->
+             <a id="sex_m" onclick="doSelect(1);" href="Javascript:void(0);" class="list-group-item">男<span id="sex_m_span" class="pull-right glyphicon" style="color:#337ab7;"></span></a>
+             <a id="sex_f" onclick="doSelect(2);" href="Javascript:void(0);" class="list-group-item">女<span id="sex_f_span" class="pull-right glyphicon" style="color:#337ab7;"></span></a>
+        </div>
+    </div>
+    <footer class="container" style="margin-top:10px;">
+       <button type="button" class="btn btn-primary btn-block" id="btnTmpSave" onclick="doTmpSave();">确定</button>
+    </footer>
+  </div>
+</form>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+        function(){
+            // 初期数据加载
+            initload();
+        }
+    );
+
+    function initload() {
+        var params = {};
+        $.ajax({
+            type:"POST",
+            url:"/m/mplg003/initload",
+            data:params,
+            async: false,
+            success:function(data){
+                //alert(data.loginUserId);
+                $("#username_disp").text(data.username);
+                $("#username").val(data.username);
+                $("#identityCardNo").text(data.identityCardNo);
+                $("#birthDate").val(UnixToDate(data.birthDate));
+                $("#sex_disp").text(data.sex);
+                $("#sex").val(data.sex);
+                $("#address").val(data.address);
+                $("#occupation").val(data.occupation);
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+
+    function chooseProtrait() {
+        $("#portrait").click();
+    }
+
+    function saveToDb() {
+        $("#saveForm").submit();
+    }
+
+    function UnixToDate(unixTime, isFull, timeZone) {
+        if (typeof (timeZone) == 'number') {
+            unixTime = parseInt(unixTime) + parseInt(timeZone) * 60 * 60 * 1000;
+        }
+
+        //var time = new Date(unixTime * 1000);
+        var time = new Date(unixTime);
+        var ymdhis = "";
+        //ymdhis += time.getUTCFullYear() + "-";
+        //ymdhis += (time.getUTCMonth()+1) + "-";
+        //ymdhis += time.getUTCDate();
+        ymdhis += time.getFullYear() + "-";
+        var m = time.getMonth()+1;
+        var mm = "";
+        if(m < 10){
+            mm = "0" + m;
+        } else {
+        	mm = "" + m;
+        }
+        ymdhis += mm + "-";
+        ymdhis += time.getDate();
+        if (isFull === true) {
+            ymdhis += " " + time.getUTCHours() + ":";
+            ymdhis += time.getUTCMinutes() + ":";
+            ymdhis += time.getUTCSeconds();
+        }
+        return ymdhis;
+    }
+
+    function updItem(i){
+       var title="";
+       $(".dispdetaildiv").hide();
+       $("#btnTmpSave").show();
+       if(i==1){
+          title="姓名";
+       }
+       else if(i==2){
+          title="性别";
+          var sex = $("#sex").val();
+          $("#btnTmpSave").hide();
+          if(sex == '男'){
+             $("#sex_f_span").removeClass('glyphicon-ok');
+             $("#sex_m_span").addClass('glyphicon-ok');
+          }
+          else if(sex == '女'){
+             $("#sex_m_span").removeClass('glyphicon-ok');
+             $("#sex_f_span").addClass('glyphicon-ok');
+          }
+       }
+       $("#detaildiv"+i).show();
+       $("#hidupdkbn").val(i);
+       $("#dpageTitle").text(title);
+       $("#mPage").hide();
+       $("#dPage").show();
+    }
+    
+    function goMPage(){
+       $("#hidupdkbn").val("");
+       $("#dPage").hide();
+       $("#mPage").show();
+    }
+
+    function goMyBack () {
+       self.location="/g/mpmp001/index";
+    }
+
+    function doTmpSave() {
+       var i = $("#hidupdkbn").val();
+       if(i==1) {
+          $("#username_disp").text($("#username").val());
+       }
+       else if(i==2) {
+          $("#sex_disp").text($("#sex").val());
+       }
+       goMPage();
+    }
+    
+    function doSelect(i) {
+       if(i==1) {
+          $("#sex").val("男");
+          $("#sex_f_span").removeClass('glyphicon-ok');
+          $("#sex_m_span").addClass('glyphicon-ok');
+       }
+       else if(i==2) {
+          $("#sex").val("女");
+          $("#sex_m_span").removeClass('glyphicon-ok');
+          $("#sex_f_span").addClass('glyphicon-ok');
+       }
+       doTmpSave();
+    }
+
+    window.URL = window.URL || window.webkitURL;
+    function handleFiles(obj) {
+        //var maxBytes = 51200;
+        var portraitDisp = document.getElementById("portraitDisp");
+        var files = obj.files;
+        if (window.URL) {
+            //File API
+            //alert(files[0].name + "," + files[0].size + " bytes");
+            portraitDisp.src = window.URL.createObjectURL(files[0]); //创建一个object URL，并不是你的本地路径
+            portraitDisp.onload = function(e) {
+                window.URL.revokeObjectURL(this.src); //图片加载后，释放object URL
+            }
+        } else if(window.FileReader) {
+            //opera不支持createObjectURL/revokeObjectURL方法。我们用FileReader对象来处理
+            var reader = new FileReader();
+            reader.readAsDataURL(files[0]);
+            reader.onload = function(e){
+                //alert(files[0].name + "," +e.total + " bytes");
+                portraitDisp.src = this.result;
+            }
+        } else {
+            //ie 不支持
+        }
+    }
+    //]]>
+ </script>
+</body>
+</html>

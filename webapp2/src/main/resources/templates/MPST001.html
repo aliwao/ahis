@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    .ldui-badge {
+        background-color:#22a7f0;
+    }
+    .ldui-panel-info {
+        margin-bottom:15px;
+        border: none;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack('/g/mpmp001/index');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#">支付安全</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv" style="margin-top:60px;">
+        <ul class="list-group" style="margin-bottom:15px;">
+            <li class="list-group-item ldui-group-item" onclick="updTelno();">手机号修改<span class="pull-right glyphicon glyphicon-chevron-right"></span><span id="motelno" class="pull-right"></span></li>
+            <li class="list-group-item ldui-group-item" onclick="updPwd();"><span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right">***********</span>密码修改</li>
+        </ul>
+
+        <div class="panel panel-info ldui-panel-info">
+            <div class="panel-heading ldui-panel-heading"><span class="ldui-mark">|</span> 卡绑定</div>
+            <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item" id="jiuzhenka">院内诊疗卡号</li>
+                <li class="list-group-item ldui-list-group-item" id="yibaoka" onclick="pageNavOnLogin('MPST004');">医保卡</li>
+                <!-- <li class="list-group-item ldui-list-group-item" id="yinhangka" onclick="pageNavOnLogin('MPST006');">银行卡</li> -->
+            </ul>
+        </div>
+        
+        <div class="panel panel-info ldui-panel-info">
+            <div class="panel-heading ldui-panel-heading"><span class="ldui-mark">|</span> 账号绑定</div>
+            <ul class="list-group">
+                <li class="list-group-item ldui-list-group-item"><span class="badge">未绑定</span>微信</li>
+                <li class="list-group-item ldui-list-group-item"><span class="badge">未绑定</span>微博</li>
+                <li class="list-group-item ldui-list-group-item"><span class="badge">未绑定</span>支付宝</li>
+            </ul>
+        </div>
+    </div>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+        function(){
+            // 初期数据加载
+            initload();
+            checkBinding();
+        }
+    );
+
+    function initload() {
+        var callback = function(data) {
+            $("#motelno").text(data.mobileNo);
+        }
+        postAjax("initload", {}, callback);
+        // message显示
+    }
+
+    function checkBinding() {
+        postAjax("checkBinding/1", {}, function(data){
+            var htmlstr = "";
+            if(data) {
+                htmlstr = '医保卡<span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right">' + data + '</span>';
+            }
+            else {
+                htmlstr = '<span class="badge ldui-badge">去绑定</span>医保卡';
+            }
+            $("#yibaoka").html(htmlstr);
+        });
+        postAjax("checkBinding/2", {}, function(data){
+            var htmlstr = "";
+            if(data) {
+                htmlstr = '院内诊疗卡号<span class="pull-right">' + data + '</span>';
+            }
+            else {
+                htmlstr = '院内诊疗卡号<span class="pull-right">暂无</span>';
+            }
+            $("#jiuzhenka").html(htmlstr);
+        });
+        postAjax("checkBinding/3", {}, function(data){
+            var htmlstr = "";
+            if(data && data > 0) {
+                htmlstr = '银行卡<span class="pull-right glyphicon glyphicon-chevron-right"></span><span class="pull-right">已绑定' + data + '张银行卡</span>';
+            }
+            else {
+                htmlstr = '<span class="badge ldui-badge">去绑定</span>银行卡';
+            }
+            $("#yinhangka").html(htmlstr);
+        });
+    }
+
+    function updPwd() {
+       //self.location = "MPST003.html";
+       self.location = "/m/mpst003/index";
+    }
+    function updTelno() {
+       //self.location = "MPST002.html";
+       self.location = "/m/mpst002/index";
+    }
+ //]]>
+ </script>
+</body>
+</html>

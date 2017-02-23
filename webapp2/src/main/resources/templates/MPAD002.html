@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的地址</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    .header-back {
+       display: block;
+       position: relative;
+       top:14px;
+       padding: 0 0 0 10px;
+     }
+     .label-row-left {
+        line-height:32px;
+     }
+     .row.ldui-row {
+        margin-left:0px;
+        margin-right:0px;
+     }
+     .list-group-item.ldui-row {
+        padding:10px 2px;
+     }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack();"></span>
+                  </div>
+                  <div class="col-xs-6">
+                     <div class="navbar-header">
+                        <a id="titleaddaddr" style="display:none;" class="navbar-brand" href="javascript:void(0)">添加地址</a>
+                        <a id="titleupdaddr" style="display:none;" class="navbar-brand" href="javascript:void(0)">修改地址</a>
+                     </div>
+                  </div>
+                  <div class="col-xs-3">
+                      <button id="btndeladdr" type="button" style="display:none;" class="btn btn-primary navbar-btn" onclick="doDelete();">删除</button>
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv">
+       <form id="mpad002Form" th:action="@{save}" method="post" th:object="${mpad002Form}">
+       <ul class="list-group">
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>联系人</span></div>
+               <div class="col-xs-9">
+                    <input type="text" class="form-control" id="lianxiren" name="lianxiren" placeholder="请输入联系人姓名" />
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span></span></div>
+               <div class="col-xs-9">
+                    <input type="radio" name="sex" value="男" title="男" checked="checked" />先生
+                    &nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="sex" value="女" title="女" />女士
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>联系电话</span></div>
+               <div class="col-xs-9">
+                    <input type="text" class="form-control" id="mobileno" name="mobileno" placeholder="请输入联系人电话" />
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3 label-row-left"><span>详细地址</span></div>
+               <div class="col-xs-9">
+                    <textarea style="margin: 0px; width: 245px; height: 75px;"  class="form-control" id="address" name="address" placeholder="请输入联系人地址" ></textarea>
+               </div>
+           </li>
+           <li class="list-group-item row ldui-row">
+               <div class="col-xs-3">标签</div>
+               <div class="col-xs-9 dropdown">
+                        <select class="pull-right" id="mark" name="mark">
+                            <option value="0">无</option>
+                            <option value="1">家</option>
+                            <option value="2">公司</option>
+                            <option value="3">学校</option>
+                        </select>
+               </div>
+           </li>
+       </ul>
+       <input type="hidden" id="action" name="action" />
+       <input type="hidden" th:field="*{siteid}" />
+       </form>
+    </div>
+    <footer class="container">
+       <button type="button" class="btn btn-primary btn-block" onclick="doSubmit();">确定</button>
+    </footer>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+       function(){
+          var siteid = $("#siteid").val();
+          if(siteid && siteid > 0){
+             $("#titleupdaddr").show();
+             $("#btndeladdr").show();
+             // 初始数据加载
+             initload(siteid);
+          }
+          else {
+             $("#titleaddaddr").show();
+          }
+       }
+    );
+
+    function initload(siteidval) {
+        var params = {siteid:siteidval};
+        $.ajax({
+            type:"POST",
+            url:"initload",
+            data:params,
+            async: false,
+            success:function(data){
+                //alert(data.siteid);
+                //alert(data.lianxiren);
+                $("#lianxiren").val(data.lianxiren);
+                //alert(data.sex);
+                $("input[name='sex'][value=" + data.sex + "]").attr("checked",true); 
+                //alert(data.mobileno);
+                $("#mobileno").val(data.mobileno);
+                //alert(data.address);
+                $("#address").val(data.address);
+                //alert(data.mark);
+                $("#mark").val(data.mark);
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+
+    function doDelete() {
+        var siteid = $("#siteid").val();
+        if(siteid){
+            $("#action").val('delete');
+            $("#mpad002Form").submit();
+        }
+    }
+
+    function doSubmit() {
+        //var sex = $("input[name='sex']:checked").val();
+    	var chkflg = checkAll();
+        if(chkflg) {
+            $("#action").val('save');
+            $("#mpad002Form").submit();
+        }
+    }
+
+    function checkAll() {
+        var chkval = $("#lianxiren").val();
+        if(!chkval){
+            showErrorToast("联系人姓名不能为空!");
+            $("#lianxiren").focus();
+            return false;
+        }
+        chkval = $("#mobileno").val();
+        if(!chkval){
+            showErrorToast("联系电话不能为空!");
+            $("#mobileno").focus();
+            return false;
+        }
+        chkval = $("#address").val();
+        if(!chkval){
+            showErrorToast("联系地址不能为空!");
+            $("#address").focus();
+            return false;
+        }
+        return true;
+     }
+ //]]>
+ </script>
+</body>
+</html>

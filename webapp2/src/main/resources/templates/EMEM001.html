@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>
+            病历一览
+        </title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet"
+        media="screen" />
+        <link href="/css/common.css" rel="stylesheet" />
+        <script src="/js/jquery-3.1.1.min.js">
+        </script>
+        <script src="/js/common.js">
+        </script>
+        <script>
+        $(document).ready(function(){ 
+        	   $(".ldui-dzbl-show").click(function(){
+        		   if($(this).children('.ldui-dzbl-show-img').attr("src")=="/images/unfold.png"){
+        		       $(this).children('.ldui-dzbl-show-img').attr("src","/images/fold.png");
+        		   } else {
+        			   $(this).children('.ldui-dzbl-show-img').attr("src","/images/unfold.png");
+        		   }
+        		   $(this).next('.ldui-dzbl-detail').toggle();
+        	   });
+        	}); 
+        </script>
+    </head>
+    
+    <body>
+        <div class="content">
+            <div class="container-fluid" style="height: 59px;">
+                <div class="row">
+                    <nav class="navbar navbar-default open-hover ldui-topnavbar" style="height: 59px;" role="navigation">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="col-xs-3">
+                        </div>
+                        <div class="col-xs-6">
+                            <p class="navbar-text text-center" style="font-size:18px;color:white">
+                                病历一览
+                            </p>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+            
+            <div class="col-xs-12" style="margin-top: 10px;">
+                <select class="pull-right" style="width: 50%;border-color: #22a7f0;height: 20px;color: #22a7f0;background-color: #f0f0f6;font-size: 14px;">
+                    <option value="0">近3个月</option>
+                    <option value="1"  selected="true">近6个月</option>
+                    <option value="1">近1年</option>
+                    <option value="1">近3年</option>
+                    <option value="1">3年以前</option>
+                </select>
+                <div style="clear:both"></div>    
+            </div>
+            
+            <div class="ldui-dzbl" style="margin-top: 40px;">
+                <div class="col-xs-7">
+                    <div>2017-01-27</div>
+                    <div class="ldui-dzbl-header-keshi">心脏科</div>
+                </div>
+                <div class="col-xs-3 ldui-dzbl-header-vertical-center ldui-dzbl-attention">已挂号</div>
+                <div class="col-xs-2 ldui-dzbl-header-vertical-center">
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </div>
+                <div class="col-xs-12 ldui-dzbl-show">
+                    <img class="ldui-dzbl-show-img" src="/images/unfold.png" />
+                </div>
+                <div class="ldui-dzbl-detail" id="blmx">
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">总费用</span>
+                        <span class="col-xs-4 col-sm-4">15.00</span>
+                        <span class="col-xs-5 col-sm-4">普通门诊</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">医保支付</span>
+                        <span class="col-xs-4 col-sm-4">12.00</span>
+                        <span class="col-xs-5 col-sm-4"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">个人自费</span>
+                        <span class="col-xs-4 col-sm-4">3.00</span>
+                        <span class="col-xs-5 col-sm-4"></span>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <div class="ldui-dzbl">
+                <div class="col-xs-7">
+                    <div>2017-01-26</div>
+                    <div class="ldui-dzbl-header-keshi">骨伤科</div>
+                </div>
+                <div class="col-xs-3 ldui-dzbl-header-vertical-center ldui-dzbl-attention">治疗中</div>
+                <div class="col-xs-2 ldui-dzbl-header-vertical-center">
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </div>
+                <div class="col-xs-12 ldui-dzbl-show">
+                    <img class="ldui-dzbl-show-img" src="/images/unfold.png" />
+                </div>
+                <div class="ldui-dzbl-detail" id="blmx">
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">总费用</span>
+                        <span class="col-xs-4 col-sm-4">120.00</span>
+                        <span class="col-xs-5 col-sm-4">普通门诊</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">医保支付</span>
+                        <span class="col-xs-4 col-sm-4">100.00</span>
+                        <span class="col-xs-5 col-sm-4 ldui-dzbl-attention">药品未领取</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">个人自费</span>
+                        <span class="col-xs-4 col-sm-4">20.00</span>
+                        <span class="col-xs-5 col-sm-4"></span>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+
+            <div class="ldui-dzbl">
+                <div class="col-xs-7">
+                    <div>2016-12-07</div>
+                    <div class="ldui-dzbl-header-keshi">心脏科</div>
+                </div>
+                <div class="col-xs-3 ldui-dzbl-header-vertical-center">已康复</div>
+                <div class="col-xs-2 ldui-dzbl-header-vertical-center">
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </div>
+                <div class="col-xs-12 ldui-dzbl-show">
+                    <img class="ldui-dzbl-show-img" src="/images/unfold.png" />
+                </div>
+                <div class="ldui-dzbl-detail" id="blmx">
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">总费用</span>
+                        <span class="col-xs-4 col-sm-4">400.00</span>
+                        <span class="col-xs-5 col-sm-4">王大生 专家门诊</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">医保支付</span>
+                        <span class="col-xs-4 col-sm-4">280.00</span>
+                        <span class="col-xs-5 col-sm-4">药品已发放</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">个人自费</span>
+                        <span class="col-xs-4 col-sm-4">120.00</span>
+                        <span class="col-xs-5 col-sm-4 ldui-dzbl-attention">有报告</span>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            
+            <div class="ldui-dzbl">
+                <div class="col-xs-7">
+                    <div class="">2016-11-24</div>
+                    <div class="ldui-dzbl-header-keshi">化验科</div>
+                </div>
+                <div class="col-xs-3 ldui-dzbl-header-vertical-center">已完成</div>
+                <div class="col-xs-2 ldui-dzbl-header-vertical-center">
+                    <span class="pull-right glyphicon glyphicon-chevron-right"></span>
+                </div>
+                <div class="col-xs-12 ldui-dzbl-show">
+                    <img class="ldui-dzbl-show-img" src="/images/unfold.png" />
+                </div>
+                <div class="ldui-dzbl-detail" id="blmx">
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">总费用</span>
+                        <span class="col-xs-4 col-sm-4">280.00</span>
+                        <span class="col-xs-5 col-sm-4">王大生 专家门诊</span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">医保支付</span>
+                        <span class="col-xs-4 col-sm-4">0.00</span>
+                        <span class="col-xs-5 col-sm-4"></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-12">
+                        <span class="col-xs-3 col-sm-4">个人自费</span>
+                        <span class="col-xs-4 col-sm-4">280.00</span>
+                        <span class="col-xs-5 col-sm-4 ldui-dzbl-attention">有报告</span>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+            
+            
+        </div>
+        <footer>
+            <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+                <ul class="nav nav-tabs  ldui-bottomtabbar">
+                    <li>
+                        <a onclick="pageNavById('HPHP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-home">
+                            </span> -->
+                            <img alt="首页" src="/images/footer/home.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                首页
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('HMHH001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-book">
+                            </span> -->
+                            <img alt="健康手冊" src="/images/footer/handbook.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                健康手册
+                            </p>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a onclick="pageNavById('EMEM001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-th-large">
+                            </span> -->
+                            <img alt="电子病历" src="/images/footer/form-fill.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                电子病历
+                            </p>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="pageNavById('MPMP001');" href="javascript:void(0)" data-toggle="tab">
+                            <!-- <span class="glyphicon glyphicon-user">
+                            </span> -->
+                            <img alt="我的" src="/images/footer/my.png" style="height: 20px;width: 20px;" />
+                            <p>
+                                我的
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
+    </body>
+    <script>
+        $("tbody tr").click(function(event) {
+            window.location = "./EMEM002.html";
+        });
+    </script>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>我的收藏</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/bootstrap-theme.css" rel="stylesheet" />
+    <script src="/js/bootstrap.min.js"></script>
+    <link href="/css/common.css" rel="stylesheet" />
+    <script src="/js/common.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container  ldui-topnavbar">
+            <!--向左对齐-->
+            <div class="row">
+                 <div class="col-xs-3">
+                      <span class="glyphicon glyphicon-chevron-left ldui-btn-icon-left" onclick="goBack('/g/mpmp001/index');"></span>
+                  </div>
+                  <div class="col-xs-6">
+                      <div class="navbar-header">
+                        <a class="navbar-brand" href="#">我的收藏</a>
+                      </div>
+                  </div>
+                  <div class="col-xs-3">
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="" id="containerDiv">
+        <ul id="groupul" class="list-group fade in" style="margin-top:15px;">
+         
+        </ul>
+    </div>
+ <script type="text/javascript" th:inline="javascript">
+ //<![CDATA[
+	//CSRF Token
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options){ xhr.setRequestHeader(header, token); });
+
+    $(document).ready(
+        function(){
+            // 初期数据加载
+            initload();
+        }
+    );
+
+    function initload() {
+        var params = {};
+        $.ajax({
+            type:"POST",
+            url:"initload",
+            data:params,
+            async: false,
+            success:function(data){
+                $.each(data.favDocslist,function(i,item){
+                    /* alert(i);
+                    alert(item.deptCode);
+                    alert(item.deptName);
+                    alert(item.doctorCode);
+                    alert(item.doctorName); */
+                    var htmlstr = '<li class="list-group-item ldui-group-item"><span class="badge" style="background-color:#22a7f0;" onclick="goMfrg003Page(&apos;'+ item.deptCode + '&apos;, &apos;' + item.doctorCode + '&apos;);">预约挂号</span>';
+                        htmlstr = htmlstr + item.doctorName + ' --- ' + item.deptName;
+                        htmlstr += '</li>';
+                    $("#groupul").append(htmlstr);
+                });
+            },
+            error:function(e) {
+                alert("出错："+e);
+            }
+        });
+    }
+    
+    function goMfrg003Page(deptCode, doctorCode) {
+        // 
+        self.location = '/m/mfrg003/index?deptCode=' + deptCode + '&doctorCode=' + doctorCode;
+    }
+ //]]>
+ </script>
+</body>
+</html>

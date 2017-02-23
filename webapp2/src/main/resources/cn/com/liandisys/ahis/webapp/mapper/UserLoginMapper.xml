@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace必须指向Dao接口 -->
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.UserLoginMapper">
+	<resultMap id="userLoginEntity"
+		type="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
+		<id column="userID" property="userID" />
+		<result column="password" property="password" />
+		<result column="mobileNo" property="mobileNo" />
+		<result column="validFlag" property="validFlag" />
+	</resultMap>
+
+	<!-- 根据ID查询数据 -->
+	<select id="getAll" resultMap="userLoginEntity">
+		select
+		  userID    as userID
+		, password  as password
+		, mobileNo  as mobileNo
+		, validFlag as validFlag
+		from UserLogin
+	</select>
+
+	<select id="getByMobileNo" parameterType="String" resultMap="userLoginEntity">
+		select
+		  userID    as userID
+		, password  as password
+		, mobileNo  as mobileNo
+		, validFlag as validFlag
+		from UserLogin
+		where MobileNo = #{mobileNo}
+	</select>
+
+	<select id="getUserIdByMobileNo" parameterType="String" resultType="Integer">
+		select
+			userID  as  userID
+		from UserLogin
+		where mobileNo = #{mobileNo}
+	</select>
+
+	<insert id="insert" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
+	    insert into UserLogin
+	        (userID
+	        , password
+	        , mobileNo
+	        , validFlag)
+	    values 
+	        (#{userID}
+	        , #{password}
+	        , #{mobileNo}
+	        , #{validFlag}); 
+	</insert>
+
+    <insert id="insertSelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
+     insert into UserLogin
+     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        userID,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="mobileNo != null" >
+        mobileNo,
+      </if>
+      <if test="validFlag != null" >
+        validFlag,
+      </if>
+     </trim>
+     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userID != null" >
+        #{userID,jdbcType=BIGINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="validFlag != null" >
+        #{validFlag,jdbcType=CHAR},
+      </if>
+     </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.liandisys.ahis.webapp.entity.UserLoginEntity">
+     update UserLogin
+     <trim prefix="set" suffixOverrides=",">
+         <if test="password != null" >password=#{password,jdbcType=VARCHAR},</if>
+         <if test="mobileNo != null" >mobileNo=#{mobileNo,jdbcType=VARCHAR},</if>
+         <if test="validFlag != null" >validFlag=#{validFlag,jdbcType=CHAR},</if>
+     </trim>
+     where userID = #{userID}
+    </update>
+</mapper>

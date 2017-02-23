@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.liandisys.ahis.webapp.mapper.Mfis009Mapper" >
+ 
+ <resultMap id="BaseResultMap" type="cn.com.liandisys.ahis.webapp.dto.OrderInfoDto">
+    <id column="orderId" property="orderId" jdbcType="VARCHAR" />
+    <result column="orderRefType" property="orderRefType" jdbcType="CHAR" />
+    <result column="orderRefSeqNo" property="orderRefSeqNo" jdbcType="CHAR" />
+    <result column="userId" property="userId" jdbcType="BIGINT" />
+    <result column="orderFee" property="orderFee" jdbcType="DOUBLE" />
+    <result column="payFee" property="payFee" jdbcType="DOUBLE" />
+    <result column="orderDateTime" property="orderDateTime" jdbcType="TIMESTAMP" />
+    <result column="orderStatus" property="orderStatus" jdbcType="CHAR" />
+    <result column="loginTime" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="loginUser" property="loginUser" jdbcType="BIGINT" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updateUser" property="updateUser" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    orderId, orderRefType, orderRefSeqNo, userId, orderFee, payFee, orderDateTime, orderStatus, loginTime, loginUser, updateTime, updateUser
+  </sql>
+  
+  <insert id="insertPaymentRecord"
+		parameterType="cn.com.liandisys.ahis.webapp.dto.PaymentRecordDto">
+		insert into PaymentRecord (paymentNo, paymentRefType, hisOrdNum, userID, departmentName, 
+			doctorName, paymentName, orderFee,  payFee, orderDateTime, medicalInsuranceAmount, 
+			medicalselfAmount, paidDate, paidState, orderType, paymentNotice, loginTime, loginUser, updateTime, updateUser)
+		values (
+		#{paymentNo,jdbcType=BIGINT},
+		#{paymentRefType,jdbcType=CHAR},
+		#{hisOrdNum,jdbcType=BIGINT},
+		#{userID,jdbcType=BIGINT},
+		#{departmentName,jdbcType=VARCHAR},
+		#{doctorName,jdbcType=VARCHAR},
+		#{paymentName,jdbcType=VARCHAR},
+		#{orderFee,jdbcType=DOUBLE},
+		#{payFee,jdbcType=DOUBLE},
+		#{orderDateTime,jdbcType=TIMESTAMP},
+		#{medicalInsuranceAmount,jdbcType=DOUBLE},
+		#{medicalselfAmount,jdbcType=DOUBLE},
+		#{paidDate,jdbcType=DATE},
+		#{paidState,jdbcType=CHAR},
+		#{orderType,jdbcType=CHAR},
+		#{paymentNotice,jdbcType=CHAR},
+		#{loginTime,jdbcType=TIMESTAMP},
+		#{loginUser,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updateUser,jdbcType=VARCHAR}
+		)
+	</insert>
+
+</mapper>
